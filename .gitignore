@@ -31,6 +31,13 @@
 *.out
 *.app
 
+
+# IDE
+.idea
+
+# Build
 build
 build-debug
-.idea
+build-release
+cmake-build-debug
+cmake-build-release

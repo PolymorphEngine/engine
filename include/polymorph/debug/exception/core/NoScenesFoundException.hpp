@@ -8,36 +8,20 @@
 
 #pragma once
 
+#include "polymorph/debug/exception/ExceptionLogger.hpp"
 
-class NoScenesFoundException
+namespace polymorph::engine::debug
 {
+    class NoScenesFoundException : public ExceptionLogger
+    {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        NoScenesFoundException();
+        public:
+            NoScenesFoundException(Logger::severity level = Logger::MAJOR);
 
-        ~NoScenesFoundException();
-
-//////////////////////--------------------------/////////////////////////
-
-
-
-///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
-
-
-    private:
+            ~NoScenesFoundException() override = default;
 
 //////////////////////--------------------------/////////////////////////
 
-
-
-/////////////////////////////// METHODS /////////////////////////////////
-    public:
-
-
-    private:
-
-//////////////////////--------------------------/////////////////////////
-
-};
+    };
+}

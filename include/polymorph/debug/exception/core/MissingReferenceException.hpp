@@ -8,36 +8,27 @@
 
 #pragma once
 
+#include "polymorph/debug/exception/ExceptionLogger.hpp"
 
-class MissingReferenceException
+namespace polymorph::engine::debug
 {
+    template<typename T = void, typename U = void>
+    class MissingReferenceException : public ExceptionLogger
+    {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        MissingReferenceException();
+        public:
+            MissingReferenceException(Logger::severity level = Logger::MAJOR) : ExceptionLogger("[MissingReferenceException] Undefined or missing reference", level) {};
 
-        ~MissingReferenceException();
+            // TODO: constructor with GameObject as parameter
 
-//////////////////////--------------------------/////////////////////////
+            //TODO: constructor with GameObject and Component as parameter
 
+            //TODO: templated constructor with Component and property as parameter
 
-
-///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
-
-
-    private:
+            ~MissingReferenceException() override = default;
 
 //////////////////////--------------------------/////////////////////////
 
-
-
-/////////////////////////////// METHODS /////////////////////////////////
-    public:
-
-
-    private:
-
-//////////////////////--------------------------/////////////////////////
-
-};
+    };
+}

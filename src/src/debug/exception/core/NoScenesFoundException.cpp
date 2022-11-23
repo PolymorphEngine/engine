@@ -5,4 +5,8 @@
 ** header for NoScenesFoundException.c
 */
 
-#include "NoScenesFoundException.hpp"
+#include "polymorph/debug/exception/core/NoScenesFoundException.hpp"
+
+
+polymorph::engine::debug::NoScenesFoundException::NoScenesFoundException(Logger::severity level)
+        : ExceptionLogger("[NoScenesFoundException] No scenes found in the project", level) {}

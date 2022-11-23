@@ -5,4 +5,7 @@
 ** header for SceneNotFoundException.c
 */
 
-#include "SceneNotFoundException.hpp"
+#include "polymorph/debug/exception/core/SceneNotFoundException.hpp"
+
+polymorph::engine::debug::SceneNotFoundException::SceneNotFoundException(std::string name, Logger::severity level)
+        : ExceptionLogger("[SceneNotFoundException] Scene: " + name + " not found", level) {}

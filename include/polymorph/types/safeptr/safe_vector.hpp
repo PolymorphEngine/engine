@@ -60,6 +60,17 @@ namespace polymorph::engine
                                       [](safe_ptr<T> instance) { return !instance; });
                 }
             }
+            
+            /**
+             * @brief checks if the vector contains any expired weak_ptr
+             */
+            bool countainsExpired() {
+                auto it = std::find_if(this->begin(), this->end(),
+                                       [](safe_ptr<T> instance) { return !instance; });
+                return it != this->end();
+            }
+            
+            
 
 
         private:

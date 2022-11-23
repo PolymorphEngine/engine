@@ -8,6 +8,7 @@
 #pragma once
 
 #include <memory>
+#include "polymorph/debug/exception/core/MissingReferenceException.hpp"
 
 
 namespace polymorph::engine
@@ -20,7 +21,7 @@ namespace polymorph::engine
         public:
             safe_ptr() : std::weak_ptr<T>()
             {};
-            safe_ptr(std::shared_ptr<T> data): std::weak_ptr<T>(data)
+            explicit safe_ptr(std::shared_ptr<T> data): std::weak_ptr<T>(data)
             {};
 
             ~safe_ptr() = default;
@@ -55,8 +56,7 @@ namespace polymorph::engine
             T *operator->() const
             {
                 if (this->expired())
-                    throw std::runtime_error(
-                            "Object reference not set to an instance");
+                    throw debug::MissingReferenceException();
                 return this->lock().get();
             }
 

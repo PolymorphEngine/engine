@@ -11,17 +11,17 @@ set_target_properties(myxmlpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 
 # Source files
-file(GLOB_RECURSE SRC src/*.cpp)
-file(GLOB_RECURSE ICL include/*.hpp)
-file(GLOB_RECURSE ICL_HEADERS include/polymorph/*.hpp)
-
+file(GLOB_RECURSE PRIVATE_SRC src/*.cpp)
+file(GLOB_RECURSE PUBLIC_ICL include/*.hpp)
+file(GLOB_RECURSE PRIVATE_ICL src/include/*.hpp)
+get_target_property(MYXMLPP_INCLUDE_DIR myxmlpp INCLUDE_DIRECTORIES)
 
 
 # Target Library
 add_library(PolymorphEngine
-        ${SRC}
-        ${ICL}
-        ${ICL_HEADERS}
+        ${PRIVATE_SRC}
+        ${PRIVATE_ICL}
+        ${PUBLIC_ICL}
 )
 
 
@@ -35,8 +35,11 @@ else()
 endif()
 
 target_include_directories(PolymorphEngine PUBLIC 
-        lib/myxmlpp/include
         include
+        ${MYXMLPP_INCLUDE_DIR}
+)
+target_include_directories(PolymorphEngine PRIVATE
+        src/include
 )
 
 set_target_properties(PolymorphEngine PROPERTIES POSITION_INDEPENDENT_CODE ON)

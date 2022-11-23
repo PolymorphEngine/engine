@@ -12,19 +12,18 @@ Precise the issue that you are resolving.
 # Breaking changes
 
 Please complete this section if any breaking changes have been made, otherwise delete it.
+- [ ] Scene update
+- [ ] Engine update
+- [ ] Entity update
+- [ ] Component update
+- [ ] Api update (Manager modified / Interface modified)
 
 # Checklist
 
 - [ ] I have assigned this PR to myself
 - [ ] I have added at least 1 reviewer
-- [ ] I have added the needed labels
-- [ ] I have linked this PR to an issue
-- [ ] I have linked this PR to a milestone
-- [ ] I have linked this PR to a project
-- [ ] I have tested this code
-- [ ] I have added / updated tests (unit / functionals / end-to-end / ...)
-- [ ] I have updated the README and other relevant documents (guides...)
-- [ ] I have added sufficient documentation both in code, as well as in the READMEs
+- [ ] I have updated the documentation
+- [ ] I have updated the README.md
 
 # Additional comments
 

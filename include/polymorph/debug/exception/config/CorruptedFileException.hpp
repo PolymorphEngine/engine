@@ -8,36 +8,41 @@
 
 #pragma once
 
+#include "polymorph/debug/exception/ConfigurationException.hpp"
 
-class CorruptedFileException
+namespace polymorph::engine::debug
 {
 
-////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        CorruptedFileException();
+    class CorruptedFileException final : public ConfigurationException
+    {
 
-        ~CorruptedFileException();
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+        public:
+            CorruptedFileException(std::string file, Logger::severity level = Logger::MAJOR);
+
+            ~CorruptedFileException() final = default;
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
-};
+    };
+}

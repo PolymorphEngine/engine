@@ -5,4 +5,11 @@
 ** header for MissingEntityException.c
 */
 
-#include "MissingEntityException.hpp"
+#include "polymorph/debug/exception/config/MissingEntityException.hpp"
+
+polymorph::engine::debug::MissingEntityException::MissingEntityException(
+        std::string entity, Logger::severity level)
+        : ConfigurationException("Missing entity '"+entity + "', file not found.", level)
+{
+
+}

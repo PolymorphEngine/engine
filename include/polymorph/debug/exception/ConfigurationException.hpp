@@ -8,36 +8,41 @@
 
 #pragma once
 
+#include "polymorph/debug/exception/ExceptionLogger.hpp"
 
-class ConfigurationException
+namespace polymorph::engine::debug
 {
 
-////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        ConfigurationException();
 
-        ~ConfigurationException();
+    class ConfigurationException : public ExceptionLogger
+    {
+        public:
+            explicit ConfigurationException(std::string message,
+                                   Logger::severity level = Logger::MAJOR);
+
+            ~ConfigurationException() override = default;
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
-};
+    };
+}

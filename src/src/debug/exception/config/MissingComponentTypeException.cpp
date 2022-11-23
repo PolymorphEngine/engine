@@ -5,4 +5,10 @@
 ** header for MissingComponentTypeException.c
 */
 
-#include "MissingComponentTypeException.hpp"
+#include "polymorph/debug/exception/config/MissingComponentTypeException.hpp"
+
+polymorph::engine::debug::MissingComponentTypeException::MissingComponentTypeException(
+        std::string entity) : ConfigurationException("missing component type for entity: '" + entity + "'.", Logger::severity::MAJOR)
+{
+
+}

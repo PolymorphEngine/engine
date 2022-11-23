@@ -8,36 +8,41 @@
 
 #pragma once
 
+#include "polymorph/debug/exception/ConfigurationException.hpp"
 
-class MissingEntityException
+namespace polymorph::engine::debug
 {
+    class MissingEntityException final : public ConfigurationException
+    {
+        public:
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        MissingEntityException();
+        public:
+            explicit MissingEntityException(std::string entity, Logger::severity level = Logger::MAJOR);
 
-        ~MissingEntityException();
+            ~MissingEntityException() final = default;
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
-};
+    };
+}

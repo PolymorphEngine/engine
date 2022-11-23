@@ -9,35 +9,42 @@
 #pragma once
 
 
-class WrongValueException
+#include "polymorph/debug/exception/ConfigurationException.hpp"
+
+namespace polymorph::engine::debug
 {
 
-////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        WrongValueException();
+    class WrongValueException final : public ConfigurationException
+    {
 
-        ~WrongValueException();
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+        public:
+            WrongValueException(std::string entity, std::string component, std::string property, std::string value, std::string object = "", Logger::severity level = Logger::MAJOR);
+            WrongValueException(std::string object, std::string property, std::string value, Logger::severity level = Logger::MAJOR);
+
+            ~WrongValueException();
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
-};
+    };
+}

@@ -8,36 +8,41 @@
 
 #pragma once
 
+#include "polymorph/debug/exception/ConfigurationException.hpp"
 
-class MissingFileException
+namespace polymorph::engine::debug
 {
 
-////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        MissingFileException();
+    class MissingFileException final : public ConfigurationException
+    {
 
-        ~MissingFileException();
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+        public:
+                explicit MissingFileException(std::string file, Logger::severity level = Logger::MAJOR);
+
+                ~MissingFileException() final = default;
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
-};
+    };
+}

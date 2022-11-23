@@ -8,36 +8,40 @@
 
 #pragma once
 
+#include "polymorph/debug/exception/ConfigurationException.hpp"
 
-class EmptySceneException
+namespace polymorph::engine::debug
 {
+    class EmptySceneException final : public ConfigurationException
+    {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
-    public:
-        EmptySceneException();
+        public:
+            EmptySceneException(std::string name, bool isFirst = false);
 
-        ~EmptySceneException();
+            ~EmptySceneException() final = default;
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-    public:
+        public:
 
 
-    private:
+        private:
 
 //////////////////////--------------------------/////////////////////////
 
-};
+    };
+}

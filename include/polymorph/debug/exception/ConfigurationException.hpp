@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** ConfigurationException.hpp
+** File description:
+** header for ConfigurationException.c
+*/
+
+
+#pragma once
+
+
+class ConfigurationException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        ConfigurationException();
+
+        ~ConfigurationException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

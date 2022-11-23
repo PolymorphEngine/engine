@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** MissingFileException.hpp
+** File description:
+** header for MissingFileException.c
+*/
+
+
+#pragma once
+
+
+class MissingFileException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        MissingFileException();
+
+        ~MissingFileException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** CorruptedFileException.hpp
+** File description:
+** header for CorruptedFileException.c
+*/
+
+
+#pragma once
+
+
+class CorruptedFileException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        CorruptedFileException();
+
+        ~CorruptedFileException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

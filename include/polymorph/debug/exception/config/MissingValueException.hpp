@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** MissingValueException.hpp
+** File description:
+** header for MissingValueException.c
+*/
+
+
+#pragma once
+
+
+class MissingValueException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        MissingValueException();
+
+        ~MissingValueException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** MissingEntityException.hpp
+** File description:
+** header for MissingEntityException.c
+*/
+
+
+#pragma once
+
+
+class MissingEntityException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        MissingEntityException();
+
+        ~MissingEntityException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

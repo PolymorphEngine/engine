@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** EmptySceneException.hpp
+** File description:
+** header for EmptySceneException.c
+*/
+
+
+#pragma once
+
+
+class EmptySceneException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        EmptySceneException();
+
+        ~EmptySceneException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

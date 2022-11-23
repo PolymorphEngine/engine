@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** SceneNotFoundException.hpp
+** File description:
+** header for SceneNotFoundException.c
+*/
+
+
+#pragma once
+
+
+class SceneNotFoundException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        SceneNotFoundException();
+
+        ~SceneNotFoundException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

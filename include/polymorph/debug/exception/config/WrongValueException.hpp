@@ -1,0 +1,43 @@
+/*
+** EPITECH PROJECT, 2020
+** WrongValueException.hpp
+** File description:
+** header for WrongValueException.c
+*/
+
+
+#pragma once
+
+
+class WrongValueException
+{
+
+////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
+    public:
+        WrongValueException();
+
+        ~WrongValueException();
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+///////////////////////////// PROPERTIES ////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+
+
+/////////////////////////////// METHODS /////////////////////////////////
+    public:
+
+
+    private:
+
+//////////////////////--------------------------/////////////////////////
+
+};

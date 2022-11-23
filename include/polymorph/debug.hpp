@@ -12,3 +12,6 @@
 
 // Exception
 #include "polymorph/debug/exception/ExceptionLogger.hpp"
+#include "polymorph/debug/exception/CoreException.hpp"
+#include "polymorph/debug/exception/ConfigurationException.hpp"
+#include "polymorph/debug/exception/PluginException.hpp"

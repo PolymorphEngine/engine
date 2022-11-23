@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "polymorph/debug/exception/ExceptionLogger.hpp"
+#include "polymorph/debug/exception/CoreException.hpp"
 
 namespace polymorph::engine::debug
 {
-    class DynamicLoaderException : public ExceptionLogger
+    class DynamicLoaderException : public CoreException
     {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////

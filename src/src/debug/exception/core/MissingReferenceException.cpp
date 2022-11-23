@@ -5,4 +5,3 @@
 ** header for MissingReferenceException.c
 */
 
-#include "MissingReferenceException.hpp"

@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "polymorph/debug/exception/ExceptionLogger.hpp"
+#include "polymorph/debug/exception/CoreException.hpp"
 
 namespace polymorph::engine::debug
 {
-    class SceneNotFoundException : public ExceptionLogger
+    class SceneNotFoundException : public CoreException
     {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////

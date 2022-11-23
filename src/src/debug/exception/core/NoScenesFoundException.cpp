@@ -9,4 +9,4 @@
 
 
 polymorph::engine::debug::NoScenesFoundException::NoScenesFoundException(Logger::severity level)
-        : ExceptionLogger("[NoScenesFoundException] No scenes found in the project", level) {}
+        : CoreException("No scenes found in the project", level) {}

@@ -8,17 +8,21 @@
 
 #pragma once
 
-#include "polymorph/debug/exception/ExceptionLogger.hpp"
+#include "polymorph/debug/exception/CoreException.hpp"
 
 namespace polymorph::engine::debug
 {
     template<typename T = void, typename U = void>
-    class MissingReferenceException : public ExceptionLogger
+    class MissingReferenceException : public CoreException
     {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
-            MissingReferenceException(Logger::severity level = Logger::MAJOR) : ExceptionLogger("[MissingReferenceException] Undefined or missing reference", level) {};
+            explicit MissingReferenceException(Logger::severity level = Logger::MAJOR) : CoreException("Undefined or missing reference to an object", level) {};
+
+            ~MissingReferenceException() override = default;
+            
+            MissingReferenceException(std::string missing, Logger::severity level = Logger::MAJOR) : CoreException("Missing reference to '" + missing + "'", level) {};
 
             // TODO: constructor with GameObject as parameter
 
@@ -26,7 +30,6 @@ namespace polymorph::engine::debug
 
             //TODO: templated constructor with Component and property as parameter
 
-            ~MissingReferenceException() override = default;
 
 //////////////////////--------------------------/////////////////////////
 

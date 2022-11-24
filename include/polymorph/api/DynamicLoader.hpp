@@ -117,6 +117,8 @@ namespace polymorph::engine::api
             /**
              * @details Close the previous opened library (if one is open) and opens the one passed as parameter
              * @param libPath
+             * @throws MissingDynamicLibraryException if the library does not exists at the provided path
+             * @throws CorruptedDynamicLibraryException if the library cannot be opened
              */
             void loadHandler(const std::string &libPath);
 
@@ -125,6 +127,7 @@ namespace polymorph::engine::api
              * @tparam T type of the symbol to return (generally a function pointer)
              * @param name name of the symbol to search for
              * @param no_except if true, the function will return a nullptr if the symbol is not found and not throw an exception
+             * @throws DynamicLoaderException if the symbol is not found and no_except is false
              * @return the symbol with the specified type signature
              */
             template<typename T>

@@ -36,8 +36,8 @@ void polymorph::engine::api::DynamicLoader::loadHandler(const std::string &libPa
 
     if (_handler == nullptr) {
         if (std::filesystem::exists(libPath))
-            throw debug::MissingDynamicLibraryException(libPath); // TODO: check parameters
-        throw debug::CorruptedDynamicLibraryException(libPath, dlerror()); //TODO: check parameters
+            throw debug::MissingDynamicLibraryException(libPath);
+        throw debug::CorruptedDynamicLibraryException(libPath, dlerror());
     }
     _libPath = libPath;
 }

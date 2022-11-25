@@ -7,8 +7,8 @@
 
 #include <filesystem>
 #include "polymorph/api/DynamicLoader.hpp"
-#include "polymorph/debug/exception/config/CorruptedFileException.hpp"
 #include "polymorph/debug/exception/core/MissingDynamicLibraryException.hpp"
+#include "polymorph/debug/exception/core/CorruptedDynamicLibraryException.hpp"
 
 polymorph::engine::api::DynamicLoader::DynamicLoader(DynamicLoader &&ref) noexcept
         : _handler(ref._handler), _libPath(ref._libPath)
@@ -36,8 +36,8 @@ void polymorph::engine::api::DynamicLoader::loadHandler(const std::string &libPa
 
     if (_handler == nullptr) {
         if (std::filesystem::exists(libPath))
-            throw debug::MissingDynamicLibraryException("[DynamicLoader] No dynamic library at path: " + libPath); // TODO: check parameters
-        throw debug::CorruptedFileException("[DynamicLoader] Failed to open dynamic library at path: " + libPath + ", error: " + dlerror()); //TODO: check parameters
+            throw debug::MissingDynamicLibraryException(libPath);
+        throw debug::CorruptedDynamicLibraryException(libPath, dlerror());
     }
     _libPath = libPath;
 }

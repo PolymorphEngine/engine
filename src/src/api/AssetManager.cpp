@@ -18,7 +18,8 @@ namespace polymorph::engine::api
     {
         for (auto &folder: _paths) {
             std::string path = folder + "/" + resource;
-            if (std::filesystem::exists(path) && !std::filesystem::is_directory(path))
+            if (std::filesystem::exists(path) && !std::filesystem::is_directory(path)
+            && std::filesystem::status(path).permissions() == (std::filesystem::perms::owner_read | std::filesystem::perms::others_read))
                 return path;
         }
         throw debug::CoreException("Asset not found: " + resource, errorIfNotFound);

@@ -39,8 +39,19 @@ namespace polymorph::engine::api
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
+            /**
+             * @brief Tries to resolve the resource path with all registered assets paths
+             * @param path The path to resolve
+             * @param errorIfNotFound The error level if the path is not found
+             * @return The resolved path
+             */
             std::string tryResolve(std::string resource,
             debug::Logger::severity errorIfNotFound = debug::Logger::MINOR);
+            
+            /**
+             * @brief Registers a new assets path
+             * @param path The path to register
+             */
             void addPath(std::string path);
 
 

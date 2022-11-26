@@ -61,10 +61,18 @@ namespace polymorph::engine::config
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
+            /**
+             * @brief Extract a PRIMITIVE property from the xml node
+             * 
+             * @tparam T The type of the property
+             * @param propertyName The name of the property
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
             template<typename T>
             void set(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName, level);
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
                 if (property == nullptr)
                     _onMissingPropertyExcept(level, propertyName);
@@ -74,32 +82,59 @@ namespace polymorph::engine::config
                 else if constexpr (!std::is_enum<T>())
                     _setPrimitiveProperty<T>(property, toSet, level);
             };
+            
+            /**
+             * @brief Extract a VECTOR property from the xml node
+             * 
+             * @tparam T The type of the property
+             * @param propertyName The name of the property
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
 
             template<typename T>
             void set(const std::string &propertyName, std::vector<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName, level);
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
                 if (property == nullptr)
                     _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
                 _setVectorProperty(property, toSet, level);
             };
-
+            
+            /**
+             * @brief Extract a MAP property from the xml node
+             * 
+             * @tparam T1 The type of the Key
+             * @tparam T2 The type of the Value
+             * @param propertyName The name of the property
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
             template<typename T1, typename T2>
             void set(const std::string &propertyName, std::map<T1, T2> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName, level);
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
                 if (property == nullptr)
                     _onMissingPropertyExcept(level, propertyName);
                 _setMapProperty<T1, T2>(property, toSet, level);
             };
 
+            /**
+             * @brief Extract an UNORDERED MAP property from the xml node
+             * 
+             * @tparam T1 The type of the Key
+             * @tparam T2 The type of the Value
+             * @param propertyName The name of the property
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
             template<typename T1, typename T2>
             void set(const std::string &propertyName, std::unordered_map<T1, T2> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName, level);
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
                 if (property == nullptr)
                     _onMissingPropertyExcept(level, propertyName);
@@ -116,9 +151,18 @@ namespace polymorph::engine::config
         protected:
             /**
              * @group Set Sub Property specializations
-            **/
-            
-            
+             * ***********************************************/
+
+
+            /**
+             * @brief Extract an PRIMITIVE SUB-property from the xml node
+             * 
+             * @tparam T The type of the property
+             * @param propertyName The name of the property
+             * @param data The node to search the sub-property in
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
             template<typename T>
             void _setSubProperty(const std::string &propertyName,
                                  const std::shared_ptr<myxmlpp::Node> &data,
@@ -126,7 +170,7 @@ namespace polymorph::engine::config
                                  debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                                                          ? _findProperty(propertyName, data, level)
+                                                          ? _findProperty(propertyName, data)
                                                           : data;
 
                 if (property == nullptr)
@@ -137,8 +181,17 @@ namespace polymorph::engine::config
                 else if constexpr (!std::is_enum<T>())
                     _setPrimitiveProperty<T>(property, toSet, level);
             };
+            
 
-
+            /**
+             * @brief Extract an VECTOR SUB-property from the xml node
+             * 
+             * @tparam T The type of the property
+             * @param propertyName The name of the property
+             * @param data The node to search the sub-property in
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
             template<typename T>
             void _setSubProperty(const std::string &propertyName,
                                  const std::shared_ptr<myxmlpp::Node> &data,
@@ -146,7 +199,7 @@ namespace polymorph::engine::config
                                  debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                                                          ? _findProperty(propertyName, data, level)
+                                                          ? _findProperty(propertyName, data)
                                                           : data;
 
                 if (property == nullptr)
@@ -155,6 +208,17 @@ namespace polymorph::engine::config
                 _setVectorProperty<T>(property, toSet, level);
             };
 
+            
+            /**
+             * @brief Extract an MAP SUB-property from the xml node
+             * 
+             * @tparam T1 The type of the Key
+             * @tparam T2 The type of the Value
+             * @param propertyName The name of the property
+             * @param data The node to search the sub-property in
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
             template<typename T1, typename T2>
             void _setSubProperty(const std::string &propertyName,
                                  const std::shared_ptr<myxmlpp::Node> &data,
@@ -162,7 +226,7 @@ namespace polymorph::engine::config
                                  debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                                                          ? _findProperty(propertyName, data, level)
+                                                          ? _findProperty(propertyName, data)
                                                           : data;
 
                 if (property == nullptr)
@@ -170,6 +234,16 @@ namespace polymorph::engine::config
                 _setMapProperty<T1, T2>(property, toSet, level);
             };
 
+            /**
+             * @brief Extract an UNORDERED MAP SUB-property from the xml node
+             * 
+             * @tparam T1 The type of the Key
+             * @tparam T2 The type of the Value
+             * @param propertyName The name of the property
+             * @param data The node to search the sub-property in
+             * @param toSet The property to set
+             * @param level The level of the error if something goes wrong (not found or wrong value)
+             */
             template<typename T1, typename T2>
             void _setSubProperty(const std::string &propertyName,
                                  const std::shared_ptr<myxmlpp::Node> &data,
@@ -177,7 +251,7 @@ namespace polymorph::engine::config
                                  debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                                                          ? _findProperty(propertyName, data, level)
+                                                          ? _findProperty(propertyName, data)
                                                           : data;
 
                 if (property == nullptr)
@@ -196,8 +270,12 @@ namespace polymorph::engine::config
 
             /**
              * @group Set Property Specializations
+             * ***********************************************/
+             
+            
+            /**
+             * @brief Set Property BUILTIN Specialization
              */
-
             template<typename T, typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data, T &toSet,
                                        debug::Logger::severity level = debug::Logger::DEBUG)
@@ -210,27 +288,39 @@ namespace polymorph::engine::config
                 toSet = T(data, *this);
             };
             
+            /**
+             * @brief Set Property INT Specialization
+             */
             template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        int &toSet, debug::Logger::severity level)
             {
                 _setPropertyFromAttr(toSet, data, level);
             }
-
+            
+            /**
+             * @brief Set Property FLOAT Specialization
+             */
             template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        float &toSet, debug::Logger::severity level)
             {
                 _setPropertyFromAttr(toSet, data, level);
             }
-
+            
+            /**
+             * @brief Set Property BOOL Specialization
+             */
             template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        bool &toSet, debug::Logger::severity level)
             {
                 _setPropertyFromAttr(toSet, data, level);
             }
-
+            
+            /**
+             * @brief Set Property STRING Specialization
+             */
             template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        std::string &toSet,
@@ -239,6 +329,10 @@ namespace polymorph::engine::config
                 _setPropertyFromAttr(toSet, data, level);
             }
 
+
+            /**
+             * @brief Set Property VECTOR Specialization
+             */
             template<typename T>
             void _setVectorProperty(std::shared_ptr<myxmlpp::Node> &data,
                                     std::vector<T> &toSet,
@@ -253,6 +347,9 @@ namespace polymorph::engine::config
                 }
             };
 
+            /**
+             * @brief Set Property MAP Specialization
+             */
             template<typename T1, typename T2>
             void _setMapProperty(std::shared_ptr<myxmlpp::Node> &data,
                                  std::map<T1, T2> &toSet,
@@ -270,6 +367,9 @@ namespace polymorph::engine::config
                 }
             };
 
+            /**
+             * @brief Set Property UNORDERED MAP Specialization
+             */
             template<typename T1, typename T2>
             void _setUMapProperty(std::shared_ptr<myxmlpp::Node> &data,
                                   std::unordered_map<T1, T2> &toSet,
@@ -287,6 +387,9 @@ namespace polymorph::engine::config
                 }
             };
 
+            /**
+             * @brief Set Property MAP from node Specialization
+             */
             template<typename T0, typename T1, typename T2>
             void _setMapPropertyFromNode(std::shared_ptr<myxmlpp::Node> &data,
                                          std::map<T1, T2> &toSet,
@@ -296,6 +399,9 @@ namespace polymorph::engine::config
                 _setMapProperty(data, toSet, level);
             };
 
+            /**
+             * @brief Set Property UNORDERED MAP from node Specialization
+             */
             template<typename T0, typename T1, typename T2>
             void _setMapPropertyFromNode(std::shared_ptr<myxmlpp::Node> &data,
                                          std::unordered_map<T1, T2> &toSet,
@@ -312,28 +418,69 @@ namespace polymorph::engine::config
 
             /**
              * @group Find property utilities
+             * ***********************************************/
+            
+            /**
+             * @brief Tries to find a property node from name
+             * @param name The name of the property to find
+             * @return the property found
              */
-            
-            std::shared_ptr<myxmlpp::Node> _findProperty(const std::string &name,
-            debug::Logger::severity level = debug::Logger::DEBUG);
-            
-            std::shared_ptr<myxmlpp::Node>
-            _findProperty(const std::string &name, const std::shared_ptr<myxmlpp::Node> &data, debug::Logger::severity level = debug::Logger::DEBUG);
+            std::shared_ptr<myxmlpp::Node> _findProperty(const std::string &name);
 
+            /**
+             * @brief Tries to find a property node from name and sub-node
+             * @param name The name of the property to find
+             * @param data The sub-node to search in
+             * @return the property found
+             */
+            std::shared_ptr<myxmlpp::Node>
+            _findProperty(const std::string &name, const std::shared_ptr<myxmlpp::Node> &data);
             
             
+            
+            
+            /**
+             * @brief Tries to set an INT property
+             * @param toSet The variable to set
+             * @param data The node containing the property
+             * @param level The error level if the value is not found or as illegal value
+             * @return True if the property is found
+             */
             bool
             _setPropertyFromAttr(int &toSet, std::shared_ptr<myxmlpp::Node> data,
              debug::Logger::severity level = debug::Logger::DEBUG);
-
+            
+            /**
+             * @brief Tries to set an FLOAT property
+             * @param toSet The variable to set
+             * @param data The node containing the property
+             * @param level The error level if the value is not found or as illegal value
+             * @return True if the property is found
+             */
             bool
             _setPropertyFromAttr(float &toSet, std::shared_ptr<myxmlpp::Node> data,
             debug::Logger::severity level = debug::Logger::DEBUG);
 
+
+            /**
+             * @brief Tries to set an BOOL property
+             * @param toSet The variable to set
+             * @param data The node containing the property
+             * @param level The error level if the value is not found or as illegal value
+             * @return True if the property is found
+             */
             bool
             _setPropertyFromAttr(bool &toSet, std::shared_ptr<myxmlpp::Node> data,
             debug::Logger::severity level = debug::Logger::DEBUG);
 
+
+            /**
+             * @brief Tries to set an STRING property
+             * @param toSet The variable to set
+             * @param data The node containing the property
+             * @param level The error level if the value is not found or as illegal value
+             * @return True if the property is found
+             */
             bool
             _setPropertyFromAttr(std::string &toSet, std::shared_ptr<myxmlpp::Node> data,
             debug::Logger::severity level = debug::Logger::DEBUG);

@@ -13,31 +13,15 @@ namespace polymorph::engine::config
 {
     void config::XmlPropertyManager::_logMissingProperty(std::string type, std::string name, debug::Logger::severity level)
     {
-        _logger.log("In component '" + type + "': Ref named '" + name + "': has no attribute for reference value", level);
+        _logger.log("[ConfigurationException] In component '" + type + "': Ref named '" + name + "': has no attribute for reference value", level);
     }
 
     void config::XmlPropertyManager::_logWrongValue(std::string type, std::string name, debug::Logger::severity level)
     {
-        _logger.log("In component '" + type + "': Ref named '" + name + "': has wrong reference value", level);
+        _logger.log("[ConfigurationException] In component '" + type + "': Ref named '" + name + "': has wrong reference value", level);
     }
 
 
-    std::shared_ptr<myxmlpp::Node>
-    XmlPropertyManager::_findProperty(const std::string &name,
-                                      debug::Logger::severity level)
-    {
-        return std::shared_ptr<myxmlpp::Node>();
-    }
-
-    std::shared_ptr<myxmlpp::Node>
-    XmlPropertyManager::_findProperty(const std::string &name,
-                                      const std::shared_ptr<myxmlpp::Node> &data,
-                                      debug::Logger::severity level)
-    {
-        return std::shared_ptr<myxmlpp::Node>();
-    }
-
-    
     
     bool XmlPropertyManager::_setPropertyFromAttr(int &toSet, std::shared_ptr<myxmlpp::Node> data, debug::Logger::severity level)
     {
@@ -126,6 +110,31 @@ namespace polymorph::engine::config
                                                  std::string propertyName)
     {
 
+    }
+
+    std::shared_ptr<myxmlpp::Node>
+    XmlPropertyManager::_findProperty(const std::string &name)
+    {
+        for (auto &child: *node) {
+            try {
+            if (child->findAttribute("name")->getValue() == name)
+                return child;
+            } catch (myxmlpp::Exception &e) {}
+        }
+        return nullptr;
+    }
+
+    std::shared_ptr<myxmlpp::Node>
+    XmlPropertyManager::_findProperty(const std::string &name,
+                                      const std::shared_ptr<myxmlpp::Node> &data)
+    {
+        for (auto &child: *data) {
+            try {
+                if (child->findAttribute("name")->getValue() == name)
+                    return child;
+            } catch (myxmlpp::Exception &e) {}
+        }
+        return nullptr;
     }
 
 

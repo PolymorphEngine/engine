@@ -91,27 +91,6 @@ namespace polymorph::engine::config
 
     }
 
-    void XmlPropertyManager::_onWrongValueExcept(debug::Logger::severity level,
-                                                 std::string propertyName,
-                                                 std::string value)
-    {
-
-    }
-
-    void
-    XmlPropertyManager::_onMissingValueExcept(debug::Logger::severity level,
-                                              std::string propertyName)
-    {
-
-    }
-
-    void
-    XmlPropertyManager::_onMissingPropertyExcept(debug::Logger::severity level,
-                                                 std::string propertyName)
-    {
-
-    }
-
     std::shared_ptr<myxmlpp::Node>
     XmlPropertyManager::_findProperty(const std::string &name)
     {

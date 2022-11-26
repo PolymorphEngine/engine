@@ -149,7 +149,7 @@ namespace polymorph::engine::config
             
 
         protected:
-            /**
+            /* ***********************************************
              * @group Set Sub Property specializations
              * ***********************************************/
 
@@ -268,7 +268,7 @@ namespace polymorph::engine::config
 
 
 
-            /**
+            /* ***********************************************
              * @group Set Property Specializations
              * ***********************************************/
              
@@ -416,7 +416,7 @@ namespace polymorph::engine::config
             
 
 
-            /**
+            /* ***********************************************
              * @group Find property utilities
              * ***********************************************/
             
@@ -485,18 +485,28 @@ namespace polymorph::engine::config
             _setPropertyFromAttr(std::string &toSet, std::shared_ptr<myxmlpp::Node> data,
             debug::Logger::severity level = debug::Logger::DEBUG);
 
-            
-            
-            
-            void _logMissingProperty(std::string type, std::string name, debug::Logger::severity level);
-            
-            void _logWrongValue(std::string type, std::string name, debug::Logger::severity level);
-            
+            /**
+             * @brief overridable method to determine logic (log or throw an exception) in case of wrong value in the config of a property
+             * @param level The severity of the error
+             * @param propertyName the property which has wrong value in configuration
+             * @param value the retrieved (wrong) value
+             */
             virtual void _onWrongValueExcept(debug::Logger::severity level,
                                              std::string propertyName,
-                                             std::string value);
-            virtual void _onMissingValueExcept(debug::Logger::severity level, std::string propertyName);
-            virtual void _onMissingPropertyExcept(debug::Logger::severity level, std::string propertyName);
+                                             std::string value) = 0;
+            /**
+             * overridable method to determine logic (log or throw an exception) in case of a missing value for a property in configuration
+             * @param level The severity of the error
+             * @param propertyName The name of the property which has missing value in configuration
+             */
+            virtual void _onMissingValueExcept(debug::Logger::severity level, std::string propertyName) = 0;
+
+            /**
+             * overridable method to determine logic (log or throw an exception) in case of a missing property in configuration
+             * @param level The severity of the error
+             * @param propertyName The property which is missing in configuration
+             */
+            virtual void _onMissingPropertyExcept(debug::Logger::severity level, std::string propertyName) = 0;
 
 //////////////////////--------------------------/////////////////////////           
 

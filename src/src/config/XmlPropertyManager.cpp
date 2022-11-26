@@ -11,18 +11,6 @@
 
 namespace polymorph::engine::config
 {
-    void config::XmlPropertyManager::_logMissingProperty(std::string type, std::string name, debug::Logger::severity level)
-    {
-        _logger.log("[ConfigurationException] In component '" + type + "': Ref named '" + name + "': has no attribute for reference value", level);
-    }
-
-    void config::XmlPropertyManager::_logWrongValue(std::string type, std::string name, debug::Logger::severity level)
-    {
-        _logger.log("[ConfigurationException] In component '" + type + "': Ref named '" + name + "': has wrong reference value", level);
-    }
-
-
-    
     bool XmlPropertyManager::_setPropertyFromAttr(int &toSet, std::shared_ptr<myxmlpp::Node> data, debug::Logger::severity level)
     {
         auto name = data->findAttribute("name")->getValue();

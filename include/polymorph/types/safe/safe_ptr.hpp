@@ -74,6 +74,12 @@ namespace polymorph::engine
             {
                 return this->expired();
             }
+            
+            explicit operator bool() const
+            {
+                return !this->expired();
+            }
+        }
 
 
         private:

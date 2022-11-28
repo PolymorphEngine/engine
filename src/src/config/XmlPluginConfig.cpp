@@ -5,14 +5,24 @@
 ** header for XmlPluginConfig.c
 */
 
-#include "XmlPluginConfig.hpp"
+#include "polymorph/config/XmlPluginConfig.hpp"
+#include "polymorph/debug/exception/config/CorruptedFileException.hpp"
 
-namespace polymorph
+
+namespace polymorph::engine::config
 {
-    namespace engine
+    config::XmlPluginConfig::XmlPluginConfig(
+            std::shared_ptr <myxmlpp::Doc> &doc, debug::Logger &logger) : XmlPropertyManager(doc->getRoot(), logger)
     {
-        namespace config
-        {
-        } // polymorph
-    } // engine
+        try {
+            _type = node->findAttribute("type")->getValue();
+        } catch (myxmlpp::AttributeNotFoundException &e) {
+            throw debug::CorruptedFileException("Plugin config corrupted, missing type ("+doc->getFilepath()+").");
+        }
+    }
+
+    std::string XmlPluginConfig::getType()
+    {
+        return _type;
+    }
 } // config

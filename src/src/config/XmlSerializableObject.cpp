@@ -6,6 +6,7 @@
 */
 
 #include "polymorph/config/XmlSerializableObject.hpp"
+#include "polymorph/debug/exception/config/MissingPropertyException.hpp"
 
 namespace polymorph::engine::config
 {
@@ -23,22 +24,53 @@ namespace polymorph::engine::config
                                                std::string value)
     {
         if (level != debug::Logger::MAJOR)
-            _logMissingProperty(_type, propertyName, level);
+            _logWrongValue(_type, propertyName, level);
         else
-            throw debug::MissingValueException(_component->gameObject->getName() + " (" + _component->gameObject->getId() + ")", _component->getType(), propertyName, _type, level);
+            throw debug::WrongValueException(_component->gameObject->getName() + " (" + _component->gameObject->getId() + ")", _component->getType(), propertyName, _type, level);
     }
 
     void
     XmlSerializableObject::_onMissingValueExcept(debug::Logger::severity level,
                                                  std::string propertyName)
     {
-        XmlPropertyManager::_onMissingValueExcept(level, propertyName);
+        if (level != debug::Logger::MAJOR)
+            _logMissingValue(_type, propertyName, level);
+        else
+            throw debug::MissingValueException(_component->gameObject->getName() + " (" + _component->gameObject->getId() + ")", _component->getType(), propertyName, _type, level);
     }
 
     void XmlSerializableObject::_onMissingPropertyExcept(
             debug::Logger::severity level, std::string propertyName)
     {
-        XmlPropertyManager::_onMissingPropertyExcept(level, propertyName);
+        if (level != debug::Logger::MAJOR)
+            _logMissingProperty(_type, propertyName, level);
+        else
+            throw debug::MissingPropertyException(_component->gameObject->getName() + " (" + _component->gameObject->getId() + ")", _component->getType(), propertyName, _type, level);
+    }
+
+    std::string XmlSerializableObject::getType() const
+    {
+        return _type;
+    }
+
+    void XmlSerializableObject::_logMissingProperty(std::string type,
+                                                    std::string name,
+                                                    debug::Logger::severity level)
+    {
+        _logger.log("[ConfigurationException] missing property '" + name + " for object '" + _type, level);
+    }
+
+    void
+    XmlSerializableObject::_logWrongValue(std::string type, std::string name,
+                                          debug::Logger::severity level)
+    {
+        _logger.log("[ConfigurationException] wrong value for property '" + name + " for object '" + _type, level);
+    }
+
+    void
+    XmlSerializableObject::_logMissingValue(std::string type, std::string name, debug::Logger::severity level)
+    {
+        _logger.log("[ConfigurationException] missing value for property '" + name + " for object '" + _type, level);
     }
 
 

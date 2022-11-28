@@ -13,13 +13,12 @@ namespace polymorph::engine::config
 {
     void config::XmlComponent::_logMissingProperty(std::string type, std::string name, debug::Logger::severity level)
     {
-        "missing value for property '" + property + (object.empty() ? "'" : "' for object '"+object+"'") + " for component '" + component + "' of entity '" + entity + "'."
-        _logger.log("[ConfigurationException] In component '" + type + "': Ref named '" + name + "': has no attribute for reference value", level);
+        _logger.log("[ConfigurationException] missing value for property '" + name + " for component '" + _type + "' of entity '" + _entity->getName() + "'.", level);
     }
 
     void config::XmlComponent::_logWrongValue(std::string type, std::string name, debug::Logger::severity level)
     {
-        _logger.log("[ConfigurationException] In component '" + type + "': Ref named '" + name + "': has wrong reference value", level);
+        _logger.log("[ConfigurationException] wrong value for property '" + name + " for component '" + _type + "' of entity '" + _entity->getName() + "'.", level);
     }
 
     void config::XmlComponent::_onWrongValueExcept(debug::Logger::severity level, std::string propertyName, std::string value)
@@ -48,5 +47,15 @@ namespace polymorph::engine::config
                                debug::Logger &logger) : XmlPropertyManager(componentNode, logger), _entity(entity)
     {
 
+    }
+
+    std::string XmlComponent::getType()
+    {
+        return _type;
+    }
+
+    bool XmlComponent::getEnabled()
+    {
+        return _enabled;
     }
 } // config

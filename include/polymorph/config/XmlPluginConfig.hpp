@@ -9,16 +9,16 @@
 #pragma once
 
 
+#include "XmlPropertyManager.hpp"
+
 namespace polymorph::engine::config
 {
-    class XmlPluginConfig
+    class XmlPluginConfig : public XmlPropertyManager
     {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
-            XmlPluginConfig();
-
-            ~XmlPluginConfig();
+            XmlPluginConfig(std::shared_ptr<myxmlpp::Doc> &doc, debug::Logger& logger);
 
 //////////////////////--------------------------/////////////////////////
 
@@ -29,6 +29,7 @@ namespace polymorph::engine::config
 
 
         private:
+            std::string _type;
 
 //////////////////////--------------------------/////////////////////////
 
@@ -36,6 +37,7 @@ namespace polymorph::engine::config
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
+            std::string getType();
 
 
         private:

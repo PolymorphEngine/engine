@@ -57,7 +57,10 @@ namespace polymorph::engine::config
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-        public:
+        public:            
+            std::string getType();
+            
+            bool getEnabled();
 
             template<typename T>
             void set(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)

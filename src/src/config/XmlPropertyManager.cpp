@@ -73,7 +73,7 @@ namespace polymorph::engine::config
     }
 
     XmlPropertyManager::XmlPropertyManager(
-            std::shared_ptr<myxmlpp::Node> &node,
+            std::shared_ptr<myxmlpp::Node> node,
             debug::Logger &logger) : _logger(logger), node(node)
     {
 

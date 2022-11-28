@@ -56,6 +56,9 @@ namespace polymorph::engine::config
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
+            
+            std::string getType() const;
+            
             template<typename T>
             void set(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
@@ -68,7 +71,20 @@ namespace polymorph::engine::config
             };
 
 
-        protected:
+        private:
+
+            void _logMissingProperty(std::string type, std::string name, debug::Logger::severity level);
+            
+            void _logMissingValue(std::string type, std::string name, debug::Logger::severity level);
+
+            /**
+             * @brief use the logger to log a meaningful message with given parameters when a property has a wrong value
+             * @param type The type of the object the property was part of
+             * @param name The searched property name
+             * @param level The logger severity level
+             */
+            void _logWrongValue(std::string type, std::string name, debug::Logger::severity level);
+            
             void _onWrongValueExcept(debug::Logger::severity level,
                                      std::string propertyName,
                                      std::string value) override;
@@ -78,8 +94,7 @@ namespace polymorph::engine::config
 
             void _onMissingPropertyExcept(debug::Logger::severity level,
                                           std::string propertyName) override;
-
-        private:
+            
             template<typename T, typename T2 = void>
             void _setSharedProperty(std::shared_ptr<myxmlpp::Node> &data,
                                     std::shared_ptr<T> &toSet,

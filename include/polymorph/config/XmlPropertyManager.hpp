@@ -37,7 +37,7 @@ namespace polymorph::engine::config
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
-            XmlPropertyManager(std::shared_ptr<myxmlpp::Node> &node, debug::Logger& logger);
+            XmlPropertyManager(std::shared_ptr<myxmlpp::Node> node, debug::Logger& logger);
 
 //////////////////////--------------------------/////////////////////////
 

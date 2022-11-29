@@ -5,14 +5,36 @@
 ** header for ASerializableObject.c
 */
 
-#include "ASerializableObject.hpp"
+#include "polymorph/api/scripting/ASerializableObject.hpp"
 
-namespace polymorph
+
+namespace polymorph::engine::api
 {
-    namespace engine
+    api::ASerializableObject::ASerializableObject(
+            safe_ptr <AComponent> component,
+            std::shared_ptr <myxmlpp::Node> node) 
+    : _logger(component->Debug), manager(component, node, component->Debug), _isFromConfig(false), _component(component)
     {
-        namespace api
-        {
-        } // polymorph
-    } // engine
+        _type = manager.getType();
+    }
+
+    api::ASerializableObject::ASerializableObject(
+            safe_ptr <APluginConfig> config,
+            std::shared_ptr <myxmlpp::Node> node) 
+    : _logger(config->getLogger()), manager(config, node, config->getLogger()), _isFromConfig(true), _config(config)
+    {
+        _type = manager.getType();
+    }
+
+
+    bool ASerializableObject::isFromConfig() const
+    {
+        return _isFromConfig;
+    }
+
+    std::string ASerializableObject::getType() const
+    {
+        return _type;
+    }
+
 } // api

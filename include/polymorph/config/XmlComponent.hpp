@@ -194,6 +194,14 @@ namespace polymorph::engine::config
             void _logMissingProperty(std::string type, std::string name, debug::Logger::severity level);
 
             /**
+             * @brief use the logger to log a meaningful message with given parameters when a property as missing value attribute
+             * @param type The type of the object the property was part of
+             * @param name The searched property name
+             * @param level The logger severity level
+             */
+            void _logMissingValue(std::string type, std::string name, debug::Logger::severity level);
+
+            /**
              * @brief use the logger to log a meaningful message with given parameters when a property has a wrong value
              * @param type The type of the object the property was part of
              * @param name The searched property name

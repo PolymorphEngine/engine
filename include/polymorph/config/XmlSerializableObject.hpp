@@ -25,7 +25,9 @@ namespace polymorph::engine {
     class Entity;
     class AComponent;
     using GameObject = safe_ptr<Entity>;
-
+    namespace api {
+        class APluginConfig;
+    }
 }
 
 
@@ -38,6 +40,7 @@ namespace polymorph::engine::config
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
             XmlSerializableObject(safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> &componentNode, debug::Logger& logger);
+            XmlSerializableObject(safe_ptr<api::APluginConfig> config, std::shared_ptr<myxmlpp::Node> &componentNode, debug::Logger& logger);
 
 //////////////////////--------------------------/////////////////////////
 
@@ -49,7 +52,9 @@ namespace polymorph::engine::config
 
         private:
             safe_ptr<AComponent> _component;
+            safe_ptr<api::APluginConfig> _config;
             std::string _type;
+            bool _isFromConfig = false;
 //////////////////////--------------------------/////////////////////////
 
 

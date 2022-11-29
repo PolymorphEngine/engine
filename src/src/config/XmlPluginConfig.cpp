@@ -15,7 +15,7 @@
 namespace polymorph::engine::config
 {
     config::XmlPluginConfig::XmlPluginConfig(
-            std::shared_ptr <myxmlpp::Doc> &doc, Engine &engine) : XmlPropertyManager(doc->getRoot(), engine.getLogger()) , _engine(engine)
+            std::shared_ptr <myxmlpp::Doc> &doc, Engine &engine) : XmlPropertyManager(doc->getRoot(), engine.getLogger()) , _engine(engine), _doc(doc)
     {
         try {
             _type = node->findAttribute("type")->getValue();
@@ -76,5 +76,10 @@ namespace polymorph::engine::config
                                          debug::Logger::severity level)
     {
         _logger.log("[ConfigurationException] Wrong property value '" + name + "' in config type '" + type + "'", level);
+    }
+
+    void XmlPluginConfig::saveConfig(std::string file)
+    {
+        _doc->writeF(file);
     }
 } // config

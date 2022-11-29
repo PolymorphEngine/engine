@@ -61,7 +61,7 @@ namespace polymorph::engine::config
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
-            
+
             std::string getType() const;
             
             template<typename T>
@@ -72,9 +72,47 @@ namespace polymorph::engine::config
                 if (property == nullptr)
                     _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
-                _setSharedProperty<T>(property, toSet, level);
+                _setSerializableProperty<T>(property, toSet, level);
             };
 
+            template<typename T>
+            void set(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                if (_isFromConfig)
+                {
+                    _logger.log("Cannot set a Reference to object in a plugin config", debug::Logger::MAJOR);
+                    return;
+                }
+                
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
+
+                if (property == nullptr)
+                    _onMissingPropertyExcept(level, propertyName);
+                _setRefProperty<T>(property, toSet, level);
+            };
+
+            template<typename T>
+            void save(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                if (_isFromConfig)
+                {
+                    _logger.log("Cannot save a Reference to object in a plugin config", debug::Logger::MAJOR);
+                    return;
+                }
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
+
+                if (property == nullptr)
+                    _onMissingPropertyExcept(level, propertyName);
+                static_assert(!CastHelper::is_map<T>);
+                _saveRefProperty<T>(property, toSet, level);
+            };
+            
+            template<typename T>
+            void save(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                static_assert(!CastHelper::is_map<T>);
+                toSet->saveAll();
+            };
 
         private:
 
@@ -101,7 +139,7 @@ namespace polymorph::engine::config
                                           std::string propertyName) override;
             
             template<typename T, typename T2 = void>
-            void _setSharedProperty(std::shared_ptr<myxmlpp::Node> &data,
+            void _setSerializableProperty(std::shared_ptr<myxmlpp::Node> &data,
                                     std::shared_ptr<T> &toSet,
                                     debug::Logger::severity level = debug::Logger::DEBUG)
             {
@@ -125,7 +163,7 @@ namespace polymorph::engine::config
                 }
             };
 
-            
+
             template<typename T>
             void _setSubProperty(const std::string &propertyName,
                                  const std::shared_ptr<myxmlpp::Node> &data,
@@ -138,7 +176,87 @@ namespace polymorph::engine::config
 
                 if (property == nullptr)
                     return;
-                _setSharedProperty<T>(property, toSet, level);
+                _setSerializableProperty<T>(property, toSet, level);
+            };
+
+
+
+            template<typename T>
+            void _saveSubProperty(const std::string &propertyName,
+                                  const std::shared_ptr<myxmlpp::Node> &data,
+                                  std::shared_ptr<T> &toSet,
+                                  debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
+                                                          ? _findProperty(propertyName, data)
+                                                          : data;
+
+                if (property == nullptr)
+                    _onMissingPropertyExcept(level, propertyName);
+                toSet->saveAll();
+            };
+
+            template<typename T, typename T2 = void>
+            void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
+                                 safe_ptr<T> &toSet,
+                                 debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::string id;
+                std::string name = refProp->findAttribute("name")->getValue();
+                GameObject gameObject;
+
+                if (!_setPropertyFromAttr(id, refProp, level))
+                    return;
+                if (_component && (_component->gameObject->getPrefabId() == id || _component->gameObject->getId() == id))
+                    gameObject = _component->gameObject;
+                if (!gameObject && _component->gameObject)
+                    gameObject = _component->gameObject->findByPrefabId(id);
+                if (!gameObject)
+                    gameObject = _component->gameObject->Scene.findById(id);
+                if (gameObject)
+                    toSet = gameObject->getComponent<T>();
+                if (!toSet)
+                    _onWrongValueExcept(level, name, id);
+            };
+
+            template<typename T2 = void>
+            void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
+                                 GameObject &toSet, debug::Logger::severity level)
+            {
+                std::string id;
+                std::string name = refProp->findAttribute("name")->getValue();
+
+                if (!_setPropertyFromAttr(id, refProp, level))
+                    return;
+                if (_component && (_component->gameObject->getPrefabId() == id || _component->gameObject->getId() == id))
+                    toSet = _component->gameObject;
+                if (!toSet && _component->gameObject)
+                    toSet = _component->gameObject->findByPrefabId(id);
+                if (!toSet)
+                    toSet = _component->Scene.findById(id);
+                if (!toSet)
+                    _onWrongValueExcept(level, name, id);
+            };
+
+            template<typename T, typename T2 = void>
+            void _saveRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
+                                  safe_ptr<T> &toSet,
+                                  debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::string id = (toSet) ? toSet->gameObject->getId() : "";
+
+                if (!_savePropertyFromAttr(id, refProp, level))
+                    return;
+            };
+
+            template<typename T2 = void>
+            void _saveRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
+                                  GameObject &toSet, debug::Logger::severity level)
+            {
+                std::string id = (toSet) ? toSet->getId() : "";
+
+                if (!_savePropertyFromAttr(id, refProp, level))
+                    return;
             };
 //////////////////////--------------------------/////////////////////////
 

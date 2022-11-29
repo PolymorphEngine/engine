@@ -98,4 +98,9 @@ namespace polymorph::engine::config
     {
         return _components;
     }
+
+    void XmlEntity::saveConfig(std::string filePath)
+    {
+        _entity->writeF(filePath);
+    }
 } // config

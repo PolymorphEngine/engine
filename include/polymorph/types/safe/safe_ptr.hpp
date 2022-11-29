@@ -79,11 +79,6 @@ namespace polymorph::engine
             {
                 return !this->expired();
             }
-        }
-
-
-        private:
-
 //////////////////////--------------------------/////////////////////////
 
     };

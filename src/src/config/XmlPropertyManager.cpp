@@ -104,5 +104,58 @@ namespace polymorph::engine::config
         return nullptr;
     }
 
+    bool XmlPropertyManager::_savePropertyFromAttr(int &toSet,
+                                                   std::shared_ptr<myxmlpp::Node> data,
+                                                   debug::Logger::severity level)
+    {
+        try {
+            data->findAttribute("value")->setValueInt(toSet);
+            return true;
+        } catch (myxmlpp::AttributeNotFoundException &e) {
+            _onMissingValueExcept(level, data->findAttribute("name")->getValue());
+        }
+        return false;
+    }
+
+    bool XmlPropertyManager::_savePropertyFromAttr(float &toSet,
+                                                   std::shared_ptr<myxmlpp::Node> data,
+                                                   debug::Logger::severity level)
+    {
+
+        try {
+            data->findAttribute("value")->setValueFloat(toSet);
+            return true;
+        } catch (myxmlpp::AttributeNotFoundException &e) {
+            _onMissingValueExcept(level, data->findAttribute("name")->getValue());
+        }
+        return false;
+    }
+
+    bool XmlPropertyManager::_savePropertyFromAttr(bool &toSet,
+                                                   std::shared_ptr<myxmlpp::Node> data,
+                                                   debug::Logger::severity level)
+    {
+        try {
+            data->findAttribute("value")->setValueBool(toSet);
+            return true;
+        } catch (myxmlpp::AttributeNotFoundException &e) {
+            _onMissingValueExcept(level, data->findAttribute("name")->getValue());
+        }
+        return false;
+    }
+
+    bool XmlPropertyManager::_savePropertyFromAttr(std::string &toSet,
+                                                   std::shared_ptr<myxmlpp::Node> data,
+                                                   debug::Logger::severity level)
+    {
+        try {
+            data->findAttribute("value")->setValue(toSet);
+            return true;
+        } catch (myxmlpp::AttributeNotFoundException &e) {
+            _onMissingValueExcept(level, data->findAttribute("name")->getValue());
+        }
+        return false;
+    }
+
 
 } // config

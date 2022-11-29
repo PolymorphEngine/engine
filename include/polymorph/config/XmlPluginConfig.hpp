@@ -30,6 +30,9 @@ namespace polymorph::engine::config
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
         public:
+            
+            void saveConfig(std::string filePath = "");
+            
             template<typename T>
             void set(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
@@ -38,11 +41,19 @@ namespace polymorph::engine::config
                 if (property == nullptr)
                     _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
-                _setSharedProperty<T>(property, toSet, level);
+                _setSerializableProperty<T>(property, toSet, level);
             };
             
+            template<typename T>
+            void save(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                static_assert(!CastHelper::is_map<T>);
+                toSet->saveAll();
+            };
+
         private:
             std::string _type;
+            std::shared_ptr<myxmlpp::Doc> _doc;
             Engine &_engine;
 
 //////////////////////--------------------------/////////////////////////
@@ -78,7 +89,7 @@ namespace polymorph::engine::config
             void _logWrongValue(std::string type, std::string name, debug::Logger::severity level);
             
             template<typename T, typename T2 = void>
-            void _setSharedProperty(std::shared_ptr<myxmlpp::Node> &data,
+            void _setSerializableProperty(std::shared_ptr<myxmlpp::Node> &data,
                                     std::shared_ptr<T> &toSet,
                                     debug::Logger::severity level = debug::Logger::DEBUG)
             {
@@ -101,7 +112,7 @@ namespace polymorph::engine::config
                     }
                 }
             };
-
+            
 
             template<typename T>
             void _setSubProperty(const std::string &propertyName,
@@ -114,8 +125,24 @@ namespace polymorph::engine::config
                                                           : data;
 
                 if (property == nullptr)
-                    return;
-                _setSharedProperty<T>(property, toSet, level);
+                    _onMissingPropertyExcept(level, propertyName);
+                _setSerializableProperty<T>(property, toSet, level);
+            };
+            
+            
+            template<typename T>
+            void _saveSubProperty(const std::string &propertyName,
+                                 const std::shared_ptr<myxmlpp::Node> &data,
+                                 std::shared_ptr<T> &toSet,
+                                 debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
+                                                          ? _findProperty(propertyName, data)
+                                                          : data;
+
+                if (property == nullptr)
+                    _onMissingPropertyExcept(level, propertyName);
+                toSet->saveAll();
             };
 //////////////////////--------------------------/////////////////////////
 

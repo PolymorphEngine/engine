@@ -56,6 +56,8 @@ namespace polymorph::engine::config
 /////////////////////////////// METHODS /////////////////////////////////
         public:
             std::string getName() const;
+            
+            void saveConfig(std::string filePath);
 
             bool isActive() const;
 

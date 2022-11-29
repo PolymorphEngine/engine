@@ -70,7 +70,7 @@ namespace polymorph::engine::config
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
                 if (property == nullptr)
-                    return;
+                    _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
                 _setSharedProperty<T>(property, toSet, level);
             };

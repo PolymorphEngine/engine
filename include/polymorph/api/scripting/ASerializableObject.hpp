@@ -11,6 +11,7 @@
 
 #include "polymorph/debug/Logger.hpp"
 #include "polymorph/config/XmlSerializableObject.hpp"
+#include "polymorph/api/plugin/PluginManager.hpp"
 
 namespace polymorph::engine::api
 {
@@ -22,6 +23,7 @@ namespace polymorph::engine::api
         public:
             ASerializableObject(safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> node);
             ASerializableObject(safe_ptr<APluginConfig> config, std::shared_ptr<myxmlpp::Node> node);
+            explicit ASerializableObject(PluginManager &pluginManager);
 
             virtual ~ASerializableObject() = default;
 
@@ -36,6 +38,7 @@ namespace polymorph::engine::api
 
         protected:
             debug::Logger &_logger;
+            PluginManager &_plugin;
 
         private:
             safe_ptr<AComponent> _component;

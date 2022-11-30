@@ -10,7 +10,6 @@
 
 #include "polymorph/types/safe/safe_ptr.hpp"
 #include "myxmlpp/Node.hpp"
-#include "polymorph/config/XmlComponent.hpp"
 
 namespace polymorph::engine
 {
@@ -32,6 +31,10 @@ namespace polymorph::engine
         class SceneManager;
         class AssetManager;
         class ScriptingApi;
+    }
+    
+    namespace config {
+        class XmlComponent;
     }
 
     namespace debug { class Logger; }
@@ -279,6 +282,62 @@ namespace polymorph::engine
             template<typename T>
             bool deleteComponent();
 
+            /**
+             * @brief Saves a property in the Xml data by its name
+             * @param name The name of the property
+             * @tparam T The type of the property
+             * @param value The value of the property
+             */
+
+            template<typename T>
+            void saveProperty(std::string propertyName, T &toSave);
+
+
+            /**
+             * @brief Saves a property in the Xml data by its name
+             * @param name The name of the property
+             * @tparam T The type of the property
+             * @param value The value of the property
+             */
+            template<typename T>
+            void saveProperty(std::string propertyName, std::shared_ptr<T> &toSave);
+
+            /**
+             * @brief Saves a property in the Xml data by its name
+             * @param name The name of the property
+             * @tparam T The type of the property
+             * @param value The value of the property
+             */
+            template<typename T>
+            void saveProperty(std::string propertyName, safe_ptr<T> &toSave);
+            
+        protected:
+            /**
+             * @brief Sets a property from the Xml data by its name
+             * @param name The name of the property
+             * @tparam T The type of the property
+             * @param value The property to set
+             */
+            template<typename T>
+            void _setProperty(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG);
+
+            /**
+             * @brief Sets a property from the Xml data by its name
+             * @param name The name of the property
+             * @tparam T The type of the property
+             * @param value The property to set
+             */
+            template<typename T>
+            void _setProperty(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG);
+
+            /**
+             * @brief Sets a property from the Xml data by its name
+             * @param name The name of the property
+             * @tparam T The type of the property
+             * @param value The property to set
+             */
+            template<typename T>
+            void _setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG);
 
 //////////////////////--------------------------/////////////////////////
 

@@ -32,7 +32,7 @@ namespace polymorph::engine::api
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
         public:
-            std::unique_ptr<config::XmlSerializableObject> manager;
+            std::shared_ptr<config::XmlSerializableObject> manager;
 
 
         protected:

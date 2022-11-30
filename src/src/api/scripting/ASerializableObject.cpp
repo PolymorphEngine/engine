@@ -15,8 +15,8 @@ namespace polymorph::engine::api
             std::shared_ptr <myxmlpp::Node> node) 
     : _isFromConfig(false), _component(component)
     {
-        manager = std::make_unique<config::XmlSerializableObject>(component, node, component->Debug);
-        _type = manager.getType();
+        manager = std::make_shared<config::XmlSerializableObject>(component, node, component->Debug);
+        _type = manager->getType();
     }
 
     api::ASerializableObject::ASerializableObject(
@@ -24,8 +24,8 @@ namespace polymorph::engine::api
             std::shared_ptr <myxmlpp::Node> node) 
     : _isFromConfig(true), _config(config)
     {
-        manager = std::make_unique<config::XmlSerializableObject>(config, node, config->Debug);
-        _type = manager.getType();
+        manager = std::make_shared<config::XmlSerializableObject>(config, node, config->Debug);
+        _type = manager->getType();
     }
 
 

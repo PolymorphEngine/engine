@@ -15,11 +15,14 @@
 #include "myxmlpp/myxmlpp.hpp"
 
 #include "polymorph/debug/Logger.hpp"
-#include "polymorph/debug/exception/config/MissingValueException.hpp"
-#include "polymorph/debug/exception/config/WrongValueException.hpp"
-#include "polymorph/config/CastHelper.hpp"
+
 #include "polymorph/config/XmlPropertyManager.hpp"
+
 #include "polymorph/types/safe/safe_ptr.hpp"
+
+#include "polymorph/core/component/AComponent.hpp"
+
+
 
 namespace polymorph::engine {
     class Entity;

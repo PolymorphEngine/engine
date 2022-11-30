@@ -106,6 +106,16 @@ namespace polymorph::engine
              * @property Is the entity previously awoken
              */
             bool _isAwoken = false;
+            
+            /**
+             * @property As the entity been enabled after last update
+             */
+            bool _asBeenEnabled = false;
+
+            /**
+             * @property As the entity been disabled after last update
+             */
+            bool _asBeenDisabled = false;
 
             /**
              * @property Is the entity transform initialized
@@ -214,17 +224,73 @@ namespace polymorph::engine
             void deleteTag(const std::string &tag);
 
             /**
+             * @details Awakes the entity by calling onAwake() of the components
+             */
+            void awake(bool rescurse = false);
+
+            /**
+             * @details start the game object by starting the components
+             */
+            void start();
+
+            /**
+             * @details start the game object by starting the components
+             */
+            void startChildren();
+
+            /**
+             * @details builds all components
+             */
+            void build();
+
+            /**
+             * @details builds all components
+             */
+            void buildChildren();
+
+            /**
              * @details Updates the game object by updating in the component execution order
              *          all components.
              */
             void update();
+
+            /**
+             * @details Updates the game object by updating in the component execution order
+             *          all components.
+             */
+            void updateChildren();
             
             
             /**
              * @details Updates the game object by updating in the component execution order
              *          all components (after all updates).
              */
-            void lateUpdate();
+            void lateUpdate();            
+
+            /**
+             * @details Updates the game object by updating in the component execution order
+             *          all components (after all updates).
+             */
+            void lateUpdateChildren();
+
+            /**
+             * @details Calls every onEnable() method of the components when the entity is enabled
+             */
+            void onEnable();
+            /**
+             * @details Calls every onEnable() method of the components when the entity is enabled
+             */
+            void onEnableChildren();
+
+            /**
+             * @details Calls every onDisable() method of the components when the entity is disabled
+             */
+            void onDisable();
+
+            /**
+             * @details Calls every onDisable() method of the components when the entity is disabled
+             */
+            void onDisableChildren();
             
             /**
              * @details Event called on all components when a new scene is loaded
@@ -232,16 +298,30 @@ namespace polymorph::engine
             void onSceneLoading(std::shared_ptr<engine::Scene> scene);
             
             /**
+             * @details Event called on all components when a new scene is loaded
+             */
+            void onSceneLoadingChildren(std::shared_ptr<engine::Scene> scene);
+            
+            /**
              * @details Event called on all components when a scene is unloaded
              */
             void onSceneUnloading(std::shared_ptr<engine::Scene> scene);
-            
-            
 
             /**
-             * @details start the game object by starting the components
+             * @details Event called on all components when a scene is unloaded
              */
-            void start();
+            void onSceneUnloadingChildren(std::shared_ptr<engine::Scene> scene);
+
+
+
+
+            /**
+             * @details Saves the entity to a file
+             * @param saveAllComponentsFirst: whether or not to save all components first
+             * @param filePath: the path to the file (if empty, the entity will be saved in the same file it was loaded from)
+             */
+            void save(bool saveAllComponentsFirst = false, std::string filePath = "");
+            
 
             /**
              * @details Get a child entity by its name
@@ -264,10 +344,7 @@ namespace polymorph::engine
              */
             GameObject childAt(std::size_t idx);
 
-            /**
-             * @details Awakes the entity by calling onAwake() of the components
-             */
-            void awake(bool rescurse = false);
+
 
             /**
              * @brief Add a component to the entity

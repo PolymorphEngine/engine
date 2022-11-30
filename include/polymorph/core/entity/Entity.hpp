@@ -48,8 +48,7 @@ namespace polymorph::engine
 
         public:
             Entity(config::XmlEntity &data, Engine &game);
-
-            ~Entity();
+            Entity(std::string filePath, Engine &game);
 
 
 //////////////////////--------------------------/////////////////////////
@@ -219,6 +218,25 @@ namespace polymorph::engine
              *          all components.
              */
             void update();
+            
+            
+            /**
+             * @details Updates the game object by updating in the component execution order
+             *          all components (after all updates).
+             */
+            void lateUpdate();
+            
+            /**
+             * @details Event called on all components when a new scene is loaded
+             */
+            void onSceneLoading(std::shared_ptr<engine::Scene> scene);
+            
+            /**
+             * @details Event called on all components when a scene is unloaded
+             */
+            void onSceneUnloading(std::shared_ptr<engine::Scene> scene);
+            
+            
 
             /**
              * @details start the game object by starting the components
@@ -272,6 +290,13 @@ namespace polymorph::engine
              */
             template<typename T>
             safe_ptr<T> getComponent();
+
+            /**
+             * @details Looks for a component by type
+             * @param type: The type of the component to look for.
+             * @returns A safe pointer to the component
+             */
+            safe_ptr<AComponent> getComponent(const std::string &type);
 
             /**
              * @details Looks for all components of type T

@@ -14,7 +14,10 @@ polymorph::engine::AComponent::AComponent(std::shared_ptr<myxmlpp::Node> data, p
           Scene(gameObject->Scene), Asset(gameObject->Asset), Factory(gameObject->Factory),
           Debug(gameObject->Debug), time(gameObject->time), Game(gameObject->Game)
 {
+    _xmlConfig = std::make_shared<config::XmlComponent>(gameObject, data, Debug);
     
+    _type = _xmlConfig->getType();
+    enabled = _xmlConfig->getEnabled();
 }
 
 void polymorph::engine::AComponent::update() {}
@@ -46,6 +49,23 @@ bool polymorph::engine::AComponent::isStarted() const noexcept
 std::string polymorph::engine::AComponent::getType() const noexcept
 {
     return _type;
+}
+
+void polymorph::engine::AComponent::lateUpdate()
+{
+
+}
+
+void polymorph::engine::AComponent::onSceneLoaded(
+        std::shared_ptr<engine::Scene> scene)
+{
+
+}
+
+void polymorph::engine::AComponent::onSceneUnloaded(
+        std::shared_ptr<engine::Scene> scene)
+{
+
 }
 
 

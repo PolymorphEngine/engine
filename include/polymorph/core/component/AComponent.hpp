@@ -23,6 +23,8 @@ namespace polymorph::engine
     using GameObject = safe_ptr<Entity>;
 
     class Engine;
+    
+    class Scene;
 
     namespace api
     {
@@ -125,7 +127,7 @@ namespace polymorph::engine
             std::shared_ptr<myxmlpp::Node> _data;
             
             /**
-             * 
+             * @property _xmlConfig the config of the component
              */
              std::shared_ptr<config::XmlComponent> _xmlConfig;
 
@@ -145,6 +147,19 @@ namespace polymorph::engine
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
+            
+            /**
+             * @brief Called before all components are awoken
+             * @details This method has to be implemented to initialize the component properties
+             */
+            virtual void build() = 0;
+            
+            /**
+             * @brief Called when the entity is saved
+             * @details This method has to be implemented to save the component properties
+             */
+            virtual void saveAll() = 0;
+
             /**
              * @details An overridable method that's called once per frame in the game loop.
              */
@@ -158,12 +173,12 @@ namespace polymorph::engine
             /**
              * @details An overridable method that's called when a scene is loaded.
              */
-            virtual void onSceneLoaded(std::shared_ptr<Scene> scene);
+            virtual void onSceneLoaded(std::shared_ptr<engine::Scene> scene);
 
             /**
              * @details An overridable method that's called when a scene is loaded.
              */
-            virtual void onSceneUnloaded(std::shared_ptr<Scene> scene);
+            virtual void onSceneUnloaded(std::shared_ptr<engine::Scene> scene);
 
             /**
              * @details An overridable method that's called once in the lifetime of the component.

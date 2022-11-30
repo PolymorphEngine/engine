@@ -76,6 +76,8 @@ namespace polymorph::engine::api
              */
             virtual void saveAll() = 0;
             
+            std::string getType() const;
+            
             /**
              * @brief Save the config to a file
              * @param saveAllProperties if true, will call saveAll() before saving

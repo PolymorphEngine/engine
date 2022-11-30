@@ -224,7 +224,13 @@ namespace polymorph::engine::api
                         return safe_ptr<T>(std::dynamic_pointer_cast<T>(*config));
                 }
                 return safe_ptr<T>();
-            }
+            }            
+            
+            /**
+             * @brief Gets a config by its type
+             * @param type the string type of the config
+             */
+            safe_ptr<APluginConfig> getConfig(const std::string &type);
             
             /**
              * @brief Builds the plugin by initializing its factories, its configs and all other Xml related data

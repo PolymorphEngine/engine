@@ -255,4 +255,15 @@ namespace polymorph::engine::api
         auto loader = _pluginsLoaders.back().loadSymbol<Symbols::createPluginDEF>(Symbols::createPlugin);
         return std::shared_ptr<APlugin>(loader(*node, game, pluginPath));
     }
+
+    safe_ptr<APluginConfig> PluginManager::getConfig(const std::string &type)
+    {
+        for (auto &plugin: _plugins)
+        {
+            auto retrieved = plugin->getConfig(type);
+            if (retrieved)
+                return retrieved;
+        }
+        return safe_ptr<APluginConfig>(nullptr);
+    }
 } // api

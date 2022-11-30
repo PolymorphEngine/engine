@@ -132,4 +132,13 @@ namespace polymorph::engine::api
     {
         createConfig(_configs);
     }
+
+    safe_ptr<APluginConfig> APlugin::getConfig(const std::string &type)
+    {
+        for (auto &config : _configs) {
+            if (config->getType() == type)
+                return safe_ptr<APluginConfig>(config);
+        }
+        return safe_ptr<APluginConfig>(nullptr);
+    }
 } // api

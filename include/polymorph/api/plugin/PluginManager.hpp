@@ -134,6 +134,28 @@ namespace polymorph::engine::api
             GameObject getPrefab(const std::string &id);
             
             /**
+             * @brief Gets a plugin conf by its type
+             * @param type The string type of the config
+             */
+            safe_ptr<APluginConfig> getConfig(const std::string &type);
+            
+            /**
+             * @brief Gets a plugin conf by its type
+             * @tparam T The type of the config
+             */
+            template<class T>
+            safe_ptr<T> getConfig()
+            {
+                for (auto &plugin: _plugins)
+                {
+                    auto retrieved = plugin->getConfig<T>();
+                    if (retrieved)
+                        return retrieved;
+                }
+                return safe_ptr<T>(nullptr);
+            }
+            
+            /**
              * @brief Starts all plugins
              */
             void startingScripts();

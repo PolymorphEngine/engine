@@ -10,4 +10,12 @@
 namespace polymorph::engine::api
 {
 
+
+
+    void ASerializableObjectFactory::buildFactory()
+    {
+        registerEmptyBuildables(_emptyBuildables);
+        registerCObjectBuildables(_componentBuildables);
+        registerPObjectBuildables(_configBuildables);
+    }
 } // api

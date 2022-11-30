@@ -147,17 +147,17 @@ namespace polymorph::engine::api
             /**
              * @brief Method to override that has to register all new Empty serializable object
              */
-            virtual void registerEmptyBuildables(std::unordered_map<std::string, EmptyFactoryLambda> &emptyBuildables) = 0;
+            virtual void _registerEmptyBuildables(std::unordered_map<std::string, EmptyFactoryLambda> &emptyBuildables) = 0;
 
             /**
              * @brief Method to override that has to register all new Component serializable object
              */
-            virtual void registerCObjectBuildables(std::unordered_map<std::string, CObjectFactoryLambda> &componentBuildables) = 0;
+            virtual void _registerCObjectBuildables(std::unordered_map<std::string, CObjectFactoryLambda> &componentBuildables) = 0;
 
             /**
              * @brief Method to override that has to register all new Plugin Config serializable object
              */
-            virtual void registerPObjectBuildables(std::unordered_map<std::string, PObjectFactoryLambda> &configBuildables) = 0;
+            virtual void _registerPObjectBuildables(std::unordered_map<std::string, PObjectFactoryLambda> &configBuildables) = 0;
 
 //////////////////////--------------------------/////////////////////////
 

@@ -144,7 +144,7 @@ namespace polymorph::engine::api
             }
 
         protected:
-            void closeHandle();
+            void _closeHandle();
 
 
 //////////////////////--------------------------/////////////////////////

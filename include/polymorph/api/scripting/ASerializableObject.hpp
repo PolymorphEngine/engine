@@ -145,7 +145,7 @@ namespace polymorph::engine::api
              * @param value The property to set
              */
             template<typename T>
-            void setProperty(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            void _setProperty(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 manager.set(propertyName, toSet, level);
             }
@@ -157,7 +157,7 @@ namespace polymorph::engine::api
              * @param value The property to set
              */
             template<typename T>
-            void setProperty(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            void _setProperty(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 manager.set(propertyName, toSet, level);
             }
@@ -169,7 +169,7 @@ namespace polymorph::engine::api
              * @param value The property to set
              */
             template<typename T>
-            void setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            void _setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 manager.XmlPropertyManager::set(propertyName, toSet, level);
             }

@@ -9,5 +9,9 @@
 
 namespace polymorph::engine::api
 {
-    
+
+    void AScriptFactory::buildFactory()
+    {
+        _registerBuildables(_buildables);
+    }
 } // api

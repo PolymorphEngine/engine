@@ -61,8 +61,8 @@ namespace polymorph::engine::api
             template<typename T>
             static inline EmptyFactoryLambda makeEmpty()
             {
-                return [](PluginManager &pluginManager) -> std::shared_ptr<T> {
-                    return std::make_shared<T>(pluginManager);
+                return [](PluginManager &pluginManager) -> std::shared_ptr<ASerializableObject> {
+                    return std::dynamic_pointer_cast<ASerializableObject>(std::make_shared<T>(pluginManager));
                 };
             }
             
@@ -74,8 +74,8 @@ namespace polymorph::engine::api
             template<typename T>
             static inline CObjectFactoryLambda makeCObject()
             {
-                return [](safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> node) -> std::shared_ptr<T> {
-                    return std::make_shared<T>(component, node);
+                return [](safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> node) -> std::shared_ptr<ASerializableObject> {
+                    return std::dynamic_pointer_cast<ASerializableObject>(std::make_shared<T>(component, node));
                 };
             }
 
@@ -87,8 +87,8 @@ namespace polymorph::engine::api
             template<typename T>
             static inline PObjectFactoryLambda makePObject()
             {
-                return [](safe_ptr<APluginConfig> config, std::shared_ptr<myxmlpp::Node> node) -> std::shared_ptr<T> {
-                    return std::make_shared<T>(config, node);
+                return [](safe_ptr<APluginConfig> config, std::shared_ptr<myxmlpp::Node> node) -> std::shared_ptr<ASerializableObject> {
+                    return std::dynamic_pointer_cast<ASerializableObject>(std::make_shared<T>(config, node));
                 };
             }
             

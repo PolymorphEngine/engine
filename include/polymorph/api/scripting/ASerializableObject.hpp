@@ -11,7 +11,6 @@
 
 #include "polymorph/debug/Logger.hpp"
 #include "polymorph/config/XmlSerializableObject.hpp"
-#include "polymorph/api/plugin/PluginManager.hpp"
 
 namespace polymorph::engine::api
 {
@@ -23,7 +22,7 @@ namespace polymorph::engine::api
         public:
             ASerializableObject(safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> node);
             ASerializableObject(safe_ptr<APluginConfig> config, std::shared_ptr<myxmlpp::Node> node);
-            explicit ASerializableObject(PluginManager &pluginManager);
+            ASerializableObject() = default;
 
             virtual ~ASerializableObject() = default;
 
@@ -33,12 +32,11 @@ namespace polymorph::engine::api
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
         public:
-            config::XmlSerializableObject manager;
+            std::unique_ptr<config::XmlSerializableObject> manager;
 
 
         protected:
-            debug::Logger &_logger;
-            PluginManager &_plugin;
+
 
         private:
             safe_ptr<AComponent> _component;
@@ -110,7 +108,7 @@ namespace polymorph::engine::api
             template<typename T>
             void saveProperty(std::string propertyName, T &toSave)
             {
-                manager.XmlPropertyManager::save(propertyName, toSave);
+                manager->XmlPropertyManager::save(propertyName, toSave);
             }
 
             /**
@@ -122,7 +120,7 @@ namespace polymorph::engine::api
             template<typename T>
             void saveProperty(std::string propertyName, std::shared_ptr<T> &toSave)
             {
-                manager.save(propertyName, toSave);
+                manager->save(propertyName, toSave);
             }
 
             /**
@@ -134,7 +132,7 @@ namespace polymorph::engine::api
             template<typename T>
             void saveProperty(std::string propertyName, safe_ptr<T> &toSave)
             {
-                manager.save(propertyName, toSave);
+                manager->save(propertyName, toSave);
             }
 
         protected:
@@ -147,7 +145,7 @@ namespace polymorph::engine::api
             template<typename T>
             void _setProperty(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                manager.set(propertyName, toSet, level);
+                manager->set(propertyName, toSet, level);
             }
 
             /**
@@ -159,7 +157,7 @@ namespace polymorph::engine::api
             template<typename T>
             void _setProperty(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                manager.set(propertyName, toSet, level);
+                manager->set(propertyName, toSet, level);
             }
 
             /**
@@ -171,7 +169,7 @@ namespace polymorph::engine::api
             template<typename T>
             void _setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                manager.XmlPropertyManager::set(propertyName, toSet, level);
+                manager->XmlPropertyManager::set(propertyName, toSet, level);
             }
 
 //////////////////////--------------------------/////////////////////////

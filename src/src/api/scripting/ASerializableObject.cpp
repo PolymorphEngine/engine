@@ -13,16 +13,18 @@ namespace polymorph::engine::api
     api::ASerializableObject::ASerializableObject(
             safe_ptr <AComponent> component,
             std::shared_ptr <myxmlpp::Node> node) 
-    : _logger(component->Debug), manager(component, node, component->Debug), _isFromConfig(false), _component(component), _plugin(component->Plugin)
+    : _isFromConfig(false), _component(component)
     {
+        manager = std::make_unique<config::XmlSerializableObject>(component, node, component->Debug);
         _type = manager.getType();
     }
 
     api::ASerializableObject::ASerializableObject(
             safe_ptr <APluginConfig> config,
             std::shared_ptr <myxmlpp::Node> node) 
-    : _logger(config->getLogger()), manager(config, node, config->getLogger()), _isFromConfig(true), _config(config), _plugin(config->getPluginManager())
+    : _isFromConfig(true), _config(config)
     {
+        manager = std::make_unique<config::XmlSerializableObject>(config, node, config->Debug);
         _type = manager.getType();
     }
 
@@ -35,11 +37,6 @@ namespace polymorph::engine::api
     std::string ASerializableObject::getType() const
     {
         return _type;
-    }
-
-    ASerializableObject::ASerializableObject(PluginManager &pluginManager) : _plugin(pluginManager)
-    {
-        
     }
 
 } // api

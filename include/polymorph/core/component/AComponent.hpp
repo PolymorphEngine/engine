@@ -9,6 +9,8 @@
 #pragma once
 
 #include "polymorph/types/safe/safe_ptr.hpp"
+#include "myxmlpp/Node.hpp"
+#include "polymorph/config/XmlComponent.hpp"
 
 namespace polymorph::engine
 {
@@ -42,10 +44,10 @@ namespace polymorph::engine
         public:
             /**
              * @brief Created a new component from a game object
-             * @param type the type of the component
+             * @param data the type of the component
              * @param game_object the game oejct that the component will be attached to
              */
-            AComponent(const std::string &type, GameObject gameObject);
+            AComponent(std::shared_ptr<myxmlpp::Node> data, GameObject gameObject);
 
             virtual ~AComponent() = default;
 
@@ -79,7 +81,7 @@ namespace polymorph::engine
             /**
              * @property Scene Manager to access to all scene operations
              */
-            api::SceneManager &Scene;
+            static api::SceneManager &Scene;
 
             /**
              * @property Asset Manager to search for asset path by their filename
@@ -116,6 +118,16 @@ namespace polymorph::engine
              * @property _type type of the component
              */
             std::string _type;
+            
+            /**
+             * @property _data the data of the component
+             */
+            std::shared_ptr<myxmlpp::Node> _data;
+            
+            /**
+             * 
+             */
+             std::shared_ptr<config::XmlComponent> _xmlConfig;
 
             /**
              * @property awaked know if the component needs to be updated or not
@@ -137,6 +149,21 @@ namespace polymorph::engine
              * @details An overridable method that's called once per frame in the game loop.
              */
             virtual void update();
+            
+            /**
+             * @details An overridable method that's called once per frame in the game loop (after all updates).
+             */
+            virtual void lateUpdate();
+
+            /**
+             * @details An overridable method that's called when a scene is loaded.
+             */
+            virtual void onSceneLoaded(std::shared_ptr<Scene> scene);
+
+            /**
+             * @details An overridable method that's called when a scene is loaded.
+             */
+            virtual void onSceneUnloaded(std::shared_ptr<Scene> scene);
 
             /**
              * @details An overridable method that's called once in the lifetime of the component.

@@ -9,12 +9,12 @@
 #include "polymorph/core/component/AComponent.hpp"
 #include "polymorph/core/entity/Entity.hpp"
 
-polymorph::engine::AComponent::AComponent(const std::string &type, polymorph::engine::GameObject gameObject)
-        : _type(type), gameObject(gameObject), Plugin(gameObject->Plugin),
+polymorph::engine::AComponent::AComponent(std::shared_ptr<myxmlpp::Node> data, polymorph::engine::GameObject gameObject)
+        : gameObject(gameObject), Plugin(gameObject->Plugin),
           Scene(gameObject->Scene), Asset(gameObject->Asset), Factory(gameObject->Factory),
           Debug(gameObject->Debug), time(gameObject->time), Game(gameObject->Game)
 {
-
+    
 }
 
 void polymorph::engine::AComponent::update() {}

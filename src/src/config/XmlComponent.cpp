@@ -8,8 +8,10 @@
 #include "polymorph/debug/Logger.hpp"
 #include "polymorph/config/XmlPropertyManager.hpp"
 #include "polymorph/config/XmlComponent.hpp"
+#include "polymorph/config/XmlEntity.hpp"
 #include "polymorph/debug/exception/config/MissingComponentTypeException.hpp"
 #include "polymorph/debug/exception/config/MissingPropertyException.hpp"
+#include "polymorph/debug/exception/config/WrongValueException.hpp"
 
 namespace polymorph::engine::config
 {
@@ -28,7 +30,7 @@ namespace polymorph::engine::config
         if (level != debug::Logger::MAJOR)
             _logWrongValue(_type, propertyName, level);
         else
-            throw debug::WrongValueException(_entity->getName() + " (" + _entity->getId() + ")", _type, propertyName, "", level);
+            throw debug::WrongValueException(_entity->getName() + " (" + _entity->getId() + ")", _type, propertyName, value, "", level);
     }
 
     void config::XmlComponent::_onMissingValueExcept(debug::Logger::severity level, std::string propertyName)
@@ -83,6 +85,6 @@ namespace polymorph::engine::config
     void XmlComponent::setGameObject(GameObject entity)
     {
         _entity = entity;
-        entity->getConfig()->addComponent(*this);
+        entity->getXmlConfig().addComponent(node);
     }
 } // config

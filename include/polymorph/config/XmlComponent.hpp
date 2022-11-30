@@ -25,7 +25,8 @@
 
 #include "polymorph/api/plugin/PluginManager.hpp"
 
-#include "polymorph/core/Entity.hpp"
+#include "polymorph/core/entity/Entity.hpp"
+#include "polymorph/core/Scene.hpp"
 
 namespace polymorph::engine {
     class Entity;

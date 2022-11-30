@@ -32,7 +32,7 @@ namespace polymorph::engine::api
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
         public:
-            using FactoryLambda = std::function<safe_ptr<AComponent> (GameObject entity)>;
+            using FactoryLambda = std::function<std::shared_ptr<AComponent> (GameObject entity, std::shared_ptr<myxmlpp::Node> node)>;
 
 
         private:
@@ -60,8 +60,8 @@ namespace polymorph::engine::api
             template<typename T>
             static inline FactoryLambda make()
             {
-                return [](GameObject entity) -> std::shared_ptr<AComponent> {
-                    return std::dynamic_pointer_cast<AComponent>(std::make_shared<T>(entity));
+                return [](GameObject entity, std::shared_ptr<myxmlpp::Node> node) -> std::shared_ptr<AComponent> {
+                    return std::dynamic_pointer_cast<AComponent>(std::make_shared<T>(entity, node));
                 };
             }
             /**
@@ -71,11 +71,11 @@ namespace polymorph::engine::api
              * @return The new object
              */
             template<class Tobj>
-            std::shared_ptr<Tobj> create(std::string type, GameObject entity)
+            std::shared_ptr<Tobj> create(std::string type, GameObject entity, std::shared_ptr<myxmlpp::Node> node)
             {
                 if (_buildables.find(type) == _buildables.end())
                     return nullptr;
-                return std::dynamic_pointer_cast<Tobj>(_buildables[type](entity));
+                return std::dynamic_pointer_cast<Tobj>(_buildables[type](entity, node));
             }
 
 

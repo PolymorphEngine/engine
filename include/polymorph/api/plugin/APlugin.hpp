@@ -96,9 +96,11 @@ namespace polymorph::engine::api
              * @return a shared pointer to the created component
              */
             template<typename T>
-            std::shared_ptr<T> createComponent(std::string &type, GameObject entity)
+            std::shared_ptr<T>
+            createComponent(std::string &type, GameObject entity,
+                            std::shared_ptr<myxmlpp::Node> node)
             {
-                return _factory->create<T>(type, entity);
+                return _factory->create<T>(type, entity, node);
             }
 
             /**

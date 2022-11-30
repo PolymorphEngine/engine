@@ -36,9 +36,9 @@ namespace polymorph::engine::api
 
 ///////////////////////////// PROPERTIES ////////////////////////////////
         public:
-            using EmptyFactoryLambda = std::function<safe_ptr<ASerializableObject> (PluginManager &pluginManager)>;
-            using CObjectFactoryLambda = std::function<safe_ptr<ASerializableObject> (safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> node)>;
-            using PObjectFactoryLambda = std::function<safe_ptr<ASerializableObject> (safe_ptr<APluginConfig> config, std::shared_ptr<myxmlpp::Node> node)>;
+            using EmptyFactoryLambda = std::function<std::shared_ptr<ASerializableObject> (PluginManager &pluginManager)>;
+            using CObjectFactoryLambda = std::function<std::shared_ptr<ASerializableObject> (safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> node)>;
+            using PObjectFactoryLambda = std::function<std::shared_ptr<ASerializableObject> (safe_ptr<APluginConfig> config, std::shared_ptr<myxmlpp::Node> node)>;
  
 
 

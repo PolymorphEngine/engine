@@ -20,7 +20,7 @@ namespace polymorph::engine {
 namespace polymorph::engine::api
 {
 
-    class AScriptFactory
+    class AComponentFactory
     {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
@@ -45,6 +45,12 @@ namespace polymorph::engine::api
 /////////////////////////////// METHODS /////////////////////////////////
         public:
             void buildFactory();
+            
+            /**
+             * @brief Tell whether or not the factory can build a component
+             * @param type The type of the component to build
+             */
+            bool hasComponent(const std::string &type) const;
 
             /**
              * @brief Register a new buildable object

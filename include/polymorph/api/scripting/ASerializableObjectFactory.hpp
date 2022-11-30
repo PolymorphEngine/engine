@@ -53,6 +53,13 @@ namespace polymorph::engine::api
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
+            
+            /**
+             * @brief Tell whether or not the factory can build an object
+             * @param type The type of the object to build
+             */
+            bool hasObject(std::string type);
+            
             /**
              * @brief Register a new buildable object
              * @param type The type of the object

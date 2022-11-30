@@ -154,11 +154,13 @@ namespace polymorph::engine::config
                 else {
                     auto t = data->findAttribute("subtype")->getValue();
                     try {
-                        toSet = std::dynamic_pointer_cast<T>(_component->Factory.createSerializableObject(t, data, *this, _component->Plugin));
+                        if (_isFromConfig)
+                            toSet = std::dynamic_pointer_cast<T>(_component->Plugin.tryCreateComponentObject(t, data, _component));
+                        else
+                            toSet = std::dynamic_pointer_cast<T>(_config->Plugin.tryCreateConfigObject(t, data, _config));
                     }  catch (debug::ExceptionLogger &e) {
                         if (level == debug::Logger::MAJOR)
                             e.what();
-                        toSet = std::dynamic_pointer_cast<T>(_component->Plugin.tryCreateSharedObject(t, *this, data, _component->Plugin));
                     }
                 }
             };

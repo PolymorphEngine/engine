@@ -16,12 +16,11 @@
 namespace polymorph::engine::config
 {
     config::XmlEntity::XmlEntity(std::shared_ptr<myxmlpp::Node> &entity,
-                                 debug::Logger &logger,
-                                 std::string &path) : _logger(logger), _node(entity), _path(path)
+                                 debug::Logger &logger) : _logger(logger)
     {
         std::string name;
         try {
-            _fileName = _node->findAttribute("path")->getValue();
+            _path = _node->findAttribute("path")->getValue();
 #ifdef _WIN32
             std::replace(_fileName.begin(), _fileName.end(), '/', '\\');
 #endif
@@ -33,7 +32,7 @@ namespace polymorph::engine::config
 #ifdef _WIN32
             _entity = std::make_shared<myxmlpp::Doc>(_path + "\\" +_fileName);
 #else
-            _entity = std::make_shared<myxmlpp::Doc>(_path + "/" +_fileName);
+            _entity = std::make_shared<myxmlpp::Doc>(_path);
 #endif
             _entity->getRoot();
             
@@ -102,5 +101,9 @@ namespace polymorph::engine::config
     void XmlEntity::saveConfig(std::string filePath)
     {
         _entity->writeF(filePath);
+    }
+    void XmlEntity::addComponent(std::shared_ptr<myxmlpp::Node> component)
+    {
+        _components->addChild(component);
     }
 } // config

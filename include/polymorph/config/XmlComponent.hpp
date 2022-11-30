@@ -18,9 +18,14 @@
 #include "polymorph/debug/Logger.hpp"
 #include "polymorph/debug/exception/config/MissingValueException.hpp"
 #include "polymorph/debug/exception/config/WrongValueException.hpp"
-#include "polymorph/config/CastHelper.hpp"
+
 #include "polymorph/config/XmlPropertyManager.hpp"
+
 #include "polymorph/types/safe/safe_ptr.hpp"
+
+#include "polymorph/api/plugin/PluginManager.hpp"
+
+#include "polymorph/core/Entity.hpp"
 
 namespace polymorph::engine {
     class Entity;
@@ -59,6 +64,8 @@ namespace polymorph::engine::config
 /////////////////////////////// METHODS /////////////////////////////////
         public:            
             std::string getType();
+            
+            void setGameObject(GameObject entity);
             
             bool getEnabled();
 
@@ -149,11 +156,10 @@ namespace polymorph::engine::config
                 else {
                     auto t = data->findAttribute("subtype")->getValue();
                     try {
-                        toSet = std::dynamic_pointer_cast<T>(_entity->Factory.createSerializableObject(t, data, *this, _entity->Plugin));
+                        toSet = std::dynamic_pointer_cast<T>(_entity->Plugin.tryCreateComponentObject(t, data, _entity->getComponent(_type)));
                     }  catch (debug::ExceptionLogger &e) {
-                        if (level == debug::Logger::MAJOR)
+                        if (level != debug::Logger::MAJOR)
                             e.what();
-                        toSet = std::dynamic_pointer_cast<T>(_entity->Plugin.tryCreateSharedObject(t, *this, data, _entity->Plugin));
                     }
                 }
             };

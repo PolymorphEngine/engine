@@ -15,7 +15,7 @@
 namespace polymorph::engine::config
 {
     config::XmlPluginConfig::XmlPluginConfig(
-            std::shared_ptr <myxmlpp::Doc> &doc, Engine &engine) : XmlPropertyManager(doc->getRoot(), engine.getLogger()) , _engine(engine), _doc(doc)
+            std::shared_ptr<myxmlpp::Doc> doc, Engine &engine) : XmlPropertyManager(doc->getRoot(), engine.getLogger()) , _engine(engine), _doc(doc)
     {
         try {
             _type = node->findAttribute("type")->getValue();

@@ -79,4 +79,10 @@ namespace polymorph::engine::config
     {
         _logger.log("[ConfigurationException] missing value for property '" + name + " for component '" + _type + "' of entity '" + _entity->getName() +"("+ _entity->getId() +")"+ "'.", level);
     }
+
+    void XmlComponent::setGameObject(GameObject entity)
+    {
+        _entity = entity;
+        entity->getConfig()->addComponent(*this);
+    }
 } // config

@@ -10,6 +10,8 @@
 
 
 #include "XmlPropertyManager.hpp"
+#include "polymorph/api/plugin/PluginManager.hpp"
+#include "polymorph/core/Engine.hpp"
 
 namespace polymorph::engine {
     class Engine;
@@ -22,7 +24,7 @@ namespace polymorph::engine::config
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
-            XmlPluginConfig(std::shared_ptr<myxmlpp::Doc> &doc, Engine &engine);
+            XmlPluginConfig(std::shared_ptr<myxmlpp::Doc> doc, Engine &engine);
 
 //////////////////////--------------------------/////////////////////////
 
@@ -104,11 +106,10 @@ namespace polymorph::engine::config
                 else {
                     auto t = data->findAttribute("subtype")->getValue();
                     try {
-                        toSet = std::dynamic_pointer_cast<T>(_engine.getFactory().createSerializableObject(t, data, *this, _engine.getPluginManager()));
+                        toSet = std::dynamic_pointer_cast<T>(_engine.getPluginManager().tryCreateConfigObject(t, data, _engine.getPluginManager().getConfig(_type)));
                     }  catch (debug::ExceptionLogger &e) {
-                        if (level == debug::Logger::MAJOR)
+                        if (level != debug::Logger::MAJOR)
                             e.what();
-                        toSet = std::dynamic_pointer_cast<T>(_engine.getPluginManager().tryCreateSharedObject(t, *this, data, _engine.getPluginManager()));
                     }
                 }
             };

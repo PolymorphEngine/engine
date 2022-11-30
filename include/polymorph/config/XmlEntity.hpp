@@ -25,7 +25,7 @@ namespace polymorph::engine::config
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
-            XmlEntity(std::shared_ptr<myxmlpp::Node> &entity, debug::Logger& logger, std::string &path);
+            XmlEntity(std::shared_ptr<myxmlpp::Node> &entity, debug::Logger& logger);
 
 //////////////////////--------------------------/////////////////////////
 
@@ -62,6 +62,8 @@ namespace polymorph::engine::config
             bool isActive() const;
 
             bool isPrefab();
+            
+            void addComponent(std::shared_ptr<myxmlpp::Node> component);
 
             std::string getPrefabId();
 

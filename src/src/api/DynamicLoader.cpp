@@ -19,14 +19,14 @@ polymorph::engine::api::DynamicLoader::DynamicLoader(DynamicLoader &&ref) noexce
 polymorph::engine::api::DynamicLoader::~DynamicLoader()
 {
     if (_handler != nullptr)
-        closeHandle();
+        _closeHandle();
     _handler = nullptr;
 }
 
 void polymorph::engine::api::DynamicLoader::loadHandler(const std::string &libPath)
 {
     if (_handler != nullptr)
-        closeHandle();
+        _closeHandle();
 
 #if _WIN32
     _handler = LoadLibrary(TEXT(libPath.c_str()));
@@ -42,7 +42,7 @@ void polymorph::engine::api::DynamicLoader::loadHandler(const std::string &libPa
     _libPath = libPath;
 }
 
-void polymorph::engine::api::DynamicLoader::closeHandle()
+void polymorph::engine::api::DynamicLoader::_closeHandle()
 {
 #if _WIN32
     FreeLibrary((HMODULE)_handler);

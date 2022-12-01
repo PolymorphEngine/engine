@@ -45,11 +45,29 @@ namespace polymorph::engine
 
         ///////////////////////////// PROPERTIES ////////////////////////////////
     public:
+        /**
+         * @property Mandatory property to check if the object is a builtin type
+         */
         static inline bool builtin_type = true;
 
+        /**
+         * @property r The red component of the color
+         */
         unsigned char r;
+
+        /**
+         * @property g The green component of the color
+         */
         unsigned char g;
+
+        /**
+         * @property b The blue component of the color
+         */
         unsigned char b;
+
+        /**
+         * @property a The alpha component of the color
+         */
         unsigned char a;
 
 
@@ -62,6 +80,13 @@ namespace polymorph::engine
 
         /////////////////////////////// METHODS /////////////////////////////////
     public:
+        /**
+         * @brief Set the color to the given values
+         * @param r The red value
+         * @param g The green value
+         * @param b The blue value
+         * @param a The alpha value
+         */
         void setColor(unsigned int r, unsigned int g, unsigned int b, unsigned int a = 255);
 
         void build() override;

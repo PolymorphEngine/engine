@@ -11,6 +11,7 @@
 
 #include <memory>
 #include <utility>
+#include <unordered_map>
 #include "polymorph/types/safe/safe_ptr.hpp"
 #include "myxmlpp/Node.hpp"
 #include "ASerializableObject.hpp"
@@ -23,7 +24,7 @@ namespace polymorph::engine::api
 {
     class PluginManager;
     class APluginConfig;
-    
+
     class ASerializableObjectFactory
     {
 
@@ -39,7 +40,7 @@ namespace polymorph::engine::api
             using EmptyFactoryLambda = std::function<std::shared_ptr<ASerializableObject> (PluginManager &pluginManager)>;
             using CObjectFactoryLambda = std::function<std::shared_ptr<ASerializableObject> (safe_ptr<AComponent> component, std::shared_ptr<myxmlpp::Node> node)>;
             using PObjectFactoryLambda = std::function<std::shared_ptr<ASerializableObject> (safe_ptr<APluginConfig> config, std::shared_ptr<myxmlpp::Node> node)>;
- 
+
 
 
         private:
@@ -53,13 +54,13 @@ namespace polymorph::engine::api
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
-            
+
             /**
              * @brief Tell whether or not the factory can build an object
              * @param type The type of the object to build
              */
             bool hasObject(std::string type);
-            
+
             /**
              * @brief Register a new buildable object
              * @param type The type of the object
@@ -72,7 +73,7 @@ namespace polymorph::engine::api
                     return std::dynamic_pointer_cast<ASerializableObject>(std::make_shared<T>(pluginManager));
                 };
             }
-            
+
             /**
              * @brief Register a new component buildable object
              * @param type The type of the object
@@ -98,7 +99,7 @@ namespace polymorph::engine::api
                     return std::dynamic_pointer_cast<ASerializableObject>(std::make_shared<T>(config, node));
                 };
             }
-            
+
             /**
              * @brief Builds a new object
              * @param type The type of the object
@@ -124,7 +125,7 @@ namespace polymorph::engine::api
             std::shared_ptr<Tobj> createComponentObject(std::string type, safe_ptr<Tcpt> component, std::shared_ptr<myxmlpp::Node> node)
             {
                 auto c = safe_ptr<AComponent>(std::dynamic_pointer_cast<AComponent>(*component));
-                
+
                 if (_componentBuildables.find(type) == _componentBuildables.end())
                     return nullptr;
                 return std::dynamic_pointer_cast<Tobj>(_componentBuildables[type](c, std::move(node)));
@@ -141,12 +142,12 @@ namespace polymorph::engine::api
             std::shared_ptr<Tobj> createConfigObject(std::string type, safe_ptr<Tcfg> config, std::shared_ptr<myxmlpp::Node> node)
             {
                 auto c = safe_ptr<APluginConfig>(std::dynamic_pointer_cast<APluginConfig>(*config));
-                
+
                 if (_configBuildables.find(type) == _configBuildables.end())
                     return nullptr;
                 return std::dynamic_pointer_cast<Tobj>(_configBuildables[type](c, std::move(node)));
             }
-            
+
             void buildFactory();
 
 

@@ -22,7 +22,7 @@ namespace polymorph::engine
     using GameObject = safe_ptr<Entity>;
 
     class Engine;
-    
+
     class Scene;
 
     namespace api
@@ -32,7 +32,7 @@ namespace polymorph::engine
         class AssetManager;
         class ScriptingApi;
     }
-    
+
     namespace config {
         class XmlComponent;
     }
@@ -123,12 +123,12 @@ namespace polymorph::engine
              * @property _type type of the component
              */
             std::string _type;
-            
+
             /**
              * @property _data the data of the component
              */
             std::shared_ptr<myxmlpp::Node> _data;
-            
+
             /**
              * @property _xmlConfig the config of the component
              */
@@ -150,13 +150,13 @@ namespace polymorph::engine
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
-            
+
             /**
              * @brief Called before all components are awoken
              * @details This method has to be implemented to initialize the component properties
              */
             virtual void build() = 0;
-            
+
             /**
              * @brief Called when the entity is saved
              * @details This method has to be implemented to save the component properties
@@ -167,7 +167,7 @@ namespace polymorph::engine
              * @details An overridable method that's called once per frame in the game loop.
              */
             virtual void update();
-            
+
             /**
              * @details An overridable method that's called once per frame in the game loop (after all updates).
              */
@@ -310,7 +310,7 @@ namespace polymorph::engine
              */
             template<typename T>
             void saveProperty(std::string propertyName, safe_ptr<T> &toSave);
-            
+
         protected:
             /**
              * @brief Sets a property from the Xml data by its name
@@ -338,6 +338,9 @@ namespace polymorph::engine
              */
             template<typename T>
             void _setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG);
+
+            template<class T>
+            safe_ptr<T> _self();
 
 //////////////////////--------------------------/////////////////////////
 

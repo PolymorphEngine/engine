@@ -115,4 +115,10 @@ namespace polymorph::engine
         _xmlConfig->set(propertyName, toSet, level);
     }
 
+    template<class T>
+    polymorph::engine::safe_ptr<T> polymorph::engine::AComponent::_self()
+    {
+        return polymorph::engine::safe_ptr<T>(std::dynamic_pointer_cast<T>(shared_from_this()));
+    }
+
 }

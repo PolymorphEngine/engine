@@ -11,21 +11,24 @@
 #include <vector>
 #include <unordered_map>
 #include "polymorph/types/safe/enable_safe_from_this.hpp"
+#include "myxmlpp/myxmlpp.hpp"
 
 namespace polymorph::engine
 {
     class AComponent;
     class TransformComponent;
     class Engine;
+    class Scene;
+    
     namespace api
     {
         class SceneManager;
         class PluginManager;
         class AssetManager;
-        class ScriptingApi;
     }
     namespace debug { class Logger;}
     namespace time { class Time; }
+    
     namespace config
     {
         class XmlEntity;
@@ -47,8 +50,8 @@ namespace polymorph::engine
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
 
         public:
-            Entity(config::XmlEntity &data, Engine &game);
-            Entity(std::string filePath, Engine &game);
+            Entity(std::shared_ptr<config::XmlEntity> data, Engine &game);
+            Entity(std::shared_ptr<myxmlpp::Node> data, Engine &game);
 
 
 //////////////////////--------------------------/////////////////////////
@@ -67,9 +70,7 @@ namespace polymorph::engine
 
             api::SceneManager &Scene;
 
-            api::AssetManager &Asset;
-
-            api::ScriptingApi &Factory;
+            api::AssetManager &Resource;
 
             debug::Logger &Debug;
 
@@ -138,15 +139,11 @@ namespace polymorph::engine
              */
             std::vector<std::string> _tags;
 
-            /**
-             * @property The entity layer in the scene
-             */
-            std::string _layer;
 
             /**
              * @property Reference to the XmlEntity used to read the entity data and components
              */
-            config::XmlEntity &_xmlConfig;
+            std::shared_ptr<config::XmlEntity> _xmlConfig;
 
             /**
              * @property Unordered map of the components of the entity
@@ -352,7 +349,7 @@ namespace polymorph::engine
              * @param config The config of the component
              * @param gameObject
              */
-            void addComponent(std::string &component, config::XmlComponent &config);
+            void addComponent(std::string &component, std::shared_ptr<myxmlpp::Node> &config);
 
             /**
              * @brief build the transform component with its configuration
@@ -423,13 +420,13 @@ namespace polymorph::engine
              * @details A getter to fetch the entity's unique id
              * @returns An std::string of the entity's unique id
              */
-            std::string &getId() const noexcept;
+            std::string getId() const noexcept;
 
             /**
              * @details A getter to fetch the entity's prefab id
              * @returns An std::string of the entity's prefab id
              */
-            std::string &getPrefabId() const noexcept;
+            std::string getPrefabId() const noexcept;
 
             /**
              * @details A setter for the entity's unique id
@@ -488,6 +485,9 @@ namespace polymorph::engine
              * @returns False if the component don't exist or True if it does
              */
             bool componentExist(std::string &type) const noexcept;
+            
+            void _createComponents(std::shared_ptr<myxmlpp::Node> components);
+            void _createComponent(std::shared_ptr<myxmlpp::Node> component);
 //////////////////////--------------------------/////////////////////////
 
     };

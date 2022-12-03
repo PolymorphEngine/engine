@@ -69,7 +69,7 @@ namespace polymorph::engine::api
             config::XmlNode &_data;
             std::shared_ptr<myxmlpp::Doc> _doc;
             std::vector<std::shared_ptr<config::XmlEntity>> _prefabs;
-            std::vector<config::XmlComponent> _templates;
+            std::vector<std::shared_ptr<myxmlpp::Node>> _templates;
             std::vector<std::shared_ptr<APluginConfig>> _configs;
             std::unique_ptr<AComponentFactory> _factory;
             std::unique_ptr<ASerializableObjectFactory> _objectFactory;
@@ -145,7 +145,7 @@ namespace polymorph::engine::api
             /**
              * @brief Tell whether or not the plugin is enabled
              */
-            bool isEnabled();
+            bool isEnabled() const;
 
             /**
              * @brief Tell if the plugin is able to create a component of the given type
@@ -174,7 +174,7 @@ namespace polymorph::engine::api
             /**
              * @brief Fetches all XmlComponent templates from the plugin
              */
-            std::vector<config::XmlComponent> &getComponentTemplates();
+            std::vector<std::shared_ptr<myxmlpp::Node>> &getComponentTemplates();
 
             /**
              * @brief An overridable method that is called every time in the game loop just before the entity update
@@ -212,7 +212,19 @@ namespace polymorph::engine::api
              * @param configs The vector of configs to populate
              */
             virtual void createConfig(std::vector<std::shared_ptr<APluginConfig>> &configs) = 0;
-            
+
+            /**
+             * @brief An overridable PURE method that must create the attached Component Factory
+             * @return a unique pointer to the created Component Factory
+             */
+            virtual std::unique_ptr<AComponentFactory> createComponentFactory() = 0;
+
+            /**
+             * @brief An overridable PURE method that must create the attached Serializable Object Factory
+             * @return a unique pointer to the created Serializable Object Factory
+             */
+            virtual std::unique_ptr<ASerializableObjectFactory> createSerializableObjectFactory() = 0;
+
             /**
              * @brief Gets a config by its type
              */

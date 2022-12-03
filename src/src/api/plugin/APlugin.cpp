@@ -7,6 +7,8 @@
 
 #include "polymorph/api/plugin/APlugin.hpp"
 #include "polymorph/config/XmlComponent.hpp"
+#include "polymorph/config/XmlEntity.hpp"
+
 #include "polymorph/debug/exception/plugin/CorruptedPluginException.hpp"
 #include "polymorph/debug/exception/plugin/PluginNotFoundException.hpp"
 
@@ -31,7 +33,7 @@ namespace polymorph::engine::api
         _loadPrefabs();
     }
 
-    bool APlugin::isEnabled()
+    bool APlugin::isEnabled() const
     {
         return _isEnabled;
     }
@@ -62,7 +64,7 @@ namespace polymorph::engine::api
         });
     }
 
-    std::vector<config::XmlComponent> &APlugin::getComponentTemplates()
+    std::vector<std::shared_ptr<myxmlpp::Node>> &APlugin::getComponentTemplates()
     {
         return _templates;
     }
@@ -106,7 +108,18 @@ namespace polymorph::engine::api
         auto prefabs = _doc->getRoot()->findChild("Templates");
 
         for (auto &t: *prefabs) {
-            _prefabs.emplace_back(std::make_shared<config::XmlComponent>(GameObject(), t, _game.getLogger()));
+            std::shared_ptr<myxmlpp::Doc> tmp;
+            try {
+                tmp = std::make_shared<myxmlpp::Doc>(assetManager.tryResolve(t->findAttribute("path")->getValue()));
+            } catch (const myxmlpp::Exception &e) {
+                debug::PluginException(_packageName, "Failed to load template at path: " + t->findAttribute("path")->getValue()).what();
+                continue;
+            } catch (const debug::CoreException &e) {
+                e.what();
+                debug::PluginException(_packageName, "Failed to load template at path: " + t->findAttribute("path")->getValue()).what();
+                continue;
+            }
+            _templates.push_back(tmp->getRoot());
         }
     }
 
@@ -131,6 +144,10 @@ namespace polymorph::engine::api
     void APlugin::build()
     {
         createConfig(_configs);
+        _factory = createComponentFactory();
+        _objectFactory = createSerializableObjectFactory();
+        _factory->buildFactory();
+        _objectFactory->buildFactory();
     }
 
     safe_ptr<APluginConfig> APlugin::getConfig(const std::string &type)

@@ -92,7 +92,7 @@ void polymorph::engine::TransformComponent::smoothMove(Vector3 destination, floa
     if (_smoothMoving)
         return;
     _smoothMoving = true;
-    _smoothTimer = Timer(this->time, time);
+    _smoothTimer = time::Timer(this->time, time);
     _smoothTarget = destination;
     _smoothOrigin = _position;
 }

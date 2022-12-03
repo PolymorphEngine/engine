@@ -139,7 +139,7 @@ polymorph::engine::Transform polymorph::engine::TransformComponent::removeChild(
         if (tchild->gameObject->getId() == child->gameObject->getId())
         {
             erase(pos);
-            child->_parent.reset();
+            child->_parent = Transform(nullptr);
             //TODO: reset in scene
             return (tchild);
         }

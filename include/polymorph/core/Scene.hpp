@@ -21,7 +21,7 @@
 
 namespace polymorph::engine
 {
-    namespace Config
+    namespace config
     {
         class XmlScene;
     }
@@ -33,12 +33,15 @@ namespace polymorph::engine
     using GameObject = safe_ptr<Entity>;
     using EntityIterator = std::vector<std::shared_ptr<Entity>>::iterator;
 
-    class Timer;
+    namespace time
+    {
+        class Timer;
+    }
 
     /**
      * @class Scene a container class that's store's all entities from a game scene
      */
-    class Scene
+    class Scene : public std::enable_shared_from_this<Scene>
     {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
@@ -85,7 +88,7 @@ namespace polymorph::engine
             /**
              * @property _destroyQueueList all the entities that will be destroyed in the next update
              */
-            std::map<std::shared_ptr<Timer>, Entity &> _destroyQueueList;
+            std::map<std::shared_ptr<time::Timer>, Entity &> _destroyQueueList;
 
             /**
              * @property _engine the engine instance that the scene is attached to
@@ -95,7 +98,7 @@ namespace polymorph::engine
             /**
              * @property _config_data the xml node that contains the scene data
              */
-            std::shared_ptr<Config::XmlScene> _config_data;
+            std::shared_ptr<config::XmlScene> _config_data;
 //////////////////////--------------------------/////////////////////////
 
 
@@ -111,7 +114,7 @@ namespace polymorph::engine
              * @details Loops trough entities and calls their lateUpdate method
              */
             void lateUpdate();
-            
+
             /**
              * @details Loops trough entities and calls their start method
              */
@@ -161,7 +164,7 @@ namespace polymorph::engine
              *          with their respective timer.
              *          Erases them if time's up.
              */
-            void updateDestroyQueueList();        
+            void updateDestroyQueueList();
             /**
              * @details Check for entities to add at the end of the game loop
              */
@@ -300,6 +303,8 @@ namespace polymorph::engine
               * @param entity the entity to erase chieldren
               */
             void _eraseChildren(Entity &entity);
+
+            void _callMethodOnTopEntities(std::function<void(std::shared_ptr<Entity>&)> method);
 
 //////////////////////--------------------------/////////////////////////
 

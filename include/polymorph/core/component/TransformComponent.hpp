@@ -10,7 +10,7 @@
 
 #include <vector>
 #include "myxmlpp/Node.hpp"
-#include "polymorph/core/component/AComponent_templated.hpp"
+#include "polymorph/core/component/AComponent.hpp"
 #include "polymorph/time/Timer.hpp"
 #include "polymorph/types/vector/Vector3.hpp"
 #include "polymorph/types/safe/safe_ptr.hpp"

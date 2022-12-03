@@ -7,6 +7,8 @@
 
 
 #pragma once
+
+#include <unordered_map>
 #include "polymorph/types/safe/safe_ptr.hpp"
 #include "myxmlpp/Node.hpp"
 
@@ -46,7 +48,7 @@ namespace polymorph::engine::api
 /////////////////////////////// METHODS /////////////////////////////////
         public:
             void buildFactory();
-            
+
             /**
              * @brief Tell whether or not the factory can build a component
              * @param type The type of the component to build

@@ -6,6 +6,7 @@
 */
 
 #include "polymorph/api/scripting/AConfigurableSerializableObject.hpp"
+#include "polymorph/api/plugin/APluginConfig.hpp"
 
 namespace polymorph::engine::api
 {
@@ -20,13 +21,13 @@ namespace polymorph::engine::api
     AConfigurableSerializableObject::AConfigurableSerializableObject(
             safe_ptr<APluginConfig> config,
             std::shared_ptr<myxmlpp::Node> node)
-            : ASerializableObject(config, node), _plugin(config->getPluginManager()), _logger(config->getLogger())
+            : ASerializableObject(config, node), _plugin(config->Plugin), _logger(config->Debug)
     {
 
     }
 
     AConfigurableSerializableObject::AConfigurableSerializableObject(
-            PluginManager &pluginManager) : _plugin(pluginManager), _logger(pluginManager->getLogger())
+            PluginManager &pluginManager) : _plugin(pluginManager), _logger(pluginManager.getLogger())
     {
 
     }

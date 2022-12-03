@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "polymorph/types/safeptr/safe_ptr.hpp"
+#include "polymorph/types/safe/safe_ptr.hpp"
 
 namespace polymorph::engine
 {

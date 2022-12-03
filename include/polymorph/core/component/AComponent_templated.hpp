@@ -10,6 +10,7 @@
 
 #include "polymorph/types/safe/safe_ptr.hpp"
 #include "polymorph/core/component/AComponent.hpp"
+#include "polymorph/core/component/TransformComponent.hpp"
 #include "polymorph/core/entity/Entity.hpp"
 
 #include "polymorph/config/XmlComponent.hpp"

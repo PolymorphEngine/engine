@@ -6,6 +6,7 @@
 */
 
 #include "polymorph/api/plugin/APluginConfig.hpp"
+#include "polymorph/core/Engine.hpp"
 #include "polymorph/debug/exception/config/MissingFileException.hpp"
 #include "polymorph/debug/exception/CoreException.hpp"
 

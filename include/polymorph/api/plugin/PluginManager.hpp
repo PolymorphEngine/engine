@@ -36,6 +36,7 @@ namespace polymorph::engine {
 namespace polymorph::engine::api
 {
     class APlugin;
+    class APluginConfig;
     class DynamicLoader;
     class ASerializableObject;
     class AssetManager;
@@ -176,6 +177,11 @@ namespace polymorph::engine::api
              * @brief Stops all plugins
              */
             void endingScripts();
+
+            /**
+             * @brief Get the logger
+             */
+             debug::Logger &getLogger();
 
         private:
             bool _isPluginPrioritary(const std::string &pluginName);

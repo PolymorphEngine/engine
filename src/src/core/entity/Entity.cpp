@@ -8,6 +8,7 @@
 #include "polymorph/core/entity/Entity.hpp"
 #include "polymorph/core/Engine.hpp"
 #include "polymorph/core/Scene.hpp"
+#include "polymorph/core/component/TransformComponent.hpp"
 #include "polymorph/core/component/AComponent.hpp"
 #include "polymorph/config/XmlEntity.hpp"
 #include "polymorph/debug/exception/config/MissingComponentTypeException.hpp"
@@ -124,8 +125,8 @@ namespace polymorph::engine
             }
         }
         if (rescurse) {
-            for (auto &child: *transform) {
-                child->awake(rescurse);
+            for (auto &child: **transform) {
+                child->gameObject->awake(rescurse);
             }
         }
     }
@@ -148,8 +149,8 @@ namespace polymorph::engine
 
     void polymorph::engine::Entity::startChildren()
     {
-        for (auto &child: *transform) {
-            child->start();
+        for (auto &child: **transform) {
+            child->gameObject->start();
         }
     }
 
@@ -166,8 +167,8 @@ namespace polymorph::engine
 
     void polymorph::engine::Entity::buildChildren()
     {
-        for (auto &child: *transform) {
-            child->build();
+        for (auto &child: **transform) {
+            child->gameObject->build();
         }
     }
 
@@ -182,14 +183,15 @@ namespace polymorph::engine
                 component->update();
             }
         }
+        updateChildren();
     }
 
     void polymorph::engine::Entity::updateChildren()
     {
         if (!_active)
             return;
-        for (auto &child: *transform) {
-            child->update();
+        for (auto &child: **transform) {
+            child->gameObject->update();
         }
     }
 
@@ -204,14 +206,15 @@ namespace polymorph::engine
                 component->lateUpdate();
             }
         }
+        lateUpdateChildren();
     }
 
     void polymorph::engine::Entity::lateUpdateChildren()
     {
         if (!_active)
             return;
-        for (auto &child: *transform) {
-            child->lateUpdate();
+        for (auto &child: **transform) {
+            child->gameObject->lateUpdate();
         }
     }
 
@@ -226,16 +229,17 @@ namespace polymorph::engine
                 component->onEnable();
             }
         }
+        onEnableChildren();
+        _asBeenEnabled = false;
     }
 
     void polymorph::engine::Entity::onEnableChildren()
     {
         if (!_asBeenEnabled && !transform->parent())
             return;
-        for (auto &child: *transform) {
-            child->onEnable();
+        for (auto &child: **transform) {
+            child->gameObject->onEnable();
         }
-        _asBeenEnabled = false;
     }
 
     void polymorph::engine::Entity::onDisable()
@@ -249,6 +253,7 @@ namespace polymorph::engine
                 component->onDisable();
             }
         }
+        onDisableChildren();
         _asBeenDisabled = false;
     }
 
@@ -256,8 +261,8 @@ namespace polymorph::engine
     {
         if (!_asBeenDisabled && !transform->parent())
             return;
-        for (auto &child: *transform) {
-            child->onDisable();
+        for (auto &child: **transform) {
+            child->gameObject->onDisable();
         }
     }
 
@@ -272,6 +277,7 @@ namespace polymorph::engine
                     component->onSceneLoaded(scene);
             }
         }
+        onSceneLoadingChildren(scene);
     }
 
     void polymorph::engine::Entity::onSceneLoadingChildren(
@@ -279,8 +285,8 @@ namespace polymorph::engine
     {
         if (!_active)
             return;
-        for (auto &child: *transform) {
-            child->onSceneLoading(scene);
+        for (auto &child: **transform) {
+            child->gameObject->onSceneLoaded(scene);
         }
     }
 
@@ -300,8 +306,8 @@ namespace polymorph::engine
     {
         if (!_active)
             return;
-        for (auto &child: *transform) {
-            child->onSceneUnloading(scene);
+        for (auto &child: **transform) {
+            child->gameObject->onSceneUnloaded(scene);
         }
     }
 
@@ -314,15 +320,15 @@ namespace polymorph::engine
                     component->saveAll();
                 }
             }
-        _xmlConfig->saveConfig(filePath);
+        _xmlConfig->saveConfig(filePath, _components);
     }
 
     polymorph::engine::GameObject
     polymorph::engine::Entity::find(const std::string &nameToFind) const
     {
-        for (auto &child: *transform) {
-            if (child->name() == nameToFind)
-                return child;
+        for (auto &child: **transform) {
+            if (child->gameObject->name == nameToFind)
+                return child->gameObject;
         }
         return GameObject(nullptr);
     }
@@ -331,23 +337,37 @@ namespace polymorph::engine
     polymorph::engine::Entity::findByPrefabId(const std::string &prefabId,
                                               bool _firstCall) const
     {
-        auto found = transform->parent()->findByPrefabId(prefabId, false);
-        if (found)
-            return found;
-        for (auto &child: *transform) {
-            if (found)
-                return found;
-            if (child->prefabId() == prefabId)
-                return child;
-            found = child->findByPrefabId(prefabId, false);
+        for (auto &child : **transform) {
+            if (child->gameObject->_prefabId == prefabId)
+                return child->gameObject;
         }
+        for (auto &child : **transform) {
+            auto found = child->gameObject->findByPrefabId(prefabId, false);
+            if (!!found)
+                return found;
+        }
+        auto parent = transform->parent();
+        if (parent && (parent->gameObject->getId() == prefabId
+                         || parent->gameObject->getPrefabId() == prefabId))
+            return parent->gameObject;
+        if (_firstCall && !!transform->parent())
+            return transform->parent()->gameObject->findByPrefabId(prefabId);
         return GameObject(nullptr);
     }
 
     polymorph::engine::GameObject
     polymorph::engine::Entity::childAt(std::size_t idx)
     {
-        return transform->findByIndex(idx);
+        int i = 0;
+        for (auto &child: **transform)
+        {
+            if (i == idx)
+                return child->gameObject;
+            if (i > idx)
+                return GameObject(nullptr);
+            ++i;
+        }
+        return GameObject(nullptr);
     }
 
     void polymorph::engine::Entity::initTransform()
@@ -355,8 +375,8 @@ namespace polymorph::engine
         if (_transformInitialized)
             return;
         transform->build();
-        for (auto &child: *transform) {
-            child->initTransform();
+        for (auto &child: **transform) {
+            child->gameObject->initTransform();
         }
         _transformInitialized = true;
     }

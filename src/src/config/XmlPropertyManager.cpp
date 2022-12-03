@@ -157,5 +157,10 @@ namespace polymorph::engine::config
         return false;
     }
 
+    std::shared_ptr<myxmlpp::Node> XmlPropertyManager::getNode()
+    {
+        return node;
+    }
+
 
 } // config

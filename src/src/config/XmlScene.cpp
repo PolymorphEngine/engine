@@ -77,4 +77,16 @@ namespace polymorph::engine::config
     {
         return _entities;
     }
+
+    void XmlScene::save(std::string filePath,
+                        std::vector<std::shared_ptr<Entity>> entities)
+    {
+        auto toSave = _sceneDoc->getRoot()->findChild("Entities");
+        toSave->rmChildren();
+        for (auto &entity : entities) {
+            auto newEntityPath = std::make_shared<myxmlpp::Attribute>("path", filePath + entity->getName() + ".pcf.entity");
+            auto newEntity = std::make_shared<myxmlpp::Node>(toSave.get(), "Entity", std::vector<std::shared_ptr<myxmlpp::Attribute>>{newEntityPath});
+        }
+        _sceneDoc->write(filePath + _name + ".pcf.scene");
+    }
 } // config

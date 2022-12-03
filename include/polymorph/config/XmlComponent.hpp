@@ -24,6 +24,7 @@
 #include "polymorph/types/safe/safe_ptr.hpp"
 
 #include "polymorph/api/plugin/PluginManager.hpp"
+#include "polymorph/api/SceneManager.hpp"
 
 #include "polymorph/core/entity/Entity.hpp"
 #include "polymorph/core/Scene.hpp"
@@ -32,7 +33,7 @@ namespace polymorph::engine {
     class Entity;
     class AComponent;
     using GameObject = safe_ptr<Entity>;
-    
+
 }
 
 namespace polymorph::engine::config
@@ -63,11 +64,11 @@ namespace polymorph::engine::config
 
 
 /////////////////////////////// METHODS /////////////////////////////////
-        public:            
+        public:
             std::string getType();
-            
+
             void setGameObject(GameObject entity);
-            
+
             bool getEnabled();
 
             template<typename T>
@@ -109,7 +110,7 @@ namespace polymorph::engine::config
                 static_assert(!CastHelper::is_map<T>);
                 toSet->saveAll();
             };
-            
+
             template<typename T>
             void _setSubProperty(const std::string &propertyName,
                                 const std::shared_ptr<myxmlpp::Node> &data,
@@ -117,7 +118,7 @@ namespace polymorph::engine::config
                                 debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                        ? _findProperty(propertyName, data) 
+                        ? _findProperty(propertyName, data)
                         : data;
 
                 if (property == nullptr)
@@ -132,7 +133,7 @@ namespace polymorph::engine::config
                                 debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                        ? _findProperty(propertyName, data) 
+                        ? _findProperty(propertyName, data)
                         : data;
 
                 if (property == nullptr)
@@ -146,7 +147,7 @@ namespace polymorph::engine::config
                                           std::shared_ptr<T> &toSet,
                                           debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                
+
                 //TODO: rework with new XmlSeralizableObject
                 static_assert(!CastHelper::is_map<T>
                         && !CastHelper::is_vector<T>
@@ -254,7 +255,7 @@ namespace polymorph::engine::config
              * @param level The logger severity level
              */
             void _logWrongValue(std::string type, std::string name, debug::Logger::severity level);
-            
+
             void _onWrongValueExcept(debug::Logger::severity level,
                                      std::string propertyName,
                                      std::string value) override;
@@ -264,9 +265,9 @@ namespace polymorph::engine::config
 
             void _onMissingPropertyExcept(debug::Logger::severity level,
                                           std::string propertyName) override;
-            
+
 //////////////////////--------------------------/////////////////////////
-            
+
 
 //////////////////////--------------------------/////////////////////////
 

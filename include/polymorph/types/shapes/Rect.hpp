@@ -186,26 +186,76 @@ namespace polymorph::engine
          */
         static bool intersect(const Rect &rect, const Circle &circle);
 
-        static bool intersect(const Vector2 &position, const Vector2 &size,
-                              const Circle &circle);
+        /**
+         * @brief Check if the given rect intersects with a given circle
+         * @param position The equivalent of x and y properties of the rect
+         * @param size The equivalent of width and height properties of the rect
+         * @param circle The circle to check intersection with
+         * @return true if the rect intersects with the given circle, false otherwise
+         */
+        static bool intersect(const Vector2 &position, const Vector2 &size, const Circle &circle);
 
+        /**
+         * @brief Check if the given rect intersects with a given circle
+         * @param position The equivalent of x and y properties of the rect
+         * @param size The equivalent of width and height properties of the rect
+         * @param center The center of the circle to check intersection with
+         * @param radius The radius of the circle to check intersection with
+         * @return true if the rect intersects with the given circle, false otherwise
+         */
         static bool intersect(const Vector2 &position, const Vector2 &size,
                               const Vector2 &center, float radius);
 
-        static bool
-        intersect(const Rect &rect, const Vector2 &center, float radius);
+        /**
+         * @brief Check if the given rect intersects with a given circle
+         * @param rect The rect to check intersection with
+         * @param center The center of the circle to check intersection with
+         * @param radius The radius of the circle to check intersection with
+         * @return true if the rect intersects with the given circle, false otherwise
+         */
+        static bool intersect(const Rect &rect, const Vector2 &center, float radius);
 
+        /**
+         * @brief Check if the given rect intersects with a given circle
+         * @param circle The circle to check intersection with
+         * @param rect The rect to check intersection with
+         * @return true if the rect intersects with the given circle, false otherwise
+         */
         static bool intersect(const Circle &circle, const Rect &rect);
 
-        static bool intersect(const Circle &circle, const Vector2 &position,
-                              const Vector2 &size);
+        /**
+         * @brief Check if the given rect intersects with a given circle
+         * @param circle The circle to check intersection with
+         * @param position The equivalent of x and y properties of the rect
+         * @param size The equivalent of width and height properties of the rect
+         * @return true if the rect intersects with the given circle, false otherwise
+         */
+        static bool intersect(const Circle &circle, const Vector2 &position, const Vector2 &size);
 
-        static bool intersect(const Vector2 &center, float radius,
-                              const Vector2 &position, const Vector2 &size);
+        /**
+         * @brief Check if the given rect intersects with a given circle
+         * @param center The center of the circle to check intersection with
+         * @param radius The radius of the circle to check intersection with
+         * @param position The equivalent of x and y properties of the rect
+         * @param size The equivalent of width and height properties of the rect
+         * @return
+         */
+        static bool intersect(const Vector2 &center, float radius, const Vector2 &position, const Vector2 &size);
 
-        static bool
-        intersect(const Vector2 &center, float radius, const Rect &rect);
+        /**
+         * @brief Check if the given rect intersects with a given circle
+         * @param center The center of the circle to check intersection with
+         * @param radius The radius of the circle to check intersection with
+         * @param rect The rect to check intersection with
+         * @return true if the rect intersects with the given circle, false otherwise
+         */
+        static bool intersect(const Vector2 &center, float radius, const Rect &rect);
 
+        /**
+         * @brief Check if the given point is inside the rect
+         * @param point The point to check
+         * @return true if the point is inside the rect, false otherwise
+         */
         bool contains(Vector2 &point) const;
 
         void build() override;

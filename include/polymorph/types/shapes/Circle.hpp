@@ -180,14 +180,35 @@ namespace polymorph::engine
          */
         static bool intersect(const Circle &circle, const Rect &rect);
 
+        /**
+         * @brief Check if the given circle and the given rect intersect
+         * @param circle The circle to check
+         * @param position The equivalent of x and y properties of rect
+         * @param size The equivalent of width and height properties of rect
+         * @return true if the circle and the rect intersect, false otherwise
+         */
         static bool intersect(const Circle &circle, const Vector2 &position,
                               const Vector2 &size);
 
+        /**
+         * @brief Check if the given circle and the given rect intersect
+         * @param center The center of the circle to check
+         * @param radius The radius of the circle to check
+         * @param position The equivalent of x and y properties of rect
+         * @param size The equivalent of width and height properties of rect
+         * @return true if the circle and the rect intersect, false otherwise
+         */
         static bool intersect(const Vector2 &center, float radius,
                               const Vector2 &position, const Vector2 &size);
 
-        static bool
-        intersect(const Vector2 &center, float radius, const Rect &rect);
+        /**
+         * @brief Check if the given circle and the given rect intersect
+         * @param center The center of the circle to check
+         * @param radius The radius of the circle to check
+         * @param rect The rect to check
+         * @return true if the circle and the rect intersect, false otherwise
+         */
+        static bool intersect(const Vector2 &center, float radius, const Rect &rect);
 
         void build() override;
 

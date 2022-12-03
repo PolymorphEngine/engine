@@ -142,7 +142,7 @@ namespace polymorph::engine::api
              * @param gameObject: the game object to clone
              * @returns the instantiated game object
              */
-            GameObject instantiate(GameObject &gameObject, bool isParent = true);
+            GameObject instantiate(GameObject &gameObject);
 
             /**
              * @details Instantiate a game object in scene (makes a clone of it)
@@ -150,8 +150,7 @@ namespace polymorph::engine::api
              * @param position: the position at which the game object is instantiated
              * @returns the instantiated game object
              */
-            GameObject instantiate(GameObject gameObject, const Vector3 &position,
-                                   bool isParent = true);
+            GameObject instantiate(GameObject gameObject, const Vector3 &position);
 
             /**
              * @details Instantiate a game object in scene (makes a clone of it)
@@ -159,8 +158,7 @@ namespace polymorph::engine::api
              * @param parent: the parent transform on which the instantiated object will depend on
              * @returns the instantiated game object
              */
-            GameObject instantiate(GameObject gameObject, Transform parent,
-                                   bool isParent = true);
+            GameObject instantiate(GameObject gameObject, Transform parent);
 
             /**
              * @details Instantiate a game object in scene (makes a clone of it)
@@ -169,8 +167,7 @@ namespace polymorph::engine::api
              * @param offset: the offset position from the parent object
              * @returns the instantiated game object
              */
-            GameObject instantiate(GameObject gameObject, Transform parent, Vector3 offset,
-                                   bool isParent = true);
+            GameObject instantiate(GameObject gameObject, Transform parent, Vector3 offset);
 
             /**
              * @details Set the position of a parent entity at the front of the scene entities list

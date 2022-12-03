@@ -110,6 +110,7 @@ void polymorph::engine::Scene::loadScene()
     for (auto &e: KeepOnLoad)
         addEntity(e);
     KeepOnLoad.clear();
+    onSceneLoaded();
     awake();
 }
 

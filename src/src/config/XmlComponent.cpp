@@ -85,6 +85,6 @@ namespace polymorph::engine::config
     void XmlComponent::setGameObject(GameObject entity)
     {
         _entity = entity;
-        entity->getXmlConfig().addComponent(node);
+        entity->getXmlConfig()->addComponent(node);
     }
 } // config

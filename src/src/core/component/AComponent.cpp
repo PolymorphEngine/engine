@@ -7,11 +7,14 @@
 
 
 #include "polymorph/core/component/AComponent.hpp"
-#include "polymorph/core/entity/Entity.hpp"
+
+#include "polymorph/config/XmlComponent.hpp"
+#include "polymorph/core/Scene.hpp"
+#include "polymorph/api/AssetManager.hpp"
 
 polymorph::engine::AComponent::AComponent(std::shared_ptr<myxmlpp::Node> data, polymorph::engine::GameObject gameObject)
         : gameObject(gameObject), Plugin(gameObject->Plugin),
-          Scene(gameObject->Scene), Asset(gameObject->Asset), Factory(gameObject->Factory),
+          Scene(gameObject->Scene), Asset(gameObject->Resource),
           Debug(gameObject->Debug), time(gameObject->time), Game(gameObject->Game)
 {
     _xmlConfig = std::make_shared<config::XmlComponent>(gameObject, data, Debug);

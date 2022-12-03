@@ -42,6 +42,8 @@ namespace polymorph::engine
              */
             Vector2(const Vector2& other) = default;
 
+            Vector2 &operator=(const Vector2 &other) = default;
+
             /**
              * @brief Construct a new Vector2 by moving the given Vector2 (std::move)
              * @param other The Vector2 to move

@@ -5,8 +5,8 @@
 ** Vector3.cpp
 */
 
-#include "Vector3.hpp"
-#include "Vector2.hpp"
+#include "polymorph/types/vector/Vector3.hpp"
+#include "polymorph/types/vector/Vector2.hpp"
 
 polymorph::engine::Vector3::Vector3(float x, float y) : x(x), y(y), z(0)
 {}

@@ -444,7 +444,7 @@ namespace polymorph::engine
              * @details A getter to fetch the XmlEntity associated with the entity
              * @returns The associated XmlEntity
              */
-            config::XmlEntity &getXmlConfig() const noexcept;
+            std::shared_ptr<config::XmlEntity> getXmlConfig() const noexcept;
 
             /**
              * @details Comparator operator that compares 2 entities based on unique id.

@@ -420,10 +420,10 @@ namespace polymorph::engine
         _prefabId = id;
     }
 
-    polymorph::engine::config::XmlEntity &
+    std::shared_ptr<polymorph::engine::config::XmlEntity>
     polymorph::engine::Entity::getXmlConfig() const noexcept
     {
-        return *_xmlConfig;
+        return _xmlConfig;
     }
 
     bool polymorph::engine::Entity::operator==(

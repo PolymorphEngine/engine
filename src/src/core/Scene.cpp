@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "polymorph/core/Scene.hpp"
+#include "polymorph/core/Engine.hpp"
 #include "polymorph/config/XmlScene.hpp"
 #include "polymorph/types/uuid.hpp"
 #include "polymorph/core/entity/Entity.hpp"
@@ -82,12 +83,34 @@ void polymorph::engine::Scene::onSceneUnloaded()
 
 void polymorph::engine::Scene::save(bool saveAllEntitiesFirst, std::string path)
 {
-
+    if (saveAllEntitiesFirst)
+        for (auto &e : _entities)
+            e->save(saveAllEntitiesFirst, path);
+    _config_data->save(path, _entities);
 }
 
 void polymorph::engine::Scene::loadScene()
 {
-
+    auto entities = _config_data->getEntities();
+    _destroyQueueList.clear();
+    _entities.clear();
+    
+    for (auto &entity : *entities) {
+        try {
+            
+        auto newEntity = std::make_shared<Entity>(entity, _game);
+        _entities.push_back(newEntity);
+        } catch (debug::ExceptionLogger &e) {
+            e.what();
+            continue;
+        }
+    }
+    build();
+    auto &KeepOnLoad = _game.getSceneManager().getKeepedEntities();
+    for (auto &e: KeepOnLoad)
+        addEntity(e);
+    KeepOnLoad.clear();
+    awake();
 }
 
 void polymorph::engine::Scene::unloadScene()

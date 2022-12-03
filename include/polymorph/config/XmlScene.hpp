@@ -63,6 +63,9 @@ namespace polymorph::engine::config
             bool isFirst() const;
 
             std::shared_ptr<myxmlpp::Node> getEntities();
+            
+            void save(std::string filePath,
+                      std::vector<std::shared_ptr<Entity>> entities);
 
 
 

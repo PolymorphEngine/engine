@@ -15,7 +15,6 @@ polymorph::engine::Engine::Engine(std::string projectName, std::string projectPa
           _pluginManager(*this), _sceneManager(*this), _assetManager(), _logger()
 {
     _assetManager.addPath(_projectPath);
-    _projectConfig = std::make_unique<config::XmlEngine>(_projectPath);
 
 #ifdef _WIN32
     _logger.setLogDir(_projectPath + "\\Logs");
@@ -23,9 +22,7 @@ polymorph::engine::Engine::Engine(std::string projectName, std::string projectPa
     _logger.setLogDir(_projectPath + "/Logs");
 #endif
     _openProject();
-
     _initDebugSettings();
-
     _initExectutionOrder();
     _initPluginsExecutionOrder();
     _initPrefabs();
@@ -64,12 +61,35 @@ polymorph::engine::time::Time &polymorph::engine::Engine::getTime()
 
 int polymorph::engine::Engine::run()
 {
-    return 0;
+    if (isExiting())
+        return _exitCode;
+    while (!_exit) {
+        _time.computeDeltaTime();
+        _sceneManager.checkQueuedScene();
+        _sceneManager.resetLoading();
+        _pluginManager.preProcessing();
+        auto scene = _sceneManager.getCurrentScene();
+        scene->start();
+        scene->update();
+        _pluginManager.lateUpdate();
+        _pluginManager.postProcessing();
+        scene->lateUpdate();
+        scene->updateAddQueueList();
+        scene->updateDestroyQueueList();
+    }
+    _pluginManager.endingScripts();
+    return _exitCode;
 }
 
 void polymorph::engine::Engine::loadEngine()
 {
-
+    _pluginsExecOrder = _projectConfig->getPluginsExecOrder();
+    _pluginManager.loadPlugins(_pluginsPath, *_projectConfig->getPlugins(), *this);
+    _initGameData();
+    _sceneManager.setCurrentScene(*_scenes.begin());
+    _sceneManager.getCurrentScene()->loadScene();
+    _time = time::Time();
+    _pluginManager.startingScripts();
 }
 
 polymorph::engine::api::PluginManager &polymorph::engine::Engine::getPluginManager()
@@ -147,7 +167,7 @@ void polymorph::engine::Engine::addScene(const std::shared_ptr<Scene> &scene)
 
 void polymorph::engine::Engine::_openProject()
 {
-
+    _projectConfig = std::make_unique<config::XmlEngine>(_assetManager.tryResolve(_projectName + ".pcf.engine"));
 }
 
 void polymorph::engine::Engine::_initExectutionOrder()

@@ -196,15 +196,14 @@ void polymorph::engine::TransformComponent::build()
 
     std::vector<GameObject> refs;
     _setProperty("children", refs);
-    Transform test(safe_from_this());
 
     for (auto &ref: refs) {
         if (!ref)
             continue;
         if (ref->isPrefab())
-            ref->Scene.instantiate(ref, safe_from_this(), false);
+            ref->Scene.instantiate(ref, safe_from_this());
         else
-            ref->transform->setParent(shared_from_this());
+            ref->transform->setParent(safe_from_this());
     }
 }
 

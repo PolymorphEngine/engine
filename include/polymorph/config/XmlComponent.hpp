@@ -179,9 +179,9 @@ namespace polymorph::engine::config
                     return;
                 if (_entity && (_entity->getPrefabId() == id || _entity->getId() == id))
                     gameObject = _entity;
-                if (!gameObject && _entity)
+                if (!gameObject && _entity->wasPrefab())
                     gameObject = _entity->findByPrefabId(id);
-                if (!gameObject)
+                else if (!gameObject)
                     gameObject = _entity->Scene.findById(id);
                 if (gameObject)
                     toSet = gameObject->getComponent<T>();

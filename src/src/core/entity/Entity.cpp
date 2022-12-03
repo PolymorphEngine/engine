@@ -337,21 +337,24 @@ namespace polymorph::engine
     polymorph::engine::Entity::findByPrefabId(const std::string &prefabId,
                                               bool _firstCall) const
     {
+        GameObject highestParent = transform->parent()->gameObject;
+        while (highestParent->transform->parent())
+            highestParent = highestParent->transform->parent()->gameObject;
+        return highestParent->_getByPrefabId(prefabId);
+    }
+    GameObject Entity::_getByPrefabId(std::string prefabId)
+    {
+        if (_prefabId == prefabId)
+            return safe_from_this();
         for (auto &child : **transform) {
             if (child->gameObject->_prefabId == prefabId)
                 return child->gameObject;
         }
         for (auto &child : **transform) {
-            auto found = child->gameObject->findByPrefabId(prefabId, false);
-            if (!!found)
+            auto found = child->gameObject->_getByPrefabId(prefabId);
+            if (found)
                 return found;
         }
-        auto parent = transform->parent();
-        if (parent && (parent->gameObject->getId() == prefabId
-                         || parent->gameObject->getPrefabId() == prefabId))
-            return parent->gameObject;
-        if (_firstCall && !!transform->parent())
-            return transform->parent()->gameObject->findByPrefabId(prefabId);
         return GameObject(nullptr);
     }
 

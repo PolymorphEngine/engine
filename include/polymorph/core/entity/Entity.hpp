@@ -488,6 +488,7 @@ namespace polymorph::engine
             
             void _createComponents(std::shared_ptr<myxmlpp::Node> components);
             void _createComponent(std::shared_ptr<myxmlpp::Node> component);
+            GameObject _getByPrefabId(std::string id);
 //////////////////////--------------------------/////////////////////////
 
     };

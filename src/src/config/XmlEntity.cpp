@@ -11,6 +11,7 @@
 #include "myxmlpp/Doc.hpp"
 #include "polymorph/debug/exception/config/MissingEntityException.hpp"
 #include "polymorph/debug/exception/config/CorruptedFileException.hpp"
+#include "polymorph/core/component/AComponent.hpp"
 
 
 namespace polymorph::engine::config
@@ -98,9 +99,15 @@ namespace polymorph::engine::config
         return _components;
     }
 
-    void XmlEntity::saveConfig(std::string filePath)
+    void XmlEntity::saveConfig(std::string filePath, std::unordered_map<std::string, std::vector<std::shared_ptr<AComponent>>> &components)
     {
-        _entity->writeF(filePath);
+        auto toSave = _entity->getRoot()->findChild("Components");
+        toSave->rmChildren();
+        for (auto &list : components) {
+            for (auto &component: list.second)
+                toSave->addChild(component->getNode());
+        }
+        _entity->write(filePath + _name + ".pcf.entity");
     }
     void XmlEntity::addComponent(std::shared_ptr<myxmlpp::Node> component)
     {

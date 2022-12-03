@@ -6,6 +6,7 @@
 */
 
 #include "polymorph/config/XmlScene.hpp"
+#include "polymorph/core/Engine.hpp"
 #include "myxmlpp/myxmlpp.hpp"
 #include "polymorph/debug/exception/ConfigurationException.hpp"
 #include "polymorph/debug/exception/config/EmptySceneException.hpp"
@@ -14,20 +15,25 @@
 
 namespace polymorph::engine::config
 {
-    config::XmlScene::XmlScene(std::shared_ptr<myxmlpp::Node> &scene,
-    debug::Logger &logger, std::string &path) : _logger(logger)
+    config::XmlScene::XmlScene(std::shared_ptr<myxmlpp::Node> &scene, polymorph::engine::Engine &engine) : _logger(engine.getLogger())
     {
         _projectNode = scene;
-        
+        std::string fullPath;
+
         try {
-            _path = path + "/" + _projectNode->findAttribute("path")->getValue();
+            auto path =  _projectNode->findAttribute("path")->getValue();
 #ifdef _WIN32
             std::replace(_path.begin(), _path.end(), '/', '\\');
 #endif
-            _sceneDoc = std::make_shared<myxmlpp::Doc>(_path);
+            fullPath = engine.getAssetManager().tryResolve(path);
+            _sceneDoc = std::make_shared<myxmlpp::Doc>(fullPath);
 
-        } catch (myxmlpp::Exception &e) {
-            throw debug::MissingFileException(_path);
+        } catch (myxmlpp::AttributeNotFoundException &e) {
+            throw debug::ConfigurationException(e.what(), debug::Logger::MAJOR);
+        } catch (myxmlpp::NoFileException &e) {
+            throw debug::MissingFileException(fullPath, debug::Logger::MAJOR);
+        } catch (myxmlpp::FileException &e) {
+            throw debug::CorruptedFileException(fullPath, debug::Logger::MAJOR);
         }
 
         try {
@@ -36,7 +42,7 @@ namespace polymorph::engine::config
             _first = _sceneDoc->getRoot()->findAttribute("first")->getValueBool();
         } catch (myxmlpp::Exception &e) {
             _logger.log("[XmlScene] Corrupted file: " + e.baseWhat(), debug::Logger::MAJOR);
-            throw debug::CorruptedFileException(_path, debug::Logger::MAJOR);
+            throw debug::CorruptedFileException(fullPath, debug::Logger::MAJOR);
         }
         _loadEntities();
     }
@@ -70,5 +76,17 @@ namespace polymorph::engine::config
     std::shared_ptr<myxmlpp::Node> XmlScene::getEntities()
     {
         return _entities;
+    }
+
+    void XmlScene::save(std::string filePath,
+                        std::vector<std::shared_ptr<Entity>> entities)
+    {
+        auto toSave = _sceneDoc->getRoot()->findChild("Entities");
+        toSave->rmChildren();
+        for (auto &entity : entities) {
+            auto newEntityPath = std::make_shared<myxmlpp::Attribute>("path", filePath + entity->getName() + ".pcf.entity");
+            auto newEntity = std::make_shared<myxmlpp::Node>(toSave.get(), "Entity", std::vector<std::shared_ptr<myxmlpp::Attribute>>{newEntityPath});
+        }
+        _sceneDoc->write(filePath + _name + ".pcf.scene");
     }
 } // config

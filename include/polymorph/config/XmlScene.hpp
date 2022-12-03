@@ -18,6 +18,11 @@ namespace myxmlpp {
     class Node;
 }
 
+namespace polymorph::engine {
+    class Engine;
+    class Entity;
+}
+
 namespace polymorph::engine::config
 {
 
@@ -26,7 +31,7 @@ namespace polymorph::engine::config
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
-            XmlScene(std::shared_ptr<myxmlpp::Node> &scene, debug::Logger& logger, std::string &path);
+            XmlScene(std::shared_ptr<myxmlpp::Node> &scene, Engine &engine);
 
 //////////////////////--------------------------/////////////////////////
 
@@ -39,7 +44,6 @@ namespace polymorph::engine::config
         private:
             std::shared_ptr<myxmlpp::Node> _projectNode;
             debug::Logger& _logger;
-            std::string _path;
             std::string _id;
             std::string _name;
             std::shared_ptr<myxmlpp::Doc> _sceneDoc;
@@ -60,6 +64,9 @@ namespace polymorph::engine::config
 
             std::shared_ptr<myxmlpp::Node> getEntities();
             
+            void save(std::string filePath,
+                      std::vector<std::shared_ptr<Entity>> entities);
+
 
 
         private:

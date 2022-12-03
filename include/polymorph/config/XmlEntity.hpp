@@ -11,11 +11,15 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <unordered_map>
 #include "polymorph/debug/Logger.hpp"
 
 namespace myxmlpp {
     class Doc;
     class Node;
+}
+namespace polymorph::engine {
+    class AComponent;
 }
 
 namespace polymorph::engine::config
@@ -57,7 +61,7 @@ namespace polymorph::engine::config
         public:
             std::string getName() const;
             
-            void saveConfig(std::string filePath);
+            void saveConfig(std::string filePath, std::unordered_map<std::string, std::vector<std::shared_ptr<AComponent>>> &components);
 
             bool isActive() const;
 

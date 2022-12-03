@@ -86,17 +86,13 @@ namespace polymorph::engine
             /**
              * @property Scene Manager to access to all scene operations
              */
-            static api::SceneManager &Scene;
+            api::SceneManager &Scene;
 
             /**
              * @property Asset Manager to search for asset path by their filename
              */
             api::AssetManager &Asset;
 
-            /**
-             * @property Scripting API to access to factories
-             */
-            api::ScriptingApi &Factory;
 
             /**
              * @property Logger to log any message/event needed
@@ -172,6 +168,16 @@ namespace polymorph::engine
              * @details An overridable method that's called once per frame in the game loop (after all updates).
              */
             virtual void lateUpdate();
+
+            /**
+             * @details An overridable method that's called once per frame in the game loop (after all updates).
+             */
+            virtual void onEnable() {};
+
+            /**
+             * @details An overridable method that's called once per frame in the game loop (after all updates).
+             */
+            virtual void onDisable() {};
 
             /**
              * @details An overridable method that's called when a scene is loaded.

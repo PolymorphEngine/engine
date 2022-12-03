@@ -62,20 +62,24 @@ void polymorph::engine::Color::saveAll()
     saveProperty("a", a);
 }
 
-bool polymorph::engine::Color::operator==(const polymorph::engine::Color &other) const {
+bool polymorph::engine::Color::operator==(const polymorph::engine::Color &other) const
+{
     return r == other.r && g == other.g && b == other.b && a == other.a;
 }
 
-bool polymorph::engine::Color::operator!=(const polymorph::engine::Color &other) const {
+bool polymorph::engine::Color::operator!=(const polymorph::engine::Color &other) const
+{
     return !(*this == other);
 }
 
 polymorph::engine::Color
-polymorph::engine::Color::operator+(const polymorph::engine::Color &other) const {
+polymorph::engine::Color::operator+(const polymorph::engine::Color &other) const
+{
     return Color(r + other.r, g + other.g, b + other.b, a + other.a);
 }
 
 polymorph::engine::Color
-polymorph::engine::Color::operator-(const polymorph::engine::Color &other) const {
+polymorph::engine::Color::operator-(const polymorph::engine::Color &other) const
+{
     return Color(r - other.r, g - other.g, b - other.b, a - other.a);
 }

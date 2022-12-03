@@ -14,7 +14,7 @@ namespace polymorph::engine
 
     class Rect;
 
-    class Circle {
+    class Circle : public api::ASerializableObject {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
 
@@ -188,6 +188,10 @@ namespace polymorph::engine
 
         static bool
         intersect(const Vector2 &center, float radius, const Rect &rect);
+
+        void build() override;
+
+        void saveAll() override;
 
 
     private:

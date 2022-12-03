@@ -13,7 +13,7 @@ namespace polymorph::engine
 {
     class Circle;
 
-    class Rect
+    class Rect : public api::ASerializableObject
     {
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
@@ -125,7 +125,7 @@ namespace polymorph::engine
         /**
          * @property A simple Rect with 0,0 as position and 0 as size for computations
          */
-        static Rect Zero;
+        static Rect zero;
 
 
     private:
@@ -207,6 +207,10 @@ namespace polymorph::engine
         intersect(const Vector2 &center, float radius, const Rect &rect);
 
         bool contains(Vector2 &point) const;
+
+        void build() override;
+
+        void saveAll() override;
 
 
     private:

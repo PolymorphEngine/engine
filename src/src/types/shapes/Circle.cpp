@@ -9,22 +9,22 @@
 #include "polymorph/types/shapes/Rect.hpp"
 
 polymorph::engine::Circle::Circle()
-: _center(Vector2(0, 0)), _radius(0)
+: center(Vector2(0, 0)), radius(0)
 {
 }
 
 polymorph::engine::Circle::Circle(const polymorph::engine::Vector2 &center, float radius)
-: center(center), radius(radius), ASerializableObject("Circle")
+: center(center), radius(radius)
 {
 }
 
 polymorph::engine::Circle::Circle(const polymorph::engine::Circle &circle)
-: center(circle.center), radius(circle.radius), ASerializableObject("Circle")
+: center(circle.center), radius(circle.radius)
 {
 }
 
 polymorph::engine::Circle::Circle(float x, float y, float radius)
-: center(x, y), radius(radius), ASerializableObject("Circle")
+: center(x, y), radius(radius)
 {
 }
 

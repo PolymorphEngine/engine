@@ -20,6 +20,8 @@
 #include "polymorph/api/plugin/PluginManager.hpp"
 #include "polymorph/api/SceneManager.hpp"
 #include "polymorph/time/Time.hpp"
+#include "polymorph/config/XmlComponent.hpp"
+#include "polymorph/config/XmlEngine.hpp"
 
 namespace polymorph::engine
 {
@@ -50,9 +52,9 @@ namespace polymorph::engine
              * @param projectPath path containing resources to load
              * @param projectName name of the main config file in the projectPath (do not include extension cause it's also the window title / project name)
              */
-            explicit Engine(std::string projectName,const std::string &projectPath, std::string pluginPath);
+            explicit Engine(std::string projectName, std::string projectPath, std::string pluginPath);
 
-            ~Engine();
+            ~Engine() = default;
 //////////////////////--------------------------/////////////////////////
 
 
@@ -82,7 +84,7 @@ namespace polymorph::engine
             /**
              * @property _prefabs list of all of the prefabs
              */
-            std::vector<std::shared_ptr<Entity>> _prefabs;
+            std::vector<std::shared_ptr<config::XmlEntity>> _prefabs;
 
             /**
              * @property _prefabsConfigs list of all of the configuration of the prefabs
@@ -92,7 +94,7 @@ namespace polymorph::engine
             /**
              * @property _defaultConfigs default configuration for the components
              */
-            std::vector<config::XmlComponent> _defaultConfigs;
+            std::vector<std::shared_ptr<myxmlpp::Node>> _defaultConfigs;
 
             /**
              * @property _execOrder order of execution of the components
@@ -140,27 +142,17 @@ namespace polymorph::engine
              *          Order determines which component has to be updated before others.
              * @returns A vector of std::string ordered based on execution order.
              */
-            std::vector<std::string> &getExecOrder()
-            { return _execOrder; };
+            std::vector<std::string> &getExecOrder();
 
-            std::vector<std::string> &getPluginExecOrder()
-            { return _pluginsExecOrder; };
+            std::vector<std::string> &getPluginExecOrder();
 
-            api::AssetManager &getAssetManager()
-            { return _assetManager; };
+            api::AssetManager &getAssetManager();
 
-            api::SceneManager &getSceneManager()
-            { return _sceneManager; };
+            api::SceneManager &getSceneManager();
 
-            debug::Logger &getLogger()
-            {
-                return _logger;
-            }
+            debug::Logger &getLogger();
 
-            time::Time &getTime()
-            {
-                return _time;
-            };
+            time::Time &getTime();
 
 
 
@@ -205,7 +197,7 @@ namespace polymorph::engine
              * @brief Getter of prefabs
              * @return A list of all the prefabs loaded
              */
-            std::vector<std::shared_ptr<Entity>> getPrefabs();
+            std::vector<std::shared_ptr<config::XmlEntity>> getPrefabs();
 
             /**
              * @brief Check if the engine is in debug mode or not
@@ -216,14 +208,14 @@ namespace polymorph::engine
              * @brief Getter of default configuration of the components
              * @return the default configuration of the components
              */
-            std::vector<config::XmlComponent> getDefaultConfigs();
+            std::vector<std::shared_ptr<myxmlpp::Node>> getDefaultConfigs();
 
             /**
              * @brief Getter of default configuration of a specific component
              * @param type type of the component
              * @return the default configuration of the component type
              */
-            config::XmlComponent &getDefaultConfig(const std::string &type);
+            std::shared_ptr<myxmlpp::Node> getDefaultConfig(const std::string &type);
 
             /**
              * @details Find a scene by its name, returns the first matched
@@ -257,7 +249,7 @@ namespace polymorph::engine
              */
             void _initExectutionOrder();
 
-            void _initPluginsExectutionOrder();
+            void _initPluginsExecutionOrder();
 
             /**
              * @details Inits the debug settings of the engine

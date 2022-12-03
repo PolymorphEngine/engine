@@ -15,8 +15,6 @@
 
 #include "polymorph/types/safe/safe_ptr.hpp"
 #include "myxmlpp/Node.hpp"
-#include "APluginConfig.hpp"
-#include "polymorph/config/XmlComponent.hpp"
 
 
 namespace polymorph::engine {
@@ -24,7 +22,7 @@ namespace polymorph::engine {
     class AComponent;
     class Entity;
     using GameObject = safe_ptr<Entity>;
-    
+
     namespace config {
         class XmlComponent;
         class XmlSerializableObject;
@@ -32,7 +30,7 @@ namespace polymorph::engine {
         class XmlEntity;
         using XmlNode = myxmlpp::Node;
     }
-    
+
 }
 
 namespace polymorph::engine::api
@@ -41,7 +39,7 @@ namespace polymorph::engine::api
     class DynamicLoader;
     class ASerializableObject;
     class AssetManager;
-    
+
     class PluginManager
     {
         public:
@@ -74,10 +72,10 @@ namespace polymorph::engine::api
              * @brief Tries to load a symbol from plugins
              * @tparam symbol the symbol signature
              * @param symbolName the string symbol
-             * @return the pointer holding the symbol 
+             * @return the pointer holding the symbol
              */
             template<typename symbol>
-            inline symbol getSymbol(const std::string &symbolName)
+            symbol getSymbol(const std::string &symbolName)
             {
                 for (auto &plugin : _pluginsLoaders) {
                     auto s = plugin.loadSymbol<symbol>(symbolName, true);
@@ -85,7 +83,7 @@ namespace polymorph::engine::api
                         return s;
                 }
                 return nullptr;
-            };
+            }
 
             /**
              * @brief Tries to create a component from plugins
@@ -101,7 +99,7 @@ namespace polymorph::engine::api
              * @brief Tries to create a serializable object from plugins
              * @param type the type of the serializable object to create
              * @param data the xml data to create the object
-             * @param component the component to attach the object with 
+             * @param component the component to attach the object with
              * @return A pointer to the newly created object
              */
             std::shared_ptr<ASerializableObject> tryCreateComponentObject(std::string &type, std::shared_ptr<myxmlpp::Node> &data, safe_ptr<AComponent> component);
@@ -110,7 +108,7 @@ namespace polymorph::engine::api
              * @brief Tries to create a serializable object from plugins
              * @param type the type of the serializable object to create
              * @param data the xml data to create the object
-             * @param config the plugin config to attach the object with 
+             * @param config the plugin config to attach the object with
              * @return A pointer to the newly created object
              */
             std::shared_ptr<ASerializableObject> tryCreateConfigObject(std::string &type, std::shared_ptr<myxmlpp::Node> &data, safe_ptr<APluginConfig> config);
@@ -132,13 +130,13 @@ namespace polymorph::engine::api
              * @param id the id of the prefab
              */
             GameObject getPrefab(const std::string &id);
-            
+
             /**
              * @brief Gets a plugin conf by its type
              * @param type The string type of the config
              */
             safe_ptr<APluginConfig> getConfig(const std::string &type);
-            
+
             /**
              * @brief Gets a plugin conf by its type
              * @tparam T The type of the config
@@ -146,30 +144,29 @@ namespace polymorph::engine::api
             template<class T>
             safe_ptr<T> getConfig()
             {
-                for (auto &plugin: _plugins)
-                {
+                for (auto &plugin: _plugins){
                     auto retrieved = plugin->getConfig<T>();
                     if (retrieved)
                         return retrieved;
                 }
                 return safe_ptr<T>(nullptr);
             }
-            
+
             /**
              * @brief Starts all plugins
              */
             void startingScripts();
-            
+
             /**
              * @brief pre update all plugins
              */
             void preProcessing();
-            
+
             /**
              * @brief update all plugins
              */
             void lateUpdate();
-            
+
             /**
              * @brief post update all plugins
              */

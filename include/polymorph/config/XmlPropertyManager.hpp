@@ -224,12 +224,7 @@ namespace polymorph::engine::config
                 _saveUMapProperty<T1, T2>(property, toSave, level);
             };
 
-            
-            
-            
-            
-            
-            
+            std::shared_ptr<myxmlpp::Node> getNode();
 
         protected:
             /* ***********************************************

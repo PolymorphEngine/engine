@@ -317,6 +317,8 @@ namespace polymorph::engine
             template<typename T>
             void saveProperty(std::string propertyName, safe_ptr<T> &toSave);
 
+            std::shared_ptr<myxmlpp::Node> getNode();
+
         protected:
             /**
              * @brief Sets a property from the Xml data by its name

@@ -71,4 +71,9 @@ void polymorph::engine::AComponent::onSceneUnloaded(
 
 }
 
+std::shared_ptr<myxmlpp::Node> polymorph::engine::AComponent::getNode()
+{
+    return _xmlConfig->getNode();
+}
+
 

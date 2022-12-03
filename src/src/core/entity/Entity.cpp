@@ -12,9 +12,9 @@
 #include "polymorph/config/XmlEntity.hpp"
 #include "polymorph/debug/exception/config/MissingComponentTypeException.hpp"
 
-namespace polymorph::engine 
+namespace polymorph::engine
 {
-    
+
     Entity::Entity(std::shared_ptr<config::XmlEntity> data, Engine &game)
     : Game(game), Debug(game.getLogger()), time(game.getTime()),
       Plugin(game.getPluginManager()), Scene(game.getSceneManager()),
@@ -262,7 +262,7 @@ namespace polymorph::engine
     }
 
     void
-    polymorph::engine::Entity::onSceneLoading(std::shared_ptr<engine::Scene> scene)
+    polymorph::engine::Entity::onSceneLoaded(std::shared_ptr<engine::Scene> scene)
     {
         if (!_active)
             return;
@@ -284,7 +284,7 @@ namespace polymorph::engine
         }
     }
 
-    void polymorph::engine::Entity::onSceneUnloading(std::shared_ptr<engine::Scene> scene)
+    void polymorph::engine::Entity::onSceneUnloaded(std::shared_ptr<engine::Scene> scene)
     {
         if (!_active)
             return;
@@ -464,7 +464,7 @@ namespace polymorph::engine
             return;
         //TODO : throw ?
         std::shared_ptr<AComponent> newComponent;
- 
+
         if (component == "Transform")
             newComponent = std::make_shared<TransformComponent>(config, safe_from_this());
         if (newComponent == nullptr)
@@ -478,7 +478,7 @@ namespace polymorph::engine
             newComponent->transform = getComponent<TransformComponent>();
     }
 
-   
+
 
 
 }

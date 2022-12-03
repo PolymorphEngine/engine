@@ -292,8 +292,8 @@ namespace polymorph::engine
             /**
              * @details Event called on all components when a new scene is loaded
              */
-            void onSceneLoading(std::shared_ptr<engine::Scene> scene);
-            
+            void onSceneLoaded(std::shared_ptr<engine::Scene> scene);
+
             /**
              * @details Event called on all components when a new scene is loaded
              */
@@ -302,7 +302,7 @@ namespace polymorph::engine
             /**
              * @details Event called on all components when a scene is unloaded
              */
-            void onSceneUnloading(std::shared_ptr<engine::Scene> scene);
+            void onSceneUnloaded(std::shared_ptr<engine::Scene> scene);
 
             /**
              * @details Event called on all components when a scene is unloaded

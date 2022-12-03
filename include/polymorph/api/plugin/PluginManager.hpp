@@ -125,7 +125,7 @@ namespace polymorph::engine::api
             /**
              * @brief Gets the component templates from all plugin
              */
-            std::vector<config::XmlComponent> getTemplates();
+            std::vector<std::shared_ptr<myxmlpp::Node>> getTemplates();
 
             /**
              * @brief Gets and instantiate a prefab from plugins by id

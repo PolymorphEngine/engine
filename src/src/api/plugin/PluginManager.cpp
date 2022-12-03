@@ -9,6 +9,13 @@
 #include "polymorph/debug/exception/plugin/PluginDisabledException.hpp"
 #include "polymorph/debug/exception/plugin/PluginNotFoundException.hpp"
 
+#include "polymorph/config/XmlEntity.hpp"
+#include "polymorph/config/XmlComponent.hpp"
+#include "polymorph/core/component/AComponent.hpp"
+#include "polymorph/core/entity/Entity.hpp"
+#include "polymorph/api/SceneManager.hpp"
+#include "polymorph/api/plugin/PluginManager.hpp"
+
 
 namespace polymorph::engine::api
 {
@@ -103,10 +110,10 @@ namespace polymorph::engine::api
         throw debug::PluginNotFoundException(type);
     }
 
-    std::vector <config::XmlComponent>
+    std::vector<std::shared_ptr<myxmlpp::Node>>
     api::PluginManager::getTemplates()
     {
-        std::vector<config::XmlComponent> templates;
+        std::vector<std::shared_ptr<myxmlpp::Node>> templates;
 
         for (auto &plugin : _plugins) {
             if (plugin->isEnabled())
@@ -124,7 +131,7 @@ namespace polymorph::engine::api
             if (plugin->isEnabled() && plugin->hasPrefab(id))
             {
                 auto e = plugin->getPrefabConf(id);
-                _prefabs.emplace_back(e);
+                _prefabs.push_back(std::make_shared<Entity>(*e, _game));
                 return GameObject(_prefabs.back());
             }
         }

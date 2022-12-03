@@ -30,6 +30,8 @@ namespace polymorph::engine::api
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
+            ASerializableObjectFactory() = default;
+            virtual ~ASerializableObjectFactory() = default;
 
 //////////////////////--------------------------/////////////////////////
 

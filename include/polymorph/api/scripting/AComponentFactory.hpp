@@ -8,7 +8,6 @@
 
 #pragma once
 #include "polymorph/types/safe/safe_ptr.hpp"
-#include "polymorph/core/AComponent.hpp"
 #include "myxmlpp/Node.hpp"
 
 namespace polymorph::engine {
@@ -25,6 +24,8 @@ namespace polymorph::engine::api
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
+            AComponentFactory() = default;
+            virtual ~AComponentFactory() = default;
 
 //////////////////////--------------------------/////////////////////////
 

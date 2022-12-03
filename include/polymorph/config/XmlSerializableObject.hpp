@@ -21,6 +21,9 @@
 #include "polymorph/types/safe/safe_ptr.hpp"
 
 #include "polymorph/core/component/AComponent.hpp"
+#include "polymorph/core/entity/Entity.hpp"
+#include "polymorph/api/SceneManager.hpp"
+#include "polymorph/api/plugin/PluginManager.hpp"
 
 
 

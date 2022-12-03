@@ -222,6 +222,8 @@ namespace polymorph::engine::api
 
             std::vector<std::shared_ptr<Entity>> &getKeepedEntities();
 
+            void save(bool saveAll, std::string saveDirectoryPath);
+
             //  End of Scene Section
 //////////////////////--------------------------/////////////////////////
 

@@ -214,3 +214,10 @@ std::vector<std::shared_ptr<polymorph::engine::Entity>> &polymorph::engine::api:
 {
     return KeepOnLoad;
 }
+
+void polymorph::engine::api::SceneManager::save(bool saveAll, std::string saveDirectoryPath)
+{
+    if (_current == nullptr)
+        return;
+    _current->save(saveAll, std::move(saveDirectoryPath));
+}

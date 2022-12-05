@@ -9,6 +9,7 @@
 #pragma once
 #include "polymorph/core/entity/Entity.hpp"
 #include "polymorph/core/Engine.hpp"
+#include "polymorph/core/component/AComponent.hpp"
 
 namespace polymorph::engine
 {
@@ -51,7 +52,7 @@ namespace polymorph::engine
         std::shared_ptr<myxmlpp::Node> config = Game.getDefaultConfig(type);
 
         if (type == "Transform")
-            newComponent = std::make_shared<TransformComponent>(config, safe_from_this());
+            newComponent = std::dynamic_pointer_cast<AComponent>(std::make_shared<TransformComponent>(config, safe_from_this()));
         if (newComponent == nullptr)
             newComponent = Plugin.tryCreateComponent(type, safe_from_this(), config);
         if (_components.contains(newComponent->getType()))
@@ -60,6 +61,8 @@ namespace polymorph::engine
             _components["Default"].push_back(newComponent);
         if (type == "Transform")
             newComponent->transform = getComponent<TransformComponent>();
+        newComponent->getConfig()->setGameObject(safe_from_this());
+        newComponent->build();
         return safe_ptr<T>(std::dynamic_pointer_cast<T>(*newComponent));
     }
 

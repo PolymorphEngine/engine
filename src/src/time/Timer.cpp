@@ -9,7 +9,7 @@
 #include "polymorph/time/Timer.hpp"
 #include "polymorph/time/Time.hpp"
 #include "polymorph/core/Engine.hpp"
-#include "polymorph/core/component/C.hpp"
+#include "polymorph/core/component/AComponent.hpp"
 
 polymorph::engine::time::Timer::Timer(polymorph::engine::time::Time &time, double delay) : time(time), delay(delay) {}
 

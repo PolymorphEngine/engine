@@ -82,6 +82,22 @@ namespace polymorph::engine::config
                 _setRefProperty<T>(property, toSet, level);
             };
 
+            template<typename T, typename T2 = void>
+            void set(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
+
+                if (property == nullptr)
+                    _onMissingPropertyExcept(level, propertyName);
+                static_assert(!CastHelper::is_map<T>);
+                if constexpr (std::is_enum<T>() && !CastHelper::is_builtin<T>)
+                    _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
+                else if constexpr (!std::is_enum<T>() && !CastHelper::is_builtin<T>)
+                    _setPrimitiveProperty(property, toSet, level);
+                else if constexpr (CastHelper::is_builtin<T>)
+                    _setBuiltinProperty(property, toSet, level);
+            };
+
             template<typename T>
             void save(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
@@ -265,6 +281,21 @@ namespace polymorph::engine::config
 
             void _onMissingPropertyExcept(debug::Logger::severity level,
                                           std::string propertyName) override;
+
+            /**
+             * @brief Set Property BUILTIN Specialization
+             */
+            template<typename T, typename T2 = void> requires CastHelper::is_builtin<T>
+            void _setBuiltinProperty(std::shared_ptr<myxmlpp::Node> &data, T &toSet,
+                                     debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                static_assert(!CastHelper::is_map<T>
+                              && !CastHelper::is_vector<T>
+                              && !CastHelper::is_safeptr<T>
+                              && !std::is_enum<T>()
+                              && CastHelper::is_builtin<T>);
+                toSet = T(_entity->getComponent(_type), data);
+            };
 
 //////////////////////--------------------------/////////////////////////
 

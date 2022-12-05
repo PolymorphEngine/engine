@@ -69,8 +69,8 @@ namespace polymorph::engine::config
              * @param propertyName The name of the property
              * @param toSet The property to set
              * @param level The level of the error if something goes wrong (not found or wrong value)
-             */
-            template<typename T>
+             *
+            template<typename T> requires (!CastHelper::is_builtin<T>)
             void set(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
@@ -79,10 +79,10 @@ namespace polymorph::engine::config
                     _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
-                    _setPrimitiveProperty<int>(property, reinterpret_cast<int &>(toSet), level);
+                    _setBuiltinProperty(property, reinterpret_cast<int &>(toSet), level);
                 else if constexpr (!std::is_enum<T>())
-                    _setPrimitiveProperty<T>(property, toSet, level);
-            };
+                    _setBuiltinProperty(property, toSet, level);
+            };*/
 
             /**
              * @brief Extract a VECTOR property from the xml node
@@ -262,7 +262,7 @@ namespace polymorph::engine::config
                     _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
-                    _setPrimitiveProperty<int>(property, reinterpret_cast<int &>(toSet), level);
+                    _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
                 else if constexpr (!std::is_enum<T>())
                     _setPrimitiveProperty<T>(property, toSet, level);
             };
@@ -460,25 +460,11 @@ namespace polymorph::engine::config
              * ***********************************************/
 
 
-            /**
-             * @brief Set Property BUILTIN Specialization
-             */
-            template<typename T, typename T2 = void>
-            void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data, T &toSet,
-                                       debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                static_assert(!CastHelper::is_map<T>
-                              && !CastHelper::is_vector<T>
-                              && !CastHelper::is_safeptr<T>
-                              && !std::is_enum<T>()
-                              && CastHelper::is_builtin<T>);
-                toSet = T(data, *this);
-            };
+
 
             /**
              * @brief Set Property INT Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        int &toSet, debug::Logger::severity level)
             {
@@ -488,7 +474,6 @@ namespace polymorph::engine::config
             /**
              * @brief Set Property FLOAT Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        float &toSet, debug::Logger::severity level)
             {
@@ -498,7 +483,6 @@ namespace polymorph::engine::config
             /**
              * @brief Set Property BOOL Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        bool &toSet, debug::Logger::severity level)
             {
@@ -508,7 +492,6 @@ namespace polymorph::engine::config
             /**
              * @brief Set Property STRING Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        std::string &toSet,
                                        debug::Logger::severity level)
@@ -608,7 +591,7 @@ namespace polymorph::engine::config
                               && !CastHelper::is_safeptr<T>
                               && !std::is_enum<T>()
                               && CastHelper::is_builtin<T>);
-                toSet = T(data, *this);
+                toSet.saveAll();
             };
 
             /**

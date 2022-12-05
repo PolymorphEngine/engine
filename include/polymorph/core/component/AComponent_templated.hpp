@@ -113,7 +113,7 @@ namespace polymorph::engine
                                                 T &toSet,
                                                 polymorph::engine::debug::Logger::severity level)
     {
-        _xmlConfig->XmlPropertyManager::set(propertyName, toSet, level);
+        _xmlConfig->set(propertyName, toSet, level);
     }
 
 }

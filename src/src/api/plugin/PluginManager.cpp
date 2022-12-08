@@ -6,15 +6,15 @@
 */
 
 #include "polymorph/api/plugin/PluginManager.hpp"
+#include "polymorph/api/plugin/APluginConfig.hpp"
+#include "polymorph/api/scripting/ASerializableObject.hpp"
 #include "polymorph/debug/exception/plugin/PluginDisabledException.hpp"
 #include "polymorph/debug/exception/plugin/PluginNotFoundException.hpp"
 
 #include "polymorph/config/XmlEntity.hpp"
-#include "polymorph/config/XmlComponent.hpp"
 #include "polymorph/core/component/AComponent.hpp"
 #include "polymorph/core/entity/Entity.hpp"
-#include "polymorph/api/SceneManager.hpp"
-#include "polymorph/api/plugin/PluginManager.hpp"
+#include "polymorph/core/Engine.hpp"
 
 
 namespace polymorph::engine::api
@@ -131,7 +131,7 @@ namespace polymorph::engine::api
             if (plugin->isEnabled() && plugin->hasPrefab(id))
             {
                 auto e = plugin->getPrefabConf(id);
-                _prefabs.push_back(std::make_shared<Entity>(*e, _game));
+                _prefabs.push_back(std::make_shared<Entity>(e, _game));
                 return GameObject(_prefabs.back());
             }
         }
@@ -272,5 +272,10 @@ namespace polymorph::engine::api
                 return retrieved;
         }
         return safe_ptr<APluginConfig>(nullptr);
+    }
+
+    debug::Logger &PluginManager::getLogger()
+    {
+        return _game.getLogger();
     }
 } // api

@@ -92,7 +92,7 @@ void polymorph::engine::TransformComponent::smoothMove(Vector3 destination, floa
     if (_smoothMoving)
         return;
     _smoothMoving = true;
-    _smoothTimer = Timer(this->time, time);
+    _smoothTimer = time::Timer(this->time, time);
     _smoothTarget = destination;
     _smoothOrigin = _position;
 }
@@ -139,7 +139,7 @@ polymorph::engine::Transform polymorph::engine::TransformComponent::removeChild(
         if (tchild->gameObject->getId() == child->gameObject->getId())
         {
             erase(pos);
-            child->_parent.reset();
+            child->_parent = Transform(nullptr);
             //TODO: reset in scene
             return (tchild);
         }
@@ -196,15 +196,14 @@ void polymorph::engine::TransformComponent::build()
 
     std::vector<GameObject> refs;
     _setProperty("children", refs);
-    Transform test(safe_from_this());
 
     for (auto &ref: refs) {
         if (!ref)
             continue;
         if (ref->isPrefab())
-            ref->Scene.instantiate(ref, safe_from_this(), false);
+            ref->Scene.instantiate(ref, safe_from_this());
         else
-            ref->transform->setParent(shared_from_this());
+            ref->transform->setParent(safe_from_this());
     }
 }
 

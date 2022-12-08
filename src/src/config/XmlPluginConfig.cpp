@@ -6,6 +6,7 @@
 */
 
 #include "polymorph/config/XmlPluginConfig.hpp"
+#include "polymorph/core/Engine.hpp"
 #include "polymorph/debug/exception/config/CorruptedFileException.hpp"
 #include "polymorph/debug/exception/config/WrongValueException.hpp"
 #include "polymorph/debug/exception/config/MissingPropertyException.hpp"

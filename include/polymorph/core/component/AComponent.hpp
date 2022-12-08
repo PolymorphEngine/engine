@@ -318,6 +318,8 @@ namespace polymorph::engine
             void saveProperty(std::string propertyName, safe_ptr<T> &toSave);
 
             std::shared_ptr<myxmlpp::Node> getNode();
+            
+            std::shared_ptr<config::XmlComponent> getConfig();
 
         protected:
             /**

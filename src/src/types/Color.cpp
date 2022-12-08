@@ -48,18 +48,31 @@ polymorph::engine::Color::setColor(unsigned int r, unsigned int g, unsigned int 
 
 void polymorph::engine::Color::build()
 {
-    _setProperty("r", r);
-    _setProperty("g", g);
-    _setProperty("b", b);
-    _setProperty("a", a);
+    int rInt;
+    int gInt;
+    int bInt;
+    int aInt;
+    _setProperty("r", rInt);
+    _setProperty("g", gInt);
+    _setProperty("b", bInt);
+    _setProperty("a", aInt);
+    r = static_cast<unsigned char>(rInt);
+    g = static_cast<unsigned char>(gInt);
+    b = static_cast<unsigned char>(bInt);
+    a = static_cast<unsigned char>(aInt);
 }
 
 void polymorph::engine::Color::saveAll()
 {
-    saveProperty("r", r);
-    saveProperty("g", g);
-    saveProperty("b", b);
-    saveProperty("a", a);
+    int rInt = static_cast<int>(r);
+    int gInt = static_cast<int>(g);
+    int bInt = static_cast<int>(b);
+    int aInt = static_cast<int>(a);
+
+    saveProperty("r", rInt);
+    saveProperty("g", gInt);
+    saveProperty("b", bInt);
+    saveProperty("a", aInt);
 }
 
 bool polymorph::engine::Color::operator==(const polymorph::engine::Color &other) const

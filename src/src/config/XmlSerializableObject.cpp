@@ -6,7 +6,10 @@
 */
 
 #include "polymorph/config/XmlSerializableObject.hpp"
+#include "polymorph/api/plugin/APluginConfig.hpp"
 #include "polymorph/debug/exception/config/MissingPropertyException.hpp"
+#include "polymorph/debug/exception/config/WrongValueException.hpp"
+#include "polymorph/debug/exception/config/MissingValueException.hpp"
 
 namespace polymorph::engine::config
 {
@@ -18,7 +21,7 @@ namespace polymorph::engine::config
         try {
             _type = node->findAttribute("subtype")->getValue();
         } catch (myxmlpp::Exception &e) {
-            throw debug::ConfigurationException("No SerializableObject type found in configuration from component (" + component->getType() + "), in entity (" 
+            throw debug::ConfigurationException("No SerializableObject type found in configuration from component (" + component->getType() + "), in entity ("
             +component->gameObject->getName() + " - "+component->gameObject->getId()+") !");
         }
     }
@@ -35,7 +38,7 @@ namespace polymorph::engine::config
             throw debug::ConfigurationException("No SerializableObject type found in configuration from plugin config ( "+ config->getType() + " ) !");
         }
     }
-    
+
     void
     XmlSerializableObject::_onWrongValueExcept(debug::Logger::severity level,
                                                std::string propertyName,
@@ -95,7 +98,7 @@ namespace polymorph::engine::config
             _logger.log("[ConfigurationException] Wrong value for property '" + name + "' in SerializableObject '" + type + "' from component '" + _component->getType() + "' in entity '" + _component->gameObject->getName() + "' (" + _component->gameObject->getId() + ")", level);
         else
             _logger.log("[ConfigurationException] Wrong value for property '" + name + "' in SerializableObject '" + type + "' from plugin config '" + _config->getType() + "'", level);
-        
+
     }
 
     void
@@ -107,4 +110,4 @@ namespace polymorph::engine::config
             _logger.log("[ConfigurationException] Missing value for property '" + name + "' in SerializableObject '" + type + "' from plugin config '" + _config->getType() + "'", level);
     }
 
-} 
+}

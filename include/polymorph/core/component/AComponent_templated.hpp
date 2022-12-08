@@ -10,6 +10,7 @@
 
 #include "polymorph/types/safe/safe_ptr.hpp"
 #include "polymorph/core/component/AComponent.hpp"
+#include "polymorph/core/component/TransformComponent.hpp"
 #include "polymorph/core/entity/Entity.hpp"
 
 #include "polymorph/config/XmlComponent.hpp"
@@ -113,12 +114,6 @@ namespace polymorph::engine
                                                 polymorph::engine::debug::Logger::severity level)
     {
         _xmlConfig->set(propertyName, toSet, level);
-    }
-
-    template<class T>
-    polymorph::engine::safe_ptr<T> polymorph::engine::AComponent::_self()
-    {
-        return polymorph::engine::safe_ptr<T>(std::dynamic_pointer_cast<T>(shared_from_this()));
     }
 
 }

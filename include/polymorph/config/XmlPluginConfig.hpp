@@ -10,6 +10,7 @@
 
 
 #include "XmlPropertyManager.hpp"
+#include "polymorph/core/Engine.hpp"
 #include "polymorph/api/plugin/PluginManager.hpp"
 
 namespace polymorph::engine {

@@ -11,6 +11,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
 #include "myxmlpp/myxmlpp.hpp"
 
@@ -22,7 +23,7 @@ namespace polymorph::engine
 {
     class Entity;
     class AComponent;
-    
+
     using GameObject = safe_ptr<Entity>;
 }
 
@@ -52,9 +53,9 @@ namespace polymorph::engine::config
             debug::Logger& _logger;
 
 
-            
-            
-            
+
+
+
 //////////////////////--------------------------/////////////////////////
 
 
@@ -63,13 +64,13 @@ namespace polymorph::engine::config
         public:
             /**
              * @brief Extract a PRIMITIVE property from the xml node
-             * 
+             *
              * @tparam T The type of the property
              * @param propertyName The name of the property
              * @param toSet The property to set
              * @param level The level of the error if something goes wrong (not found or wrong value)
-             */
-            template<typename T>
+             *
+            template<typename T> requires (!CastHelper::is_builtin<T>)
             void set(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
@@ -78,14 +79,14 @@ namespace polymorph::engine::config
                     _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
-                    _setPrimitiveProperty<int>(property, reinterpret_cast<int &>(toSet), level);
+                    _setBuiltinProperty(property, reinterpret_cast<int &>(toSet), level);
                 else if constexpr (!std::is_enum<T>())
-                    _setPrimitiveProperty<T>(property, toSet, level);
-            };
-            
+                    _setBuiltinProperty(property, toSet, level);
+            };*/
+
             /**
              * @brief Extract a VECTOR property from the xml node
-             * 
+             *
              * @tparam T The type of the property
              * @param propertyName The name of the property
              * @param toSet The property to set
@@ -102,10 +103,10 @@ namespace polymorph::engine::config
                 static_assert(!CastHelper::is_map<T>);
                 _setVectorProperty(property, toSet, level);
             };
-            
+
             /**
              * @brief Extract a MAP property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -124,7 +125,7 @@ namespace polymorph::engine::config
 
             /**
              * @brief Extract an UNORDERED MAP property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -140,13 +141,13 @@ namespace polymorph::engine::config
                     _onMissingPropertyExcept(level, propertyName);
                 _setUMapProperty<T1, T2>(property, toSet, level);
             };
-            
-            
-            
-            
+
+
+
+
             /**
              * @brief Extract a PRIMITIVE property from the xml node
-             * 
+             *
              * @tparam T The type of the property
              * @param propertyName The name of the property
              * @param toSet The property to set
@@ -165,10 +166,10 @@ namespace polymorph::engine::config
                 else if constexpr (!std::is_enum<T>())
                     _savePrimitiveProperty<T>(property, toSave, level);
             };
-            
+
             /**
              * @brief Extract a VECTOR property from the xml node
-             * 
+             *
              * @tparam T The type of the property
              * @param propertyName The name of the property
              * @param toSave The property to set
@@ -185,10 +186,10 @@ namespace polymorph::engine::config
                 static_assert(!CastHelper::is_map<T>);
                 _saveVectorProperty(property, toSave, level);
             };
-            
+
             /**
              * @brief Extract a MAP property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -207,7 +208,7 @@ namespace polymorph::engine::config
 
             /**
              * @brief Extract an UNORDERED MAP property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -226,6 +227,12 @@ namespace polymorph::engine::config
 
             std::shared_ptr<myxmlpp::Node> getNode();
 
+
+
+
+
+
+
         protected:
             /* ***********************************************
              * @group Set Sub Property specializations
@@ -234,7 +241,7 @@ namespace polymorph::engine::config
 
             /**
              * @brief Extract an PRIMITIVE SUB-property from the xml node
-             * 
+             *
              * @tparam T The type of the property
              * @param propertyName The name of the property
              * @param data The node to search the sub-property in
@@ -255,15 +262,15 @@ namespace polymorph::engine::config
                     _onMissingPropertyExcept(level, propertyName);
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
-                    _setPrimitiveProperty<int>(property, reinterpret_cast<int &>(toSet), level);
+                    _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
                 else if constexpr (!std::is_enum<T>())
                     _setPrimitiveProperty<T>(property, toSet, level);
             };
-            
+
 
             /**
              * @brief Extract an VECTOR SUB-property from the xml node
-             * 
+             *
              * @tparam T The type of the property
              * @param propertyName The name of the property
              * @param data The node to search the sub-property in
@@ -286,10 +293,10 @@ namespace polymorph::engine::config
                 _setVectorProperty<T>(property, toSet, level);
             };
 
-            
+
             /**
              * @brief Extract an MAP SUB-property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -314,7 +321,7 @@ namespace polymorph::engine::config
 
             /**
              * @brief Extract an UNORDERED MAP SUB-property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -338,11 +345,11 @@ namespace polymorph::engine::config
             };
 
 
-            
-            
-            
-            
-            
+
+
+
+
+
             template<typename T>
             void _saveSubProperty(const std::string &propertyName,
                                  const std::shared_ptr<myxmlpp::Node> &data,
@@ -361,11 +368,11 @@ namespace polymorph::engine::config
                 else if constexpr (!std::is_enum<T>())
                     _savePrimitiveProperty<T>(property, toSet, level);
             };
-            
+
 
             /**
              * @brief Extract an VECTOR SUB-property from the xml node
-             * 
+             *
              * @tparam T The type of the property
              * @param propertyName The name of the property
              * @param data The node to search the sub-property in
@@ -388,10 +395,10 @@ namespace polymorph::engine::config
                 _saveVectorProperty<T>(property, toSet, level);
             };
 
-            
+
             /**
              * @brief Extract an MAP SUB-property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -416,7 +423,7 @@ namespace polymorph::engine::config
 
             /**
              * @brief Extract an UNORDERED MAP SUB-property from the xml node
-             * 
+             *
              * @tparam T1 The type of the Key
              * @tparam T2 The type of the Value
              * @param propertyName The name of the property
@@ -440,68 +447,51 @@ namespace polymorph::engine::config
             };
 
 
-            
-            
-            
-            
-            
+
+
+
+
+
 
 
 
             /* ***********************************************
              * @group Set Property Specializations
              * ***********************************************/
-             
-            
-            /**
-             * @brief Set Property BUILTIN Specialization
-             */
-            template<typename T, typename T2 = void>
-            void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data, T &toSet,
-                                       debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                static_assert(!CastHelper::is_map<T>
-                              && !CastHelper::is_vector<T>
-                              && !CastHelper::is_safeptr<T>
-                              && !std::is_enum<T>()
-                              && CastHelper::is_builtin<T>);
-                toSet = T(data, *this);
-            };
-            
+
+
+
+
             /**
              * @brief Set Property INT Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        int &toSet, debug::Logger::severity level)
             {
                 _setPropertyFromAttr(toSet, data, level);
             }
-            
+
             /**
              * @brief Set Property FLOAT Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        float &toSet, debug::Logger::severity level)
             {
                 _setPropertyFromAttr(toSet, data, level);
             }
-            
+
             /**
              * @brief Set Property BOOL Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        bool &toSet, debug::Logger::severity level)
             {
                 _setPropertyFromAttr(toSet, data, level);
             }
-            
+
             /**
              * @brief Set Property STRING Specialization
              */
-            template<typename T2 = void>
             void _setPrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data,
                                        std::string &toSet,
                                        debug::Logger::severity level)
@@ -591,7 +581,7 @@ namespace polymorph::engine::config
                 _setUMapProperty(data, toSet, level);
             };
 
-            
+
                   template<typename T, typename T2 = void>
             void _savePrimitiveProperty(std::shared_ptr<myxmlpp::Node> &data, T &toSet,
                                        debug::Logger::severity level = debug::Logger::DEBUG)
@@ -601,9 +591,9 @@ namespace polymorph::engine::config
                               && !CastHelper::is_safeptr<T>
                               && !std::is_enum<T>()
                               && CastHelper::is_builtin<T>);
-                toSet = T(data, *this);
+                toSet.saveAll();
             };
-            
+
             /**
              * @brief Set Property INT Specialization
              */
@@ -613,7 +603,7 @@ namespace polymorph::engine::config
             {
                 _savePropertyFromAttr(toSet, data, level);
             }
-            
+
             /**
              * @brief Set Property FLOAT Specialization
              */
@@ -623,7 +613,7 @@ namespace polymorph::engine::config
             {
                 _savePropertyFromAttr(toSet, data, level);
             }
-            
+
             /**
              * @brief Set Property BOOL Specialization
              */
@@ -633,7 +623,7 @@ namespace polymorph::engine::config
             {
                 _savePropertyFromAttr(toSet, data, level);
             }
-            
+
             /**
              * @brief Set Property STRING Specialization
              */
@@ -656,9 +646,9 @@ namespace polymorph::engine::config
             {
                 int i = 0;
                 int countToPop = 0;
-                
+
                 std::vector<std::shared_ptr<myxmlpp::Node>> toKeep;
-                
+
                 for (auto &elem: *data)
                 {
                     if (i >= toSet.size()) {
@@ -674,7 +664,7 @@ namespace polymorph::engine::config
                     data->addChild(elem);
             };
 
-            
+
             /**
              * @brief Set Property MAP Specialization
              */
@@ -760,15 +750,15 @@ namespace polymorph::engine::config
                 _saveUMapProperty(data, toSet, level);
             };
 
-            
-            
-            
+
+
+
 
 
             /* ***********************************************
              * @group Find property utilities
              * ***********************************************/
-            
+
             /**
              * @brief Tries to find a property node from name
              * @param name The name of the property to find
@@ -784,10 +774,10 @@ namespace polymorph::engine::config
              */
             std::shared_ptr<myxmlpp::Node>
             _findProperty(const std::string &name, const std::shared_ptr<myxmlpp::Node> &data);
-            
-            
-            
-            
+
+
+
+
             /**
              * @brief Tries to set an INT property
              * @param toSet The variable to set
@@ -798,7 +788,7 @@ namespace polymorph::engine::config
             bool
             _setPropertyFromAttr(int &toSet, std::shared_ptr<myxmlpp::Node> data,
              debug::Logger::severity level = debug::Logger::DEBUG);
-            
+
             /**
              * @brief Tries to set an FLOAT property
              * @param toSet The variable to set
@@ -834,9 +824,9 @@ namespace polymorph::engine::config
             _setPropertyFromAttr(std::string &toSet, std::shared_ptr<myxmlpp::Node> data,
             debug::Logger::severity level = debug::Logger::DEBUG);
 
-         
-            
-            
+
+
+
             /**
              * @brief Tries to set an INT property
              * @param toSet The variable to set
@@ -847,7 +837,7 @@ namespace polymorph::engine::config
             bool
             _savePropertyFromAttr(int &toSet, std::shared_ptr<myxmlpp::Node> data,
              debug::Logger::severity level = debug::Logger::DEBUG);
-            
+
             /**
              * @brief Tries to set an FLOAT property
              * @param toSet The variable to set
@@ -906,7 +896,7 @@ namespace polymorph::engine::config
              */
             virtual void _onMissingPropertyExcept(debug::Logger::severity level, std::string propertyName) = 0;
 
-//////////////////////--------------------------/////////////////////////           
+//////////////////////--------------------------/////////////////////////
 
     };
 

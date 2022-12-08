@@ -56,6 +56,8 @@ namespace polymorph::engine
              */
             Vector3(Vector3&& other) noexcept = default;
 
+            Vector3 &operator=(const Vector3 &other) = default;
+
             /**
              * @brief Construct a new Vector3 with 0 as default value for x, y and z
              */

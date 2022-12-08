@@ -6,13 +6,14 @@
 */
 
 #include "polymorph/api/scripting/ASerializableObject.hpp"
+#include "polymorph/api/plugin/APluginConfig.hpp"
 
 
 namespace polymorph::engine::api
 {
     api::ASerializableObject::ASerializableObject(
             safe_ptr <AComponent> component,
-            std::shared_ptr <myxmlpp::Node> node) 
+            std::shared_ptr <myxmlpp::Node> node)
     : _isFromConfig(false), _component(component)
     {
         manager = std::make_shared<config::XmlSerializableObject>(component, node, component->Debug);
@@ -21,7 +22,7 @@ namespace polymorph::engine::api
 
     api::ASerializableObject::ASerializableObject(
             safe_ptr <APluginConfig> config,
-            std::shared_ptr <myxmlpp::Node> node) 
+            std::shared_ptr <myxmlpp::Node> node)
     : _isFromConfig(true), _config(config)
     {
         manager = std::make_shared<config::XmlSerializableObject>(config, node, config->Debug);

@@ -8,6 +8,7 @@
 
 #pragma once
 #include <vector>
+#include <algorithm>
 #include "safe_ptr.hpp"
 
 namespace polymorph::engine

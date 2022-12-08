@@ -14,7 +14,6 @@
 #include <unordered_map>
 #include "polymorph/types/safe/safe_ptr.hpp"
 #include "myxmlpp/Node.hpp"
-#include "ASerializableObject.hpp"
 
 namespace polymorph::engine {
     class AComponent;
@@ -24,6 +23,7 @@ namespace polymorph::engine::api
 {
     class PluginManager;
     class APluginConfig;
+    class ASerializableObject;
 
     class ASerializableObjectFactory
     {

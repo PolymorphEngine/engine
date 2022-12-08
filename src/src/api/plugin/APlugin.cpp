@@ -6,6 +6,8 @@
 */
 
 #include "polymorph/api/plugin/APlugin.hpp"
+#include "polymorph/api/plugin/APluginConfig.hpp"
+#include "polymorph/core/Engine.hpp"
 #include "polymorph/config/XmlComponent.hpp"
 #include "polymorph/config/XmlEntity.hpp"
 

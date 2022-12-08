@@ -24,6 +24,7 @@
 #include "polymorph/core/entity/Entity.hpp"
 #include "polymorph/api/SceneManager.hpp"
 #include "polymorph/api/plugin/PluginManager.hpp"
+#include "polymorph/api/plugin/APluginConfig.hpp"
 
 
 
@@ -69,7 +70,23 @@ namespace polymorph::engine::config
         public:
 
             std::string getType() const;
-            
+
+            template<typename T, typename T2 = void>
+            void set(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
+
+                if (property == nullptr)
+                    _onMissingPropertyExcept(level, propertyName);
+                static_assert(!CastHelper::is_map<T>);
+                if constexpr (std::is_enum<T>() && !CastHelper::is_builtin<T>)
+                    _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
+                else if constexpr (!std::is_enum<T>() && !CastHelper::is_builtin<T>)
+                    _setPrimitiveProperty(property, toSet, level);
+                else if constexpr (CastHelper::is_builtin<T>)
+                    _setBuiltinProperty(property, toSet, level);
+            };
+
             template<typename T>
             void set(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
@@ -89,7 +106,7 @@ namespace polymorph::engine::config
                     _logger.log("Cannot set a Reference to object in a plugin config", debug::Logger::MAJOR);
                     return;
                 }
-                
+
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
                 if (property == nullptr)
@@ -112,7 +129,7 @@ namespace polymorph::engine::config
                 static_assert(!CastHelper::is_map<T>);
                 _saveRefProperty<T>(property, toSet, level);
             };
-            
+
             template<typename T>
             void save(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
@@ -123,7 +140,7 @@ namespace polymorph::engine::config
         private:
 
             void _logMissingProperty(std::string type, std::string name, debug::Logger::severity level);
-            
+
             void _logMissingValue(std::string type, std::string name, debug::Logger::severity level);
 
             /**
@@ -133,7 +150,7 @@ namespace polymorph::engine::config
              * @param level The logger severity level
              */
             void _logWrongValue(std::string type, std::string name, debug::Logger::severity level);
-            
+
             void _onWrongValueExcept(debug::Logger::severity level,
                                      std::string propertyName,
                                      std::string value) override;
@@ -143,7 +160,7 @@ namespace polymorph::engine::config
 
             void _onMissingPropertyExcept(debug::Logger::severity level,
                                           std::string propertyName) override;
-            
+
             template<typename T, typename T2 = void>
             void _setSerializableProperty(std::shared_ptr<myxmlpp::Node> &data,
                                     std::shared_ptr<T> &toSet,
@@ -265,6 +282,24 @@ namespace polymorph::engine::config
 
                 if (!_savePropertyFromAttr(id, refProp, level))
                     return;
+            };
+
+            /**
+             * @brief Set Property BUILTIN Specialization
+             */
+            template<typename T, typename T2 = void>
+            void _setBuiltinProperty(std::shared_ptr<myxmlpp::Node> &data, T &toSet,
+                                       debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                static_assert(!CastHelper::is_map<T>
+                              && !CastHelper::is_vector<T>
+                              && !CastHelper::is_safeptr<T>
+                              && !std::is_enum<T>()
+                              && CastHelper::is_builtin<T>);
+                if (_isFromConfig)
+                    toSet = T(_config, data);
+                else
+                    toSet = T(_component, data);
             };
 //////////////////////--------------------------/////////////////////////
 

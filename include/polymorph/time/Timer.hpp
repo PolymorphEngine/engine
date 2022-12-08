@@ -8,13 +8,13 @@
 
 #pragma once
 
-#include "polymorph/types/safeptr/safe_ptr.hpp"
+#include "polymorph/types/safe/safe_ptr.hpp"
 
 namespace polymorph::engine
 {
     class Engine;
     class Entity;
-    class Component;
+    class AComponent;
     using GameObject = safe_ptr<Entity>;
 }
 
@@ -53,13 +53,13 @@ namespace polymorph::engine::time
              * @param component The Component to get the time from
              * @param delay The delay in seconds
              */
-            explicit Timer(Component &component, double delay);
+            explicit Timer(AComponent &component, double delay);
 
             Timer(const Timer &other) = default;
 
             Timer(Timer &&other) noexcept = default;
 
-            Timer &operator=(const Timer &other) = default;
+            Timer &operator=(const Timer &other);
 
 
 //////////////////////--------------------------/////////////////////////

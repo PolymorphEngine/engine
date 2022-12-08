@@ -50,7 +50,7 @@ namespace polymorph::engine::api
 
 /////////////////////////////// METHODS /////////////////////////////////
         public:
-            
+
             /**
              * @brief Virtual Pure method to be implemented in any SerializableObject implementation
              * that will be called when the object is loaded from a file to set all properties
@@ -62,27 +62,27 @@ namespace polymorph::engine::api
              * that will be called when the object is Saved to save all properties
              */
             virtual void saveAll() = 0;
-            
+
             /**
              * @brief Returns whether the object is currently stored in a component or in a plugin config file
-             * 
+             *
              * @return True if the object is stored in a plugin config file, false otherwise
              */
             bool isFromConfig() const;
-            
+
             /**
              * @brief Returns the type of the serializable object
              * @return The string type of the object
              */
             std::string getType() const;
-            
+
             /**
              * @brief Returns the Component that owns the serializable object
              * @tparam T The component type
              * @return The casted safe_ptr of the Component
              */
             template<typename T>
-            safe_ptr<T> getComponent() const 
+            safe_ptr<T> getComponent() const
             {
                 return safe_ptr<T>(std::dynamic_pointer_cast<T>(*_component));
             }
@@ -97,7 +97,7 @@ namespace polymorph::engine::api
             {
                 return safe_ptr<T>(std::dynamic_pointer_cast<T>(*_config));
             }
-            
+
             /**
              * @brief Saves a property in the Xml data by its name
              * @param name The name of the property
@@ -169,7 +169,7 @@ namespace polymorph::engine::api
             template<typename T>
             void _setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
             {
-                manager->XmlPropertyManager::set(propertyName, toSet, level);
+                manager->set(propertyName, toSet, level);
             }
 
 //////////////////////--------------------------/////////////////////////

@@ -76,4 +76,9 @@ std::shared_ptr<myxmlpp::Node> polymorph::engine::AComponent::getNode()
     return _xmlConfig->getNode();
 }
 
+std::shared_ptr<polymorph::engine::config::XmlComponent> polymorph::engine::AComponent::getConfig()
+{
+    return _xmlConfig;
+}
+
 

@@ -10,8 +10,6 @@
 namespace polymorph::engine::api
 {
 
-
-
     void ASerializableObjectFactory::buildFactory()
     {
         _registerEmptyBuildables(_emptyBuildables);

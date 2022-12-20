@@ -5,6 +5,7 @@
 ** header for PluginManager.c
 */
 
+
 #include "polymorph/engine/api/plugin/PluginManager.hpp"
 #include "polymorph/engine/api/plugin/APluginConfig.hpp"
 #include "polymorph/engine/api/scripting/ASerializableObject.hpp"

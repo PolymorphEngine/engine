@@ -12,7 +12,6 @@
 #include "polymorph/engine/config/XmlEntity.hpp"
 
 #include "polymorph/engine/debug/exception/plugin/CorruptedPluginException.hpp"
-#include "polymorph/engine/debug/exception/plugin/PluginNotFoundException.hpp"
 
 namespace polymorph::engine::api
 {

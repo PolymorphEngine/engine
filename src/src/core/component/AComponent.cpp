@@ -6,11 +6,11 @@
 */
 
 
-#include "polymorph/core/component/AComponent.hpp"
+#include "polymorph/engine/core/component/AComponent.hpp"
 
-#include "polymorph/config/XmlComponent.hpp"
-#include "polymorph/core/Scene.hpp"
-#include "polymorph/api/AssetManager.hpp"
+#include "polymorph/engine/config/XmlComponent.hpp"
+#include "polymorph/engine/core/Scene.hpp"
+#include "polymorph/engine/api/AssetManager.hpp"
 
 polymorph::engine::AComponent::AComponent(std::shared_ptr<myxmlpp::Node> data, polymorph::engine::GameObject gameObject)
         : gameObject(gameObject), Plugin(gameObject->Plugin),

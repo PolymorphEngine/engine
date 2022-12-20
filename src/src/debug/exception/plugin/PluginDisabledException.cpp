@@ -5,7 +5,7 @@
 ** header for PluginDisabledException.c
 */
 
-#include "polymorph/debug/exception/plugin/PluginDisabledException.hpp"
+#include "polymorph/engine/debug/exception/plugin/PluginDisabledException.hpp"
 
 polymorph::engine::debug::PluginDisabledException::PluginDisabledException(
         std::string plugin, std::string objectType, Logger::severity level)

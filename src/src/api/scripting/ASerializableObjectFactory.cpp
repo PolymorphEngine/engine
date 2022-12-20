@@ -5,7 +5,7 @@
 ** header for ASerializableObjectFactory.c
 */
 
-#include "polymorph/api/scripting/ASerializableObjectFactory.hpp"
+#include "polymorph/engine/api/scripting/ASerializableObjectFactory.hpp"
 
 namespace polymorph::engine::api
 {

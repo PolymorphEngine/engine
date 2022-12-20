@@ -6,8 +6,8 @@
 */
 
 
-#include "polymorph/types/vector/Vector2.hpp"
-#include "polymorph/types/vector/Vector3.hpp"
+#include "polymorph/engine/types/vector/Vector2.hpp"
+#include "polymorph/engine/types/vector/Vector3.hpp"
 
 polymorph::engine::Vector2::Vector2(float x, float y) : x(x), y(y)
 {}

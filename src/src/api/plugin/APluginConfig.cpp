@@ -5,10 +5,10 @@
 ** header for APluginConfig.c
 */
 
-#include "polymorph/api/plugin/APluginConfig.hpp"
-#include "polymorph/core/Engine.hpp"
-#include "polymorph/debug/exception/config/MissingFileException.hpp"
-#include "polymorph/debug/exception/CoreException.hpp"
+#include "polymorph/engine/api/plugin/APluginConfig.hpp"
+#include "polymorph/engine/core/Engine.hpp"
+#include "polymorph/engine/debug/exception/config/MissingFileException.hpp"
+#include "polymorph/engine/debug/exception/CoreException.hpp"
 
 namespace polymorph::engine::api
 {

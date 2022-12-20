@@ -5,10 +5,10 @@
 ** header for XmlEngine.c
 */
 
-#include "polymorph/config/XmlEngine.hpp"
-#include "polymorph/debug/exception/CoreException.hpp"
-#include "polymorph/debug/exception/ConfigurationException.hpp"
-#include "polymorph/debug/exception/core/NoScenesFoundException.hpp"
+#include "polymorph/engine/config/XmlEngine.hpp"
+#include "polymorph/engine/debug/exception/CoreException.hpp"
+#include "polymorph/engine/debug/exception/ConfigurationException.hpp"
+#include "polymorph/engine/debug/exception/core/NoScenesFoundException.hpp"
 
 
 namespace polymorph::engine::config

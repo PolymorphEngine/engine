@@ -5,13 +5,13 @@
 ** header for XmlEntity.c
 */
 
-#include "polymorph/config/XmlEntity.hpp"
+#include "polymorph/engine/config/XmlEntity.hpp"
 #include "myxmlpp/exceptions/Exception.hpp"
 #include "myxmlpp/Node.hpp"
 #include "myxmlpp/Doc.hpp"
-#include "polymorph/debug/exception/config/MissingEntityException.hpp"
-#include "polymorph/debug/exception/config/CorruptedFileException.hpp"
-#include "polymorph/core/component/AComponent.hpp"
+#include "polymorph/engine/debug/exception/config/MissingEntityException.hpp"
+#include "polymorph/engine/debug/exception/config/CorruptedFileException.hpp"
+#include "polymorph/engine/core/component/AComponent.hpp"
 
 
 namespace polymorph::engine::config

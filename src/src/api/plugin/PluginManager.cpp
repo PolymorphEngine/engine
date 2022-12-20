@@ -5,16 +5,16 @@
 ** header for PluginManager.c
 */
 
-#include "polymorph/api/plugin/PluginManager.hpp"
-#include "polymorph/api/plugin/APluginConfig.hpp"
-#include "polymorph/api/scripting/ASerializableObject.hpp"
-#include "polymorph/debug/exception/plugin/PluginDisabledException.hpp"
-#include "polymorph/debug/exception/plugin/PluginNotFoundException.hpp"
+#include "polymorph/engine/api/plugin/PluginManager.hpp"
+#include "polymorph/engine/api/plugin/APluginConfig.hpp"
+#include "polymorph/engine/api/scripting/ASerializableObject.hpp"
+#include "polymorph/engine/debug/exception/plugin/PluginDisabledException.hpp"
+#include "polymorph/engine/debug/exception/plugin/PluginNotFoundException.hpp"
 
-#include "polymorph/config/XmlEntity.hpp"
-#include "polymorph/core/component/AComponent.hpp"
-#include "polymorph/core/entity/Entity.hpp"
-#include "polymorph/core/Engine.hpp"
+#include "polymorph/engine/config/XmlEntity.hpp"
+#include "polymorph/engine/core/component/AComponent.hpp"
+#include "polymorph/engine/core/entity/Entity.hpp"
+#include "polymorph/engine/core/Engine.hpp"
 
 
 namespace polymorph::engine::api

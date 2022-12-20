@@ -7,8 +7,8 @@
 
 #include <utility>
 
-#include "polymorph/core/Engine.hpp"
-#include "polymorph/config/XmlEntity.hpp"
+#include "polymorph/engine/core/Engine.hpp"
+#include "polymorph/engine/config/XmlEntity.hpp"
 
 polymorph::engine::Engine::Engine(std::string projectName, std::string projectPath, std::string pluginsPath)
         : _projectName(std::move(projectName)), _projectPath(std::move(projectPath)), _pluginsPath(std::move(pluginsPath)),

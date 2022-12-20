@@ -5,8 +5,8 @@
 ** Circle.cpp
 */
 
-#include "polymorph/types/shapes/Circle.hpp"
-#include "polymorph/types/shapes/Rect.hpp"
+#include "polymorph/engine/types/shapes/Circle.hpp"
+#include "polymorph/engine/types/shapes/Rect.hpp"
 
 polymorph::engine::Circle::Circle()
 : center(Vector2(0, 0)), radius(0)

@@ -5,13 +5,13 @@
 ** header for XmlComponent.c
 */
 
-#include "polymorph/debug/Logger.hpp"
-#include "polymorph/config/XmlPropertyManager.hpp"
-#include "polymorph/config/XmlComponent.hpp"
-#include "polymorph/config/XmlEntity.hpp"
-#include "polymorph/debug/exception/config/MissingComponentTypeException.hpp"
-#include "polymorph/debug/exception/config/MissingPropertyException.hpp"
-#include "polymorph/debug/exception/config/WrongValueException.hpp"
+#include "polymorph/engine/debug/Logger.hpp"
+#include "polymorph/engine/config/XmlPropertyManager.hpp"
+#include "polymorph/engine/config/XmlComponent.hpp"
+#include "polymorph/engine/config/XmlEntity.hpp"
+#include "polymorph/engine/debug/exception/config/MissingComponentTypeException.hpp"
+#include "polymorph/engine/debug/exception/config/MissingPropertyException.hpp"
+#include "polymorph/engine/debug/exception/config/WrongValueException.hpp"
 
 namespace polymorph::engine::config
 {

@@ -7,13 +7,13 @@
 
 #include <utility>
 
-#include "polymorph/core/Scene.hpp"
-#include "polymorph/core/Engine.hpp"
-#include "polymorph/config/XmlScene.hpp"
-#include "polymorph/types/uuid.hpp"
-#include "polymorph/core/entity/Entity.hpp"
-#include "polymorph/core/component/TransformComponent.hpp"
-#include "polymorph/time/Timer.hpp"
+#include "polymorph/engine/core/Scene.hpp"
+#include "polymorph/engine/core/Engine.hpp"
+#include "polymorph/engine/config/XmlScene.hpp"
+#include "polymorph/engine/types/uuid.hpp"
+#include "polymorph/engine/core/entity/Entity.hpp"
+#include "polymorph/engine/core/component/TransformComponent.hpp"
+#include "polymorph/engine/time/Timer.hpp"
 
 polymorph::engine::Scene::Scene(std::shared_ptr<myxmlpp::Node> &data, polymorph::engine::Engine &game)
         : _game(game)

@@ -5,14 +5,14 @@
 ** APlugin.cpp
 */
 
-#include "polymorph/api/plugin/APlugin.hpp"
-#include "polymorph/api/plugin/APluginConfig.hpp"
-#include "polymorph/core/Engine.hpp"
-#include "polymorph/config/XmlComponent.hpp"
-#include "polymorph/config/XmlEntity.hpp"
+#include "polymorph/engine/api/plugin/APlugin.hpp"
+#include "polymorph/engine/api/plugin/APluginConfig.hpp"
+#include "polymorph/engine/core/Engine.hpp"
+#include "polymorph/engine/config/XmlComponent.hpp"
+#include "polymorph/engine/config/XmlEntity.hpp"
 
-#include "polymorph/debug/exception/plugin/CorruptedPluginException.hpp"
-#include "polymorph/debug/exception/plugin/PluginNotFoundException.hpp"
+#include "polymorph/engine/debug/exception/plugin/CorruptedPluginException.hpp"
+#include "polymorph/engine/debug/exception/plugin/PluginNotFoundException.hpp"
 
 namespace polymorph::engine::api
 {

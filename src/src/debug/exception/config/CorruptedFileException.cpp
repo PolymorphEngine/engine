@@ -5,7 +5,7 @@
 ** header for CorruptedFileException.c
 */
 
-#include "polymorph/debug/exception/config/CorruptedFileException.hpp"
+#include "polymorph/engine/debug/exception/config/CorruptedFileException.hpp"
 
 polymorph::engine::debug::CorruptedFileException::CorruptedFileException(
         std::string file, Logger::severity level)

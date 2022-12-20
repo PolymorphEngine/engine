@@ -6,9 +6,9 @@
 */
 
 #include <filesystem>
-#include "polymorph/api/DynamicLoader.hpp"
-#include "polymorph/debug/exception/core/MissingDynamicLibraryException.hpp"
-#include "polymorph/debug/exception/core/CorruptedDynamicLibraryException.hpp"
+#include "polymorph/engine/api/DynamicLoader.hpp"
+#include "polymorph/engine/debug/exception/core/MissingDynamicLibraryException.hpp"
+#include "polymorph/engine/debug/exception/core/CorruptedDynamicLibraryException.hpp"
 
 polymorph::engine::api::DynamicLoader::DynamicLoader(DynamicLoader &&ref) noexcept
         : _handler(ref._handler), _libPath(ref._libPath)

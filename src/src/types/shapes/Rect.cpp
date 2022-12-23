@@ -5,8 +5,8 @@
 ** Rect.cpp
 */
 
-#include "polymorph/types/shapes/Rect.hpp"
-#include "polymorph/types/shapes/Circle.hpp"
+#include "polymorph/engine/types/shapes/Rect.hpp"
+#include "polymorph/engine/types/shapes/Circle.hpp"
 
 polymorph::engine::Rect::Rect(
         polymorph::engine::safe_ptr<polymorph::engine::AComponent> component,

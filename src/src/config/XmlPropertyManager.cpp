@@ -5,8 +5,8 @@
 ** header for XmlPropertyManager.c
 */
 
-#include "polymorph/config/XmlPropertyManager.hpp"
-#include "polymorph/debug/exception/config/MissingValueException.hpp"
+#include "polymorph/engine/config/XmlPropertyManager.hpp"
+#include "polymorph/engine/debug/exception/config/MissingValueException.hpp"
 
 
 namespace polymorph::engine::config

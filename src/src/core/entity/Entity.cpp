@@ -5,13 +5,13 @@
 ** Entity.cpp
 */
 
-#include "polymorph/core/entity/Entity.hpp"
-#include "polymorph/core/Engine.hpp"
-#include "polymorph/core/Scene.hpp"
-#include "polymorph/core/component/TransformComponent.hpp"
-#include "polymorph/core/component/AComponent.hpp"
-#include "polymorph/config/XmlEntity.hpp"
-#include "polymorph/debug/exception/config/MissingComponentTypeException.hpp"
+#include "polymorph/engine/core/entity/Entity.hpp"
+#include "polymorph/engine/core/Engine.hpp"
+#include "polymorph/engine/core/Scene.hpp"
+#include "polymorph/engine/core/component/TransformComponent.hpp"
+#include "polymorph/engine/core/component/AComponent.hpp"
+#include "polymorph/engine/config/XmlEntity.hpp"
+#include "polymorph/engine/debug/exception/config/MissingComponentTypeException.hpp"
 
 namespace polymorph::engine
 {

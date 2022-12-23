@@ -8,7 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include "polymorph/debug/Logger.hpp"
+#include "polymorph/engine/debug/Logger.hpp"
 
 namespace polymorph::engine::debug
 {

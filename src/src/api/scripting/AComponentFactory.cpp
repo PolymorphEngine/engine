@@ -5,7 +5,7 @@
 ** header for AScriptFactory.c
 */
 
-#include "polymorph/api/scripting/AComponentFactory.hpp"
+#include "polymorph/engine/api/scripting/AComponentFactory.hpp"
 
 namespace polymorph::engine::api
 {

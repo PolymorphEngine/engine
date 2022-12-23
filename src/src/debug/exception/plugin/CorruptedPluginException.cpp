@@ -5,7 +5,7 @@
 ** header for CorruptedPluginException.c
 */
 
-#include "polymorph/debug/exception/plugin/CorruptedPluginException.hpp"
+#include "polymorph/engine/debug/exception/plugin/CorruptedPluginException.hpp"
 
 polymorph::engine::debug::CorruptedPluginException::CorruptedPluginException(
         std::string plugin) : PluginException(plugin, "Corrupted plugin", Logger::severity::MAJOR)

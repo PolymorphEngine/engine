@@ -6,9 +6,9 @@
 */
 
 #include <filesystem>
-#include "polymorph/api/AssetManager.hpp"
-#include "polymorph/debug/Logger.hpp"
-#include "polymorph/debug/exception/CoreException.hpp"
+#include "polymorph/engine/api/AssetManager.hpp"
+#include "polymorph/engine/debug/Logger.hpp"
+#include "polymorph/engine/debug/exception/CoreException.hpp"
 
 
 namespace polymorph::engine::api

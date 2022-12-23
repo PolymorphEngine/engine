@@ -5,12 +5,12 @@
 ** header for XmlPluginConfig.c
 */
 
-#include "polymorph/config/XmlPluginConfig.hpp"
-#include "polymorph/core/Engine.hpp"
-#include "polymorph/debug/exception/config/CorruptedFileException.hpp"
-#include "polymorph/debug/exception/config/WrongValueException.hpp"
-#include "polymorph/debug/exception/config/MissingPropertyException.hpp"
-#include "polymorph/debug/exception/config/MissingValueException.hpp"
+#include "polymorph/engine/config/XmlPluginConfig.hpp"
+#include "polymorph/engine/core/Engine.hpp"
+#include "polymorph/engine/debug/exception/config/CorruptedFileException.hpp"
+#include "polymorph/engine/debug/exception/config/WrongValueException.hpp"
+#include "polymorph/engine/debug/exception/config/MissingPropertyException.hpp"
+#include "polymorph/engine/debug/exception/config/MissingValueException.hpp"
 
 
 namespace polymorph::engine::config

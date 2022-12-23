@@ -5,7 +5,7 @@
 ** header for MissingPropertyException.c
 */
 
-#include "polymorph/debug/exception/config/MissingPropertyException.hpp"
+#include "polymorph/engine/debug/exception/config/MissingPropertyException.hpp"
 
 polymorph::engine::debug::MissingPropertyException::MissingPropertyException(
         std::string entity, std::string component, std::string property,

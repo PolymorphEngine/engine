@@ -5,13 +5,13 @@
 ** header for XmlScene.c
 */
 
-#include "polymorph/config/XmlScene.hpp"
-#include "polymorph/core/Engine.hpp"
+#include "polymorph/engine/config/XmlScene.hpp"
+#include "polymorph/engine/core/Engine.hpp"
 #include "myxmlpp/myxmlpp.hpp"
-#include "polymorph/debug/exception/ConfigurationException.hpp"
-#include "polymorph/debug/exception/config/EmptySceneException.hpp"
-#include "polymorph/debug/exception/config/CorruptedFileException.hpp"
-#include "polymorph/debug/exception/config/MissingFileException.hpp"
+#include "polymorph/engine/debug/exception/ConfigurationException.hpp"
+#include "polymorph/engine/debug/exception/config/EmptySceneException.hpp"
+#include "polymorph/engine/debug/exception/config/CorruptedFileException.hpp"
+#include "polymorph/engine/debug/exception/config/MissingFileException.hpp"
 
 namespace polymorph::engine::config
 {

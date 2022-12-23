@@ -5,7 +5,7 @@
 ** header for MissingFileException.c
 */
 
-#include "polymorph/debug/exception/config/MissingFileException.hpp"
+#include "polymorph/engine/debug/exception/config/MissingFileException.hpp"
 
 polymorph::engine::debug::MissingFileException::MissingFileException(
         std::string file, Logger::severity level)

@@ -5,7 +5,7 @@
 ** header for MissingObjectException.c
 */
 
-#include "polymorph/debug/exception/plugin/MissingObjectException.hpp"
+#include "polymorph/engine/debug/exception/plugin/MissingObjectException.hpp"
 
 polymorph::engine::debug::MissingObjectException::MissingObjectException(
         std::string objectType,

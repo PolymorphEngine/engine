@@ -5,14 +5,14 @@
 ** header for SceneManager.c
 */
 
-#include "polymorph/api/SceneManager.hpp"
-#include "polymorph/core/Engine.hpp"
-#include "polymorph/core/Scene.hpp"
-#include "polymorph/core/component/TransformComponent.hpp"
-#include "polymorph/config/XmlEntity.hpp"
-#include "polymorph/types/uuid.hpp"
-#include "polymorph/types/vector/Vector3.hpp"
-#include "polymorph/debug/exception/core/SceneNotFoundException.hpp"
+#include "polymorph/engine/api/SceneManager.hpp"
+#include "polymorph/engine/core/Engine.hpp"
+#include "polymorph/engine/core/Scene.hpp"
+#include "polymorph/engine/core/component/TransformComponent.hpp"
+#include "polymorph/engine/config/XmlEntity.hpp"
+#include "polymorph/engine/types/uuid.hpp"
+#include "polymorph/engine/types/vector/Vector3.hpp"
+#include "polymorph/engine/debug/exception/core/SceneNotFoundException.hpp"
 
 polymorph::engine::api::SceneManager::SceneManager(polymorph::engine::Engine &game) : _game(game)
 {}

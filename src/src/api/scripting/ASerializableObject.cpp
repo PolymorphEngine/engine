@@ -5,8 +5,8 @@
 ** header for ASerializableObject.c
 */
 
-#include "polymorph/api/scripting/ASerializableObject.hpp"
-#include "polymorph/api/plugin/APluginConfig.hpp"
+#include "polymorph/engine/api/scripting/ASerializableObject.hpp"
+#include "polymorph/engine/api/plugin/APluginConfig.hpp"
 
 
 namespace polymorph::engine::api

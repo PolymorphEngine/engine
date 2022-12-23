@@ -5,7 +5,7 @@
 ** header for DynamicLoaderException.c
 */
 
-#include "polymorph/debug/exception/core/DynamicLoaderException.hpp"
+#include "polymorph/engine/debug/exception/core/DynamicLoaderException.hpp"
 
 
 polymorph::engine::debug::DynamicLoaderException::DynamicLoaderException(std::string symbol, std::string libPath, Logger::severity level)

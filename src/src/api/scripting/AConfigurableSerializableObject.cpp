@@ -5,8 +5,8 @@
 ** header for AConfigurableSerializableObject.c
 */
 
-#include "polymorph/api/scripting/AConfigurableSerializableObject.hpp"
-#include "polymorph/api/plugin/APluginConfig.hpp"
+#include "polymorph/engine/api/scripting/AConfigurableSerializableObject.hpp"
+#include "polymorph/engine/api/plugin/APluginConfig.hpp"
 
 namespace polymorph::engine::api
 {

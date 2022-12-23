@@ -5,7 +5,7 @@
 ** Color.cpp
 */
 
-#include "polymorph/types/Color.hpp"
+#include "polymorph/engine/types/Color.hpp"
 
 polymorph::engine::Color::Color()
 {

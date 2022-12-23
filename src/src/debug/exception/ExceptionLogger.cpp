@@ -5,7 +5,7 @@
 ** header for ExceptionLogger.c
 */
 
-#include "polymorph/debug/exception/ExceptionLogger.hpp"
+#include "polymorph/engine/debug/exception/ExceptionLogger.hpp"
 
 polymorph::engine::debug::ExceptionLogger::ExceptionLogger(std::string message,
 polymorph::engine::debug::Logger::severity level)

@@ -5,7 +5,7 @@
 ** header for NoScenesFoundException.c
 */
 
-#include "polymorph/debug/exception/core/NoScenesFoundException.hpp"
+#include "polymorph/engine/debug/exception/core/NoScenesFoundException.hpp"
 
 
 polymorph::engine::debug::NoScenesFoundException::NoScenesFoundException(Logger::severity level)

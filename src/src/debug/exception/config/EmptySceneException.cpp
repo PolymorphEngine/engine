@@ -5,7 +5,7 @@
 ** header for EmptySceneException.c
 */
 
-#include "polymorph/debug/exception/config/EmptySceneException.hpp"
+#include "polymorph/engine/debug/exception/config/EmptySceneException.hpp"
 
 polymorph::engine::debug::EmptySceneException::EmptySceneException(
         std::string name, bool isFirst)

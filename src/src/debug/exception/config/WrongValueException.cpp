@@ -5,7 +5,7 @@
 ** header for WrongValueException.c
 */
 
-#include "polymorph/debug/exception/config/WrongValueException.hpp"
+#include "polymorph/engine/debug/exception/config/WrongValueException.hpp"
 
 polymorph::engine::debug::WrongValueException::WrongValueException(
         std::string entity, std::string component, std::string property,

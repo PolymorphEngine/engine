@@ -5,7 +5,7 @@
 ** header for OutdatedPluginException.c
 */
 
-#include "polymorph/debug/exception/plugin/OutdatedPluginException.hpp"
+#include "polymorph/engine/debug/exception/plugin/OutdatedPluginException.hpp"
 
 polymorph::engine::debug::OutdatedPluginException::OutdatedPluginException(
         std::string plugin) : PluginException(plugin, "Outdated plugin", Logger::severity::MAJOR)

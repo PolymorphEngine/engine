@@ -5,7 +5,7 @@
 ** header for DynamicLoaderException.c
 */
 
-#include "polymorph/debug/exception/core/MissingDynamicLibraryException.hpp"
+#include "polymorph/engine/debug/exception/core/MissingDynamicLibraryException.hpp"
 
 
 polymorph::engine::debug::MissingDynamicLibraryException::MissingDynamicLibraryException(std::string libPath, Logger::severity level)

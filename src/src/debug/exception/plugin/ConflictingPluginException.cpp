@@ -5,7 +5,7 @@
 ** header for ConflictingPluginException.c
 */
 
-#include "polymorph/debug/exception/plugin/ConflictingPluginException.hpp"
+#include "polymorph/engine/debug/exception/plugin/ConflictingPluginException.hpp"
 
 polymorph::engine::debug::ConflictingPluginException::ConflictingPluginException(
         std::string plugin) : PluginException(plugin, "Conflicting plugin", Logger::severity::MAJOR)

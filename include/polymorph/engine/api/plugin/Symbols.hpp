@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <string>
+
 #if defined _WIN32 || defined __CYGWIN__
     #ifdef WIN_EXPORT
         // Exporting...
@@ -29,8 +31,8 @@
         #define EXPORT_MODULE extern "C" __attribute__ ((visibility ("default")))
         #define NOT_EXPORT_MODULE  __attribute__ ((visibility ("hidden")))
     #else
-    #define EXPORT_MODULE extern "C" 
-            #define NOT_EXPORT_MODULE extern "C" 
+    #define EXPORT_MODULE extern "C"
+            #define NOT_EXPORT_MODULE extern "C"
     #endif
 #endif
 

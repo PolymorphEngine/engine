@@ -10,6 +10,7 @@
 #include "polymorph/engine/core/entity/Entity.hpp"
 #include "polymorph/engine/core/Engine.hpp"
 #include "polymorph/engine/core/component/AComponent.hpp"
+#include "polymorph/engine/config/XmlComponent.hpp"
 
 namespace polymorph::engine
 {
@@ -46,7 +47,7 @@ namespace polymorph::engine
         std::string type = T::type;
 
         if (componentExist(type))
-            return;
+            return getComponent<T>();
         //TODO : throw ?
         std::shared_ptr<AComponent> newComponent;
         std::shared_ptr<myxmlpp::Node> config = Game.getDefaultConfig(type);

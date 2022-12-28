@@ -281,7 +281,7 @@ void polymorph::engine::Vector3::build()
 
 void polymorph::engine::Vector3::saveAll()
 {
-    _setProperty("x", x);
-    _setProperty("y", y);
-    _setProperty("z", z);
+    saveProperty("x", x);
+    saveProperty("y", y);
+    saveProperty("z", z);
 }

@@ -20,7 +20,6 @@
 #include "polymorph/engine/api/plugin/PluginManager.hpp"
 #include "polymorph/engine/api/SceneManager.hpp"
 #include "polymorph/engine/time/Time.hpp"
-#include "polymorph/engine/config/XmlComponent.hpp"
 #include "polymorph/engine/config/XmlEngine.hpp"
 
 namespace polymorph::engine

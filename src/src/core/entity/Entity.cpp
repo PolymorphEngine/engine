@@ -6,6 +6,7 @@
 */
 
 #include "polymorph/engine/core/entity/Entity.hpp"
+#include "polymorph/engine/core/entity/Entity_templated.hpp"
 #include "polymorph/engine/core/Engine.hpp"
 #include "polymorph/engine/core/Scene.hpp"
 #include "polymorph/engine/core/component/TransformComponent.hpp"

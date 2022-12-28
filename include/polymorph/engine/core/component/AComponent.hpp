@@ -299,46 +299,11 @@ namespace polymorph::engine
             void saveProperty(std::string propertyName, T &toSave);
 
 
-            /**
-             * @brief Saves a property in the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The value of the property
-             */
-            template<typename T>
-            void saveProperty(std::string propertyName, std::shared_ptr<T> &toSave);
-
-            /**
-             * @brief Saves a property in the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The value of the property
-             */
-            template<typename T>
-            void saveProperty(std::string propertyName, safe_ptr<T> &toSave);
-
             std::shared_ptr<myxmlpp::Node> getNode();
             
             std::shared_ptr<config::XmlComponent> getConfig();
 
         protected:
-            /**
-             * @brief Sets a property from the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The property to set
-             */
-            template<typename T>
-            void _setProperty(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG);
-
-            /**
-             * @brief Sets a property from the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The property to set
-             */
-            template<typename T>
-            void _setProperty(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG);
 
             /**
              * @brief Sets a property from the Xml data by its name

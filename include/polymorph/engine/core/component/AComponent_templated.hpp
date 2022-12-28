@@ -72,39 +72,7 @@ namespace polymorph::engine
     void
     polymorph::engine::AComponent::saveProperty(std::string propertyName, T &toSave)
     {
-        _xmlConfig->XmlPropertyManager::save(propertyName, toSave);
-    }
-
-    template<typename T>
-    void polymorph::engine::AComponent::saveProperty(std::string propertyName,
-                                                     std::shared_ptr<T> &toSave)
-    {
         _xmlConfig->save(propertyName, toSave);
-    }
-
-    template<typename T>
-    void polymorph::engine::AComponent::saveProperty(std::string propertyName,
-                                                     polymorph::engine::safe_ptr<T> &toSave)
-    {
-        _xmlConfig->save(propertyName, toSave);
-    }
-
-    template<typename T>
-    void
-    polymorph::engine::AComponent::_setProperty(const std::string &propertyName,
-                                                std::shared_ptr<T> &toSet,
-                                                polymorph::engine::debug::Logger::severity level)
-    {
-        _xmlConfig->set(propertyName, toSet, level);
-    }
-
-    template<typename T>
-    void
-    polymorph::engine::AComponent::_setProperty(const std::string &propertyName,
-                                                polymorph::engine::safe_ptr<T> &toSet,
-                                                polymorph::engine::debug::Logger::severity level)
-    {
-        _xmlConfig->set(propertyName, toSet, level);
     }
 
     template<typename T>

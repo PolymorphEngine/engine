@@ -22,7 +22,7 @@ namespace polymorph::engine::debug
             WrongValueException(std::string entity, std::string component, std::string property, std::string value, std::string object = "", Logger::severity level = Logger::MAJOR);
             WrongValueException(std::string object, std::string property, std::string value, Logger::severity level = Logger::MAJOR);
 
-            ~WrongValueException();
+            ~WrongValueException() override = default;
 
 //////////////////////--------------------------/////////////////////////
 

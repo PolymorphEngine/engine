@@ -6,12 +6,12 @@
 */
 
 #include "polymorph/engine/debug/Logger.hpp"
-#include "polymorph/engine/config/XmlPropertyManager.hpp"
 #include "polymorph/engine/config/XmlComponent.hpp"
 #include "polymorph/engine/config/XmlEntity.hpp"
 #include "polymorph/engine/debug/exception/config/MissingComponentTypeException.hpp"
 #include "polymorph/engine/debug/exception/config/MissingPropertyException.hpp"
 #include "polymorph/engine/debug/exception/config/WrongValueException.hpp"
+#include "polymorph/engine/debug/exception/config/MissingValueException.hpp"
 
 namespace polymorph::engine::config
 {

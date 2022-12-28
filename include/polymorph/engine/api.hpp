@@ -15,6 +15,7 @@
 #include "polymorph/engine/api/plugin/PluginManager.hpp"
 #include "polymorph/engine/api/plugin/Symbols.hpp"
 #include "polymorph/engine/api/plugin/APluginConfig.hpp"
+#include "polymorph/engine/api/plugin/APluginConfig_templated.hpp"
 
 #include "polymorph/engine/api/scripting/AConfigurableSerializableObject.hpp"
 #include "polymorph/engine/api/scripting/ASerializableObject.hpp"

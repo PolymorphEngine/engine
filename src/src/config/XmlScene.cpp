@@ -23,7 +23,7 @@ namespace polymorph::engine::config
         try {
             auto path =  _projectNode->findAttribute("path")->getValue();
 #ifdef _WIN32
-            std::replace(_path.begin(), _path.end(), '/', '\\');
+            std::replace(path.begin(), path.end(), '/', '\\');
 #endif
             fullPath = engine.getAssetManager().tryResolve(path);
             _sceneDoc = std::make_shared<myxmlpp::Doc>(fullPath);

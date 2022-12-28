@@ -15,6 +15,7 @@
 #include <unordered_map>
 
 #include <myxmlpp/myxmlpp.hpp>
+#include <functional>
 #include "polymorph/engine/types/safe/safe_ptr.hpp"
 #include "polymorph/engine/core/entity/Entity.hpp"
 

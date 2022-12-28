@@ -23,6 +23,36 @@ polymorph::engine::api::DynamicLoader::~DynamicLoader()
     _handler = nullptr;
 }
 
+#ifdef _WIN32
+std::string GetLastErrorStdStr()
+{
+    DWORD error = GetLastError();
+    if (error)
+    {
+        LPVOID lpMsgBuf;
+        DWORD bufLen = FormatMessage(
+                FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                FORMAT_MESSAGE_FROM_SYSTEM |
+                FORMAT_MESSAGE_IGNORE_INSERTS,
+                NULL,
+                error,
+                MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                (LPTSTR) &lpMsgBuf,
+                0, NULL );
+        if (bufLen)
+        {
+            LPCSTR lpMsgStr = (LPCSTR)lpMsgBuf;
+            std::string result(lpMsgStr, lpMsgStr+bufLen);
+
+            LocalFree(lpMsgBuf);
+
+            return result;
+        }
+    }
+    return std::string();
+}
+#endif
+
 void polymorph::engine::api::DynamicLoader::loadHandler(const std::string &libPath)
 {
     if (_handler != nullptr)
@@ -37,7 +67,11 @@ void polymorph::engine::api::DynamicLoader::loadHandler(const std::string &libPa
     if (_handler == nullptr) {
         if (std::filesystem::exists(libPath))
             throw debug::MissingDynamicLibraryException(libPath);
+#if _WIN32
+        throw debug::CorruptedDynamicLibraryException(libPath, GetLastErrorStdStr());
+#else
         throw debug::CorruptedDynamicLibraryException(libPath, dlerror());
+#endif
     }
     _libPath = libPath;
 }

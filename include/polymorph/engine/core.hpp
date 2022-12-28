@@ -12,8 +12,10 @@
 #include "polymorph/engine/core/Scene.hpp"
 
 #include "polymorph/engine/core/entity/Entity.hpp"
+#include "polymorph/engine/core/entity/Entity_templated.hpp"
 
 #include "polymorph/engine/core/component/AComponent.hpp"
+#include "polymorph/engine/core/component/AComponent_templated.hpp"
 #include "polymorph/engine/core/component/TransformComponent.hpp"
 
 #include "polymorph/engine/time/Time.hpp"

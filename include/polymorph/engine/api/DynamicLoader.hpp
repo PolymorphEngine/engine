@@ -10,6 +10,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include "polymorph/engine/debug/exception/core/DynamicLoaderException.hpp"
 
 #ifdef _WIN32
     #define MMNOSOUND

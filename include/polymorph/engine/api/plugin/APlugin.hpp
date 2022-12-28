@@ -61,7 +61,7 @@ namespace polymorph::engine::api
             PluginManager &pluginManager;
             AssetManager &assetManager;
 
-        private:
+        protected:
 
             std::string _packageName;
             bool _isEnabled = true;
@@ -232,8 +232,9 @@ namespace polymorph::engine::api
             safe_ptr<T> getConfig()
             {
                 for (auto &config : _configs) {
-                    if (std::dynamic_pointer_cast<T>(*config))
-                        return safe_ptr<T>(std::dynamic_pointer_cast<T>(*config));
+                    auto casted = std::dynamic_pointer_cast<T>(config);
+                    if (casted)
+                        return safe_ptr<T>(casted);
                 }
                 return safe_ptr<T>();
             }            

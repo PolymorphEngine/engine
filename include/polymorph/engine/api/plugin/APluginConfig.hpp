@@ -10,7 +10,7 @@
 
 
 #include "myxmlpp/Doc.hpp"
-#include "polymorph/engine/config/XmlPluginConfig.hpp"
+#include "polymorph/engine/debug/Logger.hpp"
 
 namespace polymorph::engine {
     class Engine;
@@ -20,6 +20,9 @@ namespace polymorph::engine {
     }
     namespace time {
         class Time;
+    }
+    namespace config {
+        class XmlPluginConfig;
     }
 }
 namespace polymorph::engine::api
@@ -92,48 +95,13 @@ namespace polymorph::engine::api
              * @param value The value of the property
              */
             template<typename T>
-            void saveProperty(std::string propertyName, T &toSave)
-            {
-                manager->XmlPropertyManager::save(propertyName, toSave);
-            }
+            void saveProperty(std::string propertyName, T &toSave);
 
-            /**
-             * @brief Saves a property in the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The value of the property
-             */
-            template<typename T>
-            void saveProperty(std::string propertyName, std::shared_ptr<T> &toSave)
-            {
-                manager->save(propertyName, toSave);
-            }
 
-            /**
-             * @brief Saves a property in the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The value of the property
-             */
-            template<typename T>
-            void saveProperty(std::string propertyName, safe_ptr<T> &toSave)
-            {
-                manager->save(propertyName, toSave);
-            }
+
 
 
         protected:
-            /**
-             * @brief Sets a property from the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The property to set
-             */
-            template<typename T>
-            void _setProperty(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                manager->set(propertyName, toSet, level);
-            }
 
             /**
              * @brief Sets a property from the Xml data by its name
@@ -142,22 +110,7 @@ namespace polymorph::engine::api
              * @param value The property to set
              */
             template<typename T>
-            void _setProperty(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                manager->set(propertyName, toSet, level);
-            }
-
-            /**
-             * @brief Sets a property from the Xml data by its name
-             * @param name The name of the property
-             * @tparam T The type of the property
-             * @param value The property to set
-             */
-            template<typename T>
-            void _setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                manager->XmlPropertyManager::set(propertyName, toSet, level);
-            }
+            void _setProperty(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG);
 //////////////////////--------------------------/////////////////////////
     };
 

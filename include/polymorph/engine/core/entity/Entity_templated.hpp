@@ -19,7 +19,7 @@ namespace polymorph::engine
         for (auto &components: _components)
             for (auto &component: components.second)
             {
-                auto casted = std::dynamic_pointer_cast<T>(component);
+                auto &casted = std::dynamic_pointer_cast<T>(component);
                 if (casted)
                     return safe_ptr<T>(casted);
             }
@@ -46,7 +46,7 @@ namespace polymorph::engine
         std::string type = T::type;
 
         if (componentExist(type))
-            return;
+            return getComponent<T>();
         //TODO : throw ?
         std::shared_ptr<AComponent> newComponent;
         std::shared_ptr<myxmlpp::Node> config = Game.getDefaultConfig(type);

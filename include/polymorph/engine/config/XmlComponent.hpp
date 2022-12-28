@@ -16,18 +16,10 @@
 #include "myxmlpp/myxmlpp.hpp"
 
 #include "polymorph/engine/debug/Logger.hpp"
-#include "polymorph/engine/debug/exception/config/MissingValueException.hpp"
-#include "polymorph/engine/debug/exception/config/WrongValueException.hpp"
-
-#include "polymorph/engine/config/XmlPropertyManager.hpp"
 
 #include "polymorph/engine/types/safe/safe_ptr.hpp"
 
-#include "polymorph/engine/api/plugin/PluginManager.hpp"
-#include "polymorph/engine/api/SceneManager.hpp"
-
-#include "polymorph/engine/core/entity/Entity.hpp"
-#include "polymorph/engine/core/Scene.hpp"
+#include "polymorph/engine/config/XmlPropertyManager.hpp"
 
 namespace polymorph::engine {
     class Entity;
@@ -70,182 +62,16 @@ namespace polymorph::engine::config
             void setGameObject(GameObject entity);
 
             bool getEnabled();
-
+            
             template<typename T>
-            void set(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
-
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
-                static_assert(!CastHelper::is_map<T>);
-                _setRefProperty<T>(property, toSet, level);
-            };
-
-            template<typename T, typename T2 = void>
-            void set(const std::string &propertyName, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
-
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
-                static_assert(!CastHelper::is_map<T>);
-                if constexpr (std::is_enum<T>() && !CastHelper::is_builtin<T>)
-                    _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
-                else if constexpr (!std::is_enum<T>() && !CastHelper::is_builtin<T>)
-                    _setPrimitiveProperty(property, toSet, level);
-                else if constexpr (CastHelper::is_builtin<T>)
-                    _setBuiltinProperty(property, toSet, level);
-            };
-
+            void set(std::string property, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG) {
+                this->XmlPropertyManager::set(property, toSet, _entity, _type, level);
+            }
+            
             template<typename T>
-            void save(const std::string &propertyName, safe_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
-
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
-                static_assert(!CastHelper::is_map<T>);
-                _saveRefProperty<T>(property, toSet, level);
-            };
-
-            template<typename T>
-            void set(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
-
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
-                static_assert(!CastHelper::is_map<T>);
-                _setSerializableProperty<T>(property, toSet, level);
-            };
-
-            template<typename T>
-            void save(const std::string &propertyName, std::shared_ptr<T> &toSet, debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                static_assert(!CastHelper::is_map<T>);
-                toSet->saveAll();
-            };
-
-            template<typename T>
-            void _setSubProperty(const std::string &propertyName,
-                                const std::shared_ptr<myxmlpp::Node> &data,
-                                std::shared_ptr<T> &toSet,
-                                debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                        ? _findProperty(propertyName, data)
-                        : data;
-
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
-                _setSerializableProperty<T>(property, toSet, level);
-            };
-
-            template<typename T>
-            void _setSubProperty(const std::string &propertyName,
-                                const std::shared_ptr<myxmlpp::Node> &data,
-                                safe_ptr<T> &toSet,
-                                debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::shared_ptr<myxmlpp::Node> property = (propertyName != "")
-                        ? _findProperty(propertyName, data)
-                        : data;
-
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
-                static_assert(!CastHelper::is_map<T>);
-                _setRefProperty<T>(property, toSet, level);
-            };
-
-            template<typename T, typename T2 = void>
-            void _setSerializableProperty(std::shared_ptr<myxmlpp::Node> &data,
-                                          std::shared_ptr<T> &toSet,
-                                          debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-
-                //TODO: rework with new XmlSeralizableObject
-                static_assert(!CastHelper::is_map<T>
-                        && !CastHelper::is_vector<T>
-                        && !CastHelper::is_safeptr<T>
-                        && !std::is_enum<T>());
-                if constexpr (CastHelper::is_builtin<T>)
-                    return std::make_shared<T>(data, *this);
-                else {
-                    auto t = data->findAttribute("subtype")->getValue();
-                    try {
-                        toSet = std::dynamic_pointer_cast<T>(_entity->Plugin.tryCreateComponentObject(t, data, _entity->getComponent(_type)));
-                    }  catch (debug::ExceptionLogger &e) {
-                        if (level != debug::Logger::MAJOR)
-                            e.what();
-                    }
-                }
-            };
-
-
-            template<typename T, typename T2 = void>
-            void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
-                                 safe_ptr<T> &toSet,
-                                 debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::string id;
-                std::string name = refProp->findAttribute("name")->getValue();
-                GameObject gameObject;
-
-                if (!_setPropertyFromAttr(id, refProp, level))
-                    return;
-                if (_entity && (_entity->getPrefabId() == id || _entity->getId() == id))
-                    gameObject = _entity;
-                if (!gameObject && _entity->wasPrefab())
-                    gameObject = _entity->findByPrefabId(id);
-                else if (!gameObject)
-                    gameObject = _entity->Scene.findById(id);
-                if (gameObject)
-                    toSet = gameObject->getComponent<T>();
-                if (!toSet)
-                    _onWrongValueExcept(level, name, id);
-            };
-
-            template<typename T2 = void>
-            void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
-                                 GameObject &toSet, debug::Logger::severity level)
-            {
-                std::string id;
-                std::string name = refProp->findAttribute("name")->getValue();
-
-                if (!_setPropertyFromAttr(id, refProp, level))
-                    return;
-                if (_entity && (_entity->getPrefabId() == id || _entity->getId() == id))
-                    toSet = _entity;
-                if (!toSet && _entity)
-                    toSet = _entity->findByPrefabId(id);
-                if (!toSet)
-                    toSet = _entity->Scene.findById(id);
-                if (!toSet)
-                    _onWrongValueExcept(level, name, id);
-            };
-
-            template<typename T, typename T2 = void>
-            void _saveRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
-                                 safe_ptr<T> &toSet,
-                                 debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                std::string id = (toSet) ? toSet->gameObject->getId() : "";
-
-                if (!_savePropertyFromAttr(id, refProp, level))
-                    return;
-            };
-
-            template<typename T2 = void>
-            void _saveRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
-                                 GameObject &toSet, debug::Logger::severity level)
-            {
-                std::string id = (toSet) ? toSet->getId() : "";
-
-                if (!_savePropertyFromAttr(id, refProp, level))
-                    return;
-            };
-
+            void save(std::string property, T &toSet, debug::Logger::severity level = debug::Logger::DEBUG) {
+                this->XmlPropertyManager::save(property, toSet, level);
+            }
 
         protected:
             /**
@@ -282,20 +108,6 @@ namespace polymorph::engine::config
             void _onMissingPropertyExcept(debug::Logger::severity level,
                                           std::string propertyName) override;
 
-            /**
-             * @brief Set Property BUILTIN Specialization
-             */
-            template<typename T, typename T2 = void> requires CastHelper::is_builtin<T>
-            void _setBuiltinProperty(std::shared_ptr<myxmlpp::Node> &data, T &toSet,
-                                     debug::Logger::severity level = debug::Logger::DEBUG)
-            {
-                static_assert(!CastHelper::is_map<T>
-                              && !CastHelper::is_vector<T>
-                              && !CastHelper::is_safeptr<T>
-                              && !std::is_enum<T>()
-                              && CastHelper::is_builtin<T>);
-                toSet = T(_entity->getComponent(_type), data);
-            };
 
 //////////////////////--------------------------/////////////////////////
 

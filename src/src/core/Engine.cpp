@@ -9,6 +9,8 @@
 
 #include "polymorph/engine/core/Engine.hpp"
 #include "polymorph/engine/config/XmlEntity.hpp"
+#include "polymorph/engine/config/XmlComponent.hpp"
+#include "polymorph/engine/debug/exception/ConfigurationException.hpp"
 
 polymorph::engine::Engine::Engine(std::string projectName, std::string projectPath, std::string pluginsPath)
         : _projectName(std::move(projectName)), _projectPath(std::move(projectPath)), _pluginsPath(std::move(pluginsPath)),

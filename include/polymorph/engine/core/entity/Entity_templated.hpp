@@ -10,6 +10,7 @@
 #include "polymorph/engine/core/entity/Entity.hpp"
 #include "polymorph/engine/core/Engine.hpp"
 #include "polymorph/engine/core/component/AComponent.hpp"
+#include "polymorph/engine/config/XmlComponent.hpp"
 
 namespace polymorph::engine
 {
@@ -19,7 +20,7 @@ namespace polymorph::engine
         for (auto &components: _components)
             for (auto &component: components.second)
             {
-                auto &casted = std::dynamic_pointer_cast<T>(component);
+                auto casted = std::dynamic_pointer_cast<T>(component);
                 if (casted)
                     return safe_ptr<T>(casted);
             }

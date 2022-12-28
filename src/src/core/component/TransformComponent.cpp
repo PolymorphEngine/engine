@@ -7,6 +7,7 @@
 
 
 #include "polymorph/engine/core/component/TransformComponent.hpp"
+#include "polymorph/engine/core/component/AComponent_templated.hpp"
 
 polymorph::engine::TransformComponent::TransformComponent(std::shared_ptr<myxmlpp::Node> data, polymorph::engine::GameObject gameObject)
     : AComponent(data, gameObject), _smoothTimer(gameObject, 0)

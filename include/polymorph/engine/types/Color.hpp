@@ -23,7 +23,6 @@ namespace polymorph::engine
 
         explicit Color(unsigned int r, unsigned int g, unsigned int b, unsigned int a = 255);
         Color(const Color &other) = default;
-        Color(Color &&other) noexcept = default;
 
         /**
          * @brief Create a new Color with the given xml node

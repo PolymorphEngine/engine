@@ -38,6 +38,7 @@ namespace polymorph::engine::api
             auto name = node->findAttribute("name")->getValue();
             try {
                 auto plugin = _loadPlugin(node, pluginsPath + name, game, name);
+                plugin->build();
                 _plugins.push_back(plugin);
             } catch (debug::ExceptionLogger &e) {
                 e.what();

@@ -32,7 +32,7 @@ namespace polymorph::engine::api
         _pluginsOrder = _game.getPluginExecOrder();
         for (auto &node : list) {
             auto name = node->findAttribute("name")->getValue();
-            _game.getAssetManager().addPath(pluginsPath + "/" + name + "/Assets/");
+            _game.getAssetManager().addPath(pluginsPath + "/" + name + "/assets/");
         }
         for (auto &node : list) {
             auto name = node->findAttribute("name")->getValue();
@@ -56,7 +56,7 @@ namespace polymorph::engine::api
                                            std::shared_ptr<myxmlpp::Node> node)
     {
         for (auto &plugin : _plugins) {
-            if (plugin->hasObject(type))
+            if (plugin->hasComponent(type))
             {
                 if (!plugin->isEnabled())
                     throw debug::PluginDisabledException(plugin->getPluginName(), type);

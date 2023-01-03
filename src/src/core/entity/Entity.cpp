@@ -378,6 +378,7 @@ namespace polymorph::engine
     {
         if (_transformInitialized)
             return;
+        transform = getComponent<TransformComponent>();
         transform->build();
         for (auto &child: **transform) {
             child->gameObject->initTransform();

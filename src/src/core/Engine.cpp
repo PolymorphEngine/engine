@@ -89,9 +89,9 @@ void polymorph::engine::Engine::loadEngine()
     _pluginManager.loadPlugins(_pluginsPath, *_projectConfig->getPlugins(), *this);
     _initGameData();
     _sceneManager.setCurrentScene(*_scenes.begin());
+    _pluginManager.startingScripts();
     _sceneManager.getCurrentScene()->loadScene();
     _time = time::Time();
-    _pluginManager.startingScripts();
 }
 
 polymorph::engine::api::PluginManager &polymorph::engine::Engine::getPluginManager()

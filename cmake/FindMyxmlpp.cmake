@@ -4,7 +4,7 @@ if(NOT TARGET myxmlpp)
     FetchContent_Declare(
             myxmlpp
             GIT_REPOSITORY https://github.com/PolymorphEngine/myxmlpp.git
-            GIT_TAG master
+            GIT_TAG test
     )
 
     FetchContent_MakeAvailable(myxmlpp)

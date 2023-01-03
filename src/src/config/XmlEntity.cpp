@@ -12,16 +12,17 @@
 #include "polymorph/engine/debug/exception/config/MissingEntityException.hpp"
 #include "polymorph/engine/debug/exception/config/CorruptedFileException.hpp"
 #include "polymorph/engine/core/component/AComponent.hpp"
+#include "polymorph/engine/core/Engine.hpp"
 
 
 namespace polymorph::engine::config
 {
     config::XmlEntity::XmlEntity(std::shared_ptr<myxmlpp::Node> &entity,
-                                 debug::Logger &logger) : _logger(logger)
+                                 debug::Logger &logger, Engine &engine) : _logger(logger)
     {
         std::string name;
         try {
-            _path = _node->findAttribute("path")->getValue();
+            _path = entity->findAttribute("path")->getValue();
 #ifdef _WIN32
             std::replace(_fileName.begin(), _fileName.end(), '/', '\\');
 #endif
@@ -33,12 +34,12 @@ namespace polymorph::engine::config
 #ifdef _WIN32
             _entity = std::make_shared<myxmlpp::Doc>(_path + "\\" +_fileName);
 #else
-            _entity = std::make_shared<myxmlpp::Doc>(_path);
+            _entity = std::make_shared<myxmlpp::Doc>(engine.getAssetManager().tryResolve(_path));
 #endif
             _entity->getRoot();
             
         } catch (myxmlpp::Exception &e) {
-            throw debug::MissingEntityException(name);
+            throw debug::MissingEntityException(_path);
         }
         try {
             _name = _entity->getRoot()->findAttribute("name")->getValue();

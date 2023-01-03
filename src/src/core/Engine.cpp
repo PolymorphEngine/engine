@@ -196,7 +196,7 @@ void polymorph::engine::Engine::_initPrefabs()
 
     for (auto &prefab : *prefabs) {
         try {
-            auto entity = std::make_shared<config::XmlEntity>(prefab, _logger);
+            auto entity = std::make_shared<config::XmlEntity>(prefab, _logger, *this);
             _prefabs.push_back(entity);
         } catch (const std::exception &e) {
             e.what();

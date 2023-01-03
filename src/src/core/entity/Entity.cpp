@@ -38,7 +38,7 @@ namespace polymorph::engine
     : Game(game), Debug(game.getLogger()), time(game.getTime()),
       Plugin(game.getPluginManager()), Scene(game.getSceneManager()), Resource(game.getAssetManager())
     {
-        _xmlConfig = std::make_shared<config::XmlEntity>(data, Debug);
+        _xmlConfig = std::make_shared<config::XmlEntity>(data, Debug, Game);
         name = _xmlConfig->getName();
         _stringId = _xmlConfig->getId();
         _tags = _xmlConfig->getTags();

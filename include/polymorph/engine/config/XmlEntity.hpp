@@ -20,6 +20,7 @@ namespace myxmlpp {
 }
 namespace polymorph::engine {
     class AComponent;
+    class Engine;
 }
 
 namespace polymorph::engine::config
@@ -29,7 +30,7 @@ namespace polymorph::engine::config
 
 ////////////////////// CONSTRUCTORS/DESTRUCTORS /////////////////////////
         public:
-            XmlEntity(std::shared_ptr<myxmlpp::Node> &entity, debug::Logger& logger);
+            XmlEntity(std::shared_ptr<myxmlpp::Node> &entity, debug::Logger& logger, Engine &engine);
 
 //////////////////////--------------------------/////////////////////////
 

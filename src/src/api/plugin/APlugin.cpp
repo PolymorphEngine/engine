@@ -100,7 +100,7 @@ namespace polymorph::engine::api
         auto prefabs = _doc->getRoot()->findChild("Prefabs");
 
         for (auto &t: *prefabs) {
-            _prefabs.emplace_back(std::make_shared<config::XmlEntity>(t, _game.getLogger()));
+            _prefabs.emplace_back(std::make_shared<config::XmlEntity>(t, _game.getLogger(), _game));
         }
     }
 

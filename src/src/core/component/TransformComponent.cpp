@@ -203,8 +203,10 @@ void polymorph::engine::TransformComponent::build()
             continue;
         if (ref->isPrefab())
             ref->Scene.instantiate(ref, safe_from_this());
-        else
+        else {
+            ref->transform = ref->getComponent<TransformComponent>();
             ref->transform->setParent(safe_from_this());
+        }
     }
 }
 

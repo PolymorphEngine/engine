@@ -45,7 +45,15 @@ polymorph::engine::GameObject polymorph::engine::api::SceneManager::findById(con
 {
     if (_current == nullptr)
         return GameObject(nullptr);
-    return _current->findById(id);
+    auto found = _current->findById(id);
+    if (found)
+        return found;
+    auto prefabs = _game.getPrefabs();
+    for (auto &prefab : prefabs) {
+        if (*prefab == id || prefab->getPrefabId() == id)
+            return GameObject(prefab);
+    }
+    return GameObject(nullptr);
 }
 
 polymorph::engine::GameObject polymorph::engine::api::SceneManager::findByTag(const std::string &tag)

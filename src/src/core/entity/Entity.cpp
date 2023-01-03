@@ -159,8 +159,10 @@ namespace polymorph::engine
         initTransform();
         for (auto &exec: Game.getExecOrder()) {
             for (auto &component: _components[exec]) {
-                if (component->getType() != "Transform")
+                if (component->getType() != "Transform") {
+                    component->transform = transform;
                     component->build();
+                }
             }
         }
         buildChildren();
@@ -181,7 +183,11 @@ namespace polymorph::engine
             for (auto &component: _components[exec]) {
                 if (!component->enabled)
                     continue;
-                component->update();
+                try {
+                    component->update();
+                } catch (debug::MissingReferenceException &e) {
+                    e.what();
+                }
             }
         }
         updateChildren();
@@ -336,12 +342,16 @@ namespace polymorph::engine
 
     polymorph::engine::GameObject
     polymorph::engine::Entity::findByPrefabId(const std::string &prefabId,
-                                              bool _firstCall) const
+                                              bool _firstCall)
     {
-        GameObject highestParent = transform->parent()->gameObject;
-        while (highestParent->transform->parent())
-            highestParent = highestParent->transform->parent()->gameObject;
-        return highestParent->_getByPrefabId(prefabId);
+        try {
+            GameObject highestParent = transform->parent()->gameObject;
+            while (highestParent->transform->parent())
+                highestParent = highestParent->transform->parent()->gameObject;
+            return highestParent->_getByPrefabId(prefabId);
+        } catch (debug::MissingReferenceException &e) {
+            return _getByPrefabId(prefabId);
+        }
     }
     GameObject Entity::_getByPrefabId(std::string prefabId)
     {

@@ -12,7 +12,6 @@
 
 namespace polymorph::engine::debug
 {
-    template<typename T = void, typename U = void>
     class MissingReferenceException : public CoreException
     {
 

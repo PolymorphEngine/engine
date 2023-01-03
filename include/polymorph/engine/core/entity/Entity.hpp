@@ -332,7 +332,7 @@ namespace polymorph::engine
              * @param prefabId The prefab id of the child
              * @return The child entity
              */
-            GameObject findByPrefabId(const std::string &prefabId, bool _firstCall = true) const;
+            GameObject findByPrefabId(const std::string &prefabId, bool _firstCall = true);
 
             /**
              * @details Get a child entity by its index

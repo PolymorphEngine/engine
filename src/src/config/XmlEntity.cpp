@@ -96,7 +96,7 @@ namespace polymorph::engine::config
     {
         auto tags = _entity->getRoot()->findChild("Tags");
         for (auto &tag : *tags) {
-            _tags.push_back(tag->findAttribute("value")->getValue());
+            _tags.push_back(tag->findAttribute("tag")->getValue());
         }
     }
 

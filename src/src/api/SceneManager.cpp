@@ -91,6 +91,7 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);
@@ -106,6 +107,7 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);
@@ -122,6 +124,7 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);
@@ -139,6 +142,7 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);

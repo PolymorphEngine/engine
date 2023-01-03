@@ -486,7 +486,9 @@ namespace polymorph::engine
              */
             bool componentExist(std::string &type) const noexcept;
             
-            void _createComponents(std::shared_ptr<myxmlpp::Node> components);
+        public:
+            void _createComponents();
+        private:
             void _createComponent(std::shared_ptr<myxmlpp::Node> component);
             GameObject _getByPrefabId(std::string id);
 //////////////////////--------------------------/////////////////////////

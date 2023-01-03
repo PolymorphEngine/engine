@@ -132,7 +132,9 @@ namespace polymorph::engine::api
             if (plugin->isEnabled() && plugin->hasPrefab(id))
             {
                 auto e = plugin->getPrefabConf(id);
-                _prefabs.push_back(std::make_shared<Entity>(e, _game));
+                auto entity = std::make_shared<Entity>(e, _game);
+                entity->_createComponents(); //TODO: see if needed
+                _prefabs.push_back(entity);
                 return GameObject(_prefabs.back());
             }
         }

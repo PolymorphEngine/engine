@@ -31,7 +31,6 @@ namespace polymorph::engine
         _prefabId = data->getPrefabId();
         for (auto &exec: Game.getExecOrder())
             _components[exec] = std::vector<std::shared_ptr<AComponent>>();
-        _createComponents(data->getComponents());
     }
 
     Entity::Entity(std::shared_ptr<myxmlpp::Node> data, Engine &game)
@@ -48,7 +47,6 @@ namespace polymorph::engine
         _prefabId = _xmlConfig->getPrefabId();
         for (auto &exec: Game.getExecOrder())
             _components[exec] = std::vector<std::shared_ptr<AComponent>>();
-        _createComponents(_xmlConfig->getComponents());
     }
 
     bool polymorph::engine::Entity::isActive() const
@@ -146,6 +144,7 @@ namespace polymorph::engine
                 }
             }
         }
+        startChildren();
     }
 
     void polymorph::engine::Entity::startChildren()
@@ -164,6 +163,7 @@ namespace polymorph::engine
                     component->build();
             }
         }
+        buildChildren();
     }
 
     void polymorph::engine::Entity::buildChildren()
@@ -457,10 +457,10 @@ namespace polymorph::engine
                     return true;
         return false;
     }
-
-    void Entity::_createComponents(std::shared_ptr<myxmlpp::Node> components)
+    
+    void Entity::_createComponents()
     {
-        for (auto &cpt: *components) {
+        for (auto &cpt: *_xmlConfig->getComponents()) {
             try {
                 _createComponent(cpt);
             } catch (debug::ExceptionLogger &e) {

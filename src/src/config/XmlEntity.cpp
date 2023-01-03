@@ -31,21 +31,26 @@ namespace polymorph::engine::config
         }
 
         try {
+            _path = engine.getAssetManager().tryResolve(_path);
 #ifdef _WIN32
             _entity = std::make_shared<myxmlpp::Doc>(_path + "\\" +_fileName);
 #else
-            _entity = std::make_shared<myxmlpp::Doc>(engine.getAssetManager().tryResolve(_path));
+            
+            _entity = std::make_shared<myxmlpp::Doc>(_path);
 #endif
             _entity->getRoot();
             
         } catch (myxmlpp::Exception &e) {
+            logger.log("[XmlEntity] Error: " + e.baseWhat(), debug::Logger::MAJOR);
+            throw debug::MissingEntityException(_path);
+        } catch (debug::CoreException &e) {
             throw debug::MissingEntityException(_path);
         }
         try {
             _name = _entity->getRoot()->findAttribute("name")->getValue();
             _id = _entity->getRoot()->findAttribute("id")->getValue();
             _isPrefab = _entity->getRoot()->findAttribute("prefab")->getValueBool();
-            _prefabId = _entity->getRoot()->findAttribute("prefabid")->getValue();
+            _prefabId = _entity->getRoot()->findAttribute("prefab_id")->getValue();
             _isActive = _entity->getRoot()->findAttribute("active")->getValueBool();
             _components = _entity->getRoot()->findChild("Components");
             _loadTags();

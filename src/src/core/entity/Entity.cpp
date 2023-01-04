@@ -138,7 +138,7 @@ namespace polymorph::engine
             for (auto &component: _components[exec]) {
                 if (!component->enabled)
                     continue;
-                if (component->isStarted()) {
+                if (!component->isStarted()) {
                     component->start();
                     component->setAsStarted();
                 }
@@ -165,7 +165,6 @@ namespace polymorph::engine
                 }
             }
         }
-        buildChildren();
     }
 
     void polymorph::engine::Entity::buildChildren()
@@ -390,9 +389,6 @@ namespace polymorph::engine
             return;
         transform = getComponent<TransformComponent>();
         transform->build();
-        for (auto &child: **transform) {
-            child->gameObject->initTransform();
-        }
         _transformInitialized = true;
     }
 

@@ -23,7 +23,7 @@ namespace polymorph::engine::api
     void APluginConfig::_setProperty(const std::string &propertyName, T &toSet,
                                       debug::Logger::severity level)
     {
-        manager->save(propertyName, toSet, level);
+        manager->set(propertyName, toSet, level);
     }
 
 }

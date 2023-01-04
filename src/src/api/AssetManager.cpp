@@ -36,7 +36,9 @@ namespace polymorph::engine::api
             }*/
             return path;
         }
-        throw debug::CoreException("Asset not found: " + resource, errorIfNotFound);
+        debug::CoreException("Asset not found: " + resource, errorIfNotFound).what();
+        return "";
+        //TODO: CE DE
     }
 
     void api::AssetManager::addPath(std::string path)

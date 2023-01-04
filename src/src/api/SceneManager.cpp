@@ -139,6 +139,7 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
     _current->addEntityToAddQueue(nEntity);
     nEntity->build();
     nEntity->transform->setParent(parent);
+    nEntity->transform->setPosition(parent->getPosition());
     nEntity->awake();
     return GameObject(nEntity);
 }

@@ -52,14 +52,15 @@ void polymorph::engine::Scene::start()
 void polymorph::engine::Scene::awake()
 {
     _callMethodOnTopEntities([](std::shared_ptr<polymorph::engine::Entity> &e) {
-        e->awake();
+        e->awake(true);
     });
 }
 
 void polymorph::engine::Scene::build()
 {
     for (auto &entity : _entities) {
-        if (!entity->transform || !entity->transform->parent())
+        entity->transform = entity->getComponent<polymorph::engine::TransformComponent>();
+        if (!entity->transform->parent())
             entity->build();
     }
 }

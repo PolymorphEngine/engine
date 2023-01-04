@@ -129,6 +129,8 @@ void polymorph::engine::TransformComponent::setRotation(const Vector3 &rotation)
 void polymorph::engine::TransformComponent::setParent(polymorph::engine::Transform parent_ref)
 {
     _parent = parent_ref;
+    if (parent_ref)
+        parent_ref->_children.push_back(safe_from_this());
 }
 
 polymorph::engine::Transform polymorph::engine::TransformComponent::removeChild(polymorph::engine::Transform child)
@@ -186,7 +188,8 @@ void polymorph::engine::TransformComponent::_updateSmoothMove()
 
 void polymorph::engine::TransformComponent::_moveChildren(const Vector3 &delta)
 {
-
+    for (auto &child: *this)
+        child->move(delta);
 }
 
 void polymorph::engine::TransformComponent::build()
@@ -204,8 +207,9 @@ void polymorph::engine::TransformComponent::build()
         if (ref->isPrefab())
             ref->Scene.instantiate(ref, safe_from_this());
         else {
-            ref->transform = ref->getComponent<TransformComponent>();
+            ref->build();
             ref->transform->setParent(safe_from_this());
+            ref->transform->setPosition(_position);
         }
     }
 }

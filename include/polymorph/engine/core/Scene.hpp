@@ -305,7 +305,9 @@ namespace polymorph::engine
               */
             void _eraseChildren(Entity &entity);
 
-            void _callMethodOnTopEntities(std::function<void(std::shared_ptr<Entity>&)> method);
+            void _callMethodOnTopEntities(
+                    std::function<void(std::shared_ptr<Entity> &)> method,
+                    bool shouldExitOnSceneLoading);
 
 //////////////////////--------------------------/////////////////////////
 

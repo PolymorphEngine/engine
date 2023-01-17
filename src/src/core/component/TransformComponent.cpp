@@ -153,7 +153,11 @@ polymorph::engine::Transform polymorph::engine::TransformComponent::removeChild(
 
 void polymorph::engine::TransformComponent::removeAllChildren()
 {
-
+    for (auto &child: *this)
+    {
+        child->setParent(Transform(nullptr));
+    }
+    _children.clear();
 }
 
 void polymorph::engine::TransformComponent::setSiblingIndex(int index)

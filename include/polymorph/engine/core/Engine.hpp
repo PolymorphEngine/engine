@@ -83,12 +83,7 @@ namespace polymorph::engine
             /**
              * @property _prefabs list of all of the prefabs
              */
-            std::vector<std::shared_ptr<config::XmlEntity>> _prefabs;
-
-            /**
-             * @property _prefabsConfigs list of all of the configuration of the prefabs
-             */
-            std::vector<std::shared_ptr<config::XmlEntity>> _prefabsConfigs;
+            std::vector<std::shared_ptr<Entity>> _prefabs;
 
             /**
              * @property _defaultConfigs default configuration for the components
@@ -196,7 +191,7 @@ namespace polymorph::engine
              * @brief Getter of prefabs
              * @return A list of all the prefabs loaded
              */
-            std::vector<std::shared_ptr<config::XmlEntity>> getPrefabs();
+            std::vector<std::shared_ptr<Entity>> getPrefabs();
 
             /**
              * @brief Check if the engine is in debug mode or not

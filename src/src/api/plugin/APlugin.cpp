@@ -19,7 +19,7 @@ namespace polymorph::engine::api
     APlugin::APlugin(config::XmlNode &data, Engine &game,
                      std::string PluginsPath) : _data(data), _game(game),
                                                 pluginManager(game.getPluginManager()),
-                                                assetManager(game.getAssetManager())
+                                                assetManager(game.getAssetManager()), _pluginsPath(std::move(PluginsPath))
     {
         try {
             _packageName = _data.findAttribute("name")->getValue();
@@ -100,7 +100,7 @@ namespace polymorph::engine::api
         auto prefabs = _doc->getRoot()->findChild("Prefabs");
 
         for (auto &t: *prefabs) {
-            _prefabs.emplace_back(std::make_shared<config::XmlEntity>(t, _game.getLogger()));
+            _prefabs.emplace_back(std::make_shared<config::XmlEntity>(t, _game.getLogger(), _game));
         }
     }
 

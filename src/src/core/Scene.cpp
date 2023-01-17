@@ -32,53 +32,57 @@ void polymorph::engine::Scene::update()
 {
     _callMethodOnTopEntities([](std::shared_ptr<polymorph::engine::Entity> &e) {
         e->update();
-    });
+    }, true);
 }
 
 void polymorph::engine::Scene::lateUpdate()
 {
     _callMethodOnTopEntities([](std::shared_ptr<polymorph::engine::Entity> &e) {
         e->lateUpdate();
-    });
+    }, true);
 }
 
 void polymorph::engine::Scene::start()
 {
     _callMethodOnTopEntities([](std::shared_ptr<polymorph::engine::Entity> &e) {
         e->start();
-    });
+    }, true);
 }
 
 void polymorph::engine::Scene::awake()
 {
     _callMethodOnTopEntities([](std::shared_ptr<polymorph::engine::Entity> &e) {
-        e->awake();
-    });
+        e->awake(true);
+    }, false);
 }
 
 void polymorph::engine::Scene::build()
 {
-    _callMethodOnTopEntities([](std::shared_ptr<polymorph::engine::Entity> &e) {
-        e->build();
-    });
+    for (auto &entity : _entities) {
+        entity->transform = entity->getComponent<polymorph::engine::TransformComponent>();
+        if (!entity->transform->parent())
+            entity->build();
+    }
 }
 
 void polymorph::engine::Scene::onSceneLoaded()
 {
     auto sharedThis = shared_from_this();
 
-    _callMethodOnTopEntities([sharedThis](std::shared_ptr<polymorph::engine::Entity> &e) {
-        e->onSceneLoaded(sharedThis);
-    });
+    _callMethodOnTopEntities(
+            [sharedThis](std::shared_ptr<polymorph::engine::Entity> &e) {
+                e->onSceneLoaded(sharedThis);
+            }, false);
 }
 
 void polymorph::engine::Scene::onSceneUnloaded()
 {
     auto sharedThis = shared_from_this();
 
-    _callMethodOnTopEntities([sharedThis](std::shared_ptr<polymorph::engine::Entity> &e) {
-        e->onSceneUnloaded(sharedThis);
-    });
+    _callMethodOnTopEntities(
+            [sharedThis](std::shared_ptr<polymorph::engine::Entity> &e) {
+                e->onSceneUnloaded(sharedThis);
+            }, false);
 }
 
 void polymorph::engine::Scene::save(bool saveAllEntitiesFirst, std::string path)
@@ -94,12 +98,12 @@ void polymorph::engine::Scene::loadScene()
     auto entities = _config_data->getEntities();
     _destroyQueueList.clear();
     _entities.clear();
-    
+
     for (auto &entity : *entities) {
         try {
-            
-        auto newEntity = std::make_shared<Entity>(entity, _game);
-        _entities.push_back(newEntity);
+            auto newEntity = std::make_shared<Entity>(entity, _game);
+            newEntity->_createComponents();
+            _entities.push_back(newEntity);
         } catch (debug::ExceptionLogger &e) {
             e.what();
             continue;
@@ -279,12 +283,14 @@ void polymorph::engine::Scene::_eraseChildren(polymorph::engine::Entity &entity)
     }
 }
 
-void polymorph::engine::Scene::_callMethodOnTopEntities(std::function<void(std::shared_ptr<Entity>&)> method)
+void polymorph::engine::Scene::_callMethodOnTopEntities(
+        std::function<void(std::shared_ptr<Entity> &)> method,
+        bool shouldExitOnSceneLoading)
 {
     for (auto &e: _entities) {
         if (!e->transform->parent())
             method(e);
-        if (_game.isExiting() || _game.getSceneManager().isSceneUnloaded())
+        if (shouldExitOnSceneLoading && (_game.isExiting() || _game.getSceneManager().isSceneUnloaded()))
             return;
     }
 }

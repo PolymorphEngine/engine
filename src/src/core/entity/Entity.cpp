@@ -26,29 +26,27 @@ namespace polymorph::engine
         _stringId = data->getId();
         _tags = data->getTags();
         _active = data->isActive();
-        _isPrefab = false;
+        _isPrefab = data->isPrefab();
         _wasPrefab = data->isPrefab();
         _prefabId = data->getPrefabId();
         for (auto &exec: Game.getExecOrder())
             _components[exec] = std::vector<std::shared_ptr<AComponent>>();
-        _createComponents(data->getComponents());
     }
 
     Entity::Entity(std::shared_ptr<myxmlpp::Node> data, Engine &game)
     : Game(game), Debug(game.getLogger()), time(game.getTime()),
       Plugin(game.getPluginManager()), Scene(game.getSceneManager()), Resource(game.getAssetManager())
     {
-        _xmlConfig = std::make_shared<config::XmlEntity>(data, Debug);
+        _xmlConfig = std::make_shared<config::XmlEntity>(data, Debug, Game);
         name = _xmlConfig->getName();
         _stringId = _xmlConfig->getId();
         _tags = _xmlConfig->getTags();
         _active = _xmlConfig->isActive();
-        _isPrefab = false;
+        _isPrefab = _xmlConfig->isPrefab();
         _wasPrefab = _xmlConfig->isPrefab();
         _prefabId = _xmlConfig->getPrefabId();
         for (auto &exec: Game.getExecOrder())
             _components[exec] = std::vector<std::shared_ptr<AComponent>>();
-        _createComponents(_xmlConfig->getComponents());
     }
 
     bool polymorph::engine::Entity::isActive() const
@@ -120,14 +118,22 @@ namespace polymorph::engine
         for (auto &exec: Game.getExecOrder()) {
             for (auto &component: _components[exec]) {
                 if (!component->isAwoken()) {
-                    component->onAwake();
-                    component->setAsAwoken();
+                    try {
+                        component->onAwake();
+                        component->setAsAwoken();
+                    } catch (const std::exception &e) {
+                        Debug.log("Error while awake component " + component->getType() + " of entity " + name + ": " + e.what());
+                    }
                 }
             }
         }
         if (rescurse) {
             for (auto &child: **transform) {
-                child->gameObject->awake(rescurse);
+                try {
+                    child->gameObject->awake(rescurse);
+                } catch (const std::exception &e) {
+                    Debug.log("Error while awake entity " + child->gameObject->name + ": " + e.what());
+                }
             }
         }
     }
@@ -140,18 +146,27 @@ namespace polymorph::engine
             for (auto &component: _components[exec]) {
                 if (!component->enabled)
                     continue;
-                if (component->isStarted()) {
-                    component->start();
-                    component->setAsStarted();
+                if (!component->isStarted()) {
+                    try {
+                        component->start();
+                        component->setAsStarted();
+                    } catch (const debug::ExceptionLogger &e) {
+                        e.what();
+                    }
                 }
             }
         }
+        startChildren();
     }
 
     void polymorph::engine::Entity::startChildren()
     {
         for (auto &child: **transform) {
-            child->gameObject->start();
+            try {
+                child->gameObject->start();
+            } catch (const debug::ExceptionLogger &e) {
+                e.what();
+            }
         }
     }
 
@@ -160,8 +175,10 @@ namespace polymorph::engine
         initTransform();
         for (auto &exec: Game.getExecOrder()) {
             for (auto &component: _components[exec]) {
-                if (component->getType() != "Transform")
+                if (component->getType() != "Transform") {
+                    component->transform = transform;
                     component->build();
+                }
             }
         }
     }
@@ -181,7 +198,11 @@ namespace polymorph::engine
             for (auto &component: _components[exec]) {
                 if (!component->enabled)
                     continue;
-                component->update();
+                try {
+                    component->update();
+                } catch (debug::MissingReferenceException &e) {
+                    e.what();
+                }
             }
         }
         updateChildren();
@@ -274,8 +295,11 @@ namespace polymorph::engine
             return;
         for (auto &exec: Game.getExecOrder()) {
             for (auto &component: _components[exec]) {
-                if (component->enabled)
+                try {
                     component->onSceneLoaded(scene);
+                } catch (debug::MissingReferenceException &e) {
+                    e.what();
+                }
             }
         }
         onSceneLoadingChildren(scene);
@@ -287,7 +311,11 @@ namespace polymorph::engine
         if (!_active)
             return;
         for (auto &child: **transform) {
-            child->gameObject->onSceneLoaded(scene);
+            try {
+                child->gameObject->onSceneLoaded(scene);
+            } catch (debug::MissingReferenceException &e) {
+                e.what();
+            }
         }
     }
 
@@ -336,12 +364,16 @@ namespace polymorph::engine
 
     polymorph::engine::GameObject
     polymorph::engine::Entity::findByPrefabId(const std::string &prefabId,
-                                              bool _firstCall) const
+                                              bool _firstCall)
     {
-        GameObject highestParent = transform->parent()->gameObject;
-        while (highestParent->transform->parent())
-            highestParent = highestParent->transform->parent()->gameObject;
-        return highestParent->_getByPrefabId(prefabId);
+        try {
+            GameObject highestParent = transform->parent()->gameObject;
+            while (highestParent->transform->parent())
+                highestParent = highestParent->transform->parent()->gameObject;
+            return highestParent->_getByPrefabId(prefabId);
+        } catch (debug::MissingReferenceException &e) {
+            return _getByPrefabId(prefabId);
+        }
     }
     GameObject Entity::_getByPrefabId(std::string prefabId)
     {
@@ -378,10 +410,8 @@ namespace polymorph::engine
     {
         if (_transformInitialized)
             return;
+        transform = getComponent<TransformComponent>();
         transform->build();
-        for (auto &child: **transform) {
-            child->gameObject->initTransform();
-        }
         _transformInitialized = true;
     }
 
@@ -457,10 +487,10 @@ namespace polymorph::engine
                     return true;
         return false;
     }
-
-    void Entity::_createComponents(std::shared_ptr<myxmlpp::Node> components)
+    
+    void Entity::_createComponents()
     {
-        for (auto &cpt: *components) {
+        for (auto &cpt: *_xmlConfig->getComponents()) {
             try {
                 _createComponent(cpt);
             } catch (debug::ExceptionLogger &e) {

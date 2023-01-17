@@ -45,7 +45,15 @@ polymorph::engine::GameObject polymorph::engine::api::SceneManager::findById(con
 {
     if (_current == nullptr)
         return GameObject(nullptr);
-    return _current->findById(id);
+    auto found = _current->findById(id);
+    if (found)
+        return found;
+    auto prefabs = _game.getPrefabs();
+    for (auto &prefab : prefabs) {
+        if (*prefab == id || prefab->getPrefabId() == id)
+            return GameObject(prefab);
+    }
+    return GameObject(nullptr);
 }
 
 polymorph::engine::GameObject polymorph::engine::api::SceneManager::findByTag(const std::string &tag)
@@ -91,12 +99,14 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);
-    _current->addEntityToAddQueue(nEntity);
+    nEntity->setIsPrefab(false);
     nEntity->build();
     nEntity->awake();
+    _current->addEntityToAddQueue(nEntity);
     return GameObject(nEntity);
 }
 
@@ -106,9 +116,11 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);
+    nEntity->setIsPrefab(false);
     _current->addEntityToAddQueue(nEntity);
     nEntity->build();
     nEntity->transform->setPosition(position);
@@ -122,12 +134,15 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);
+    nEntity->setIsPrefab(false);
     _current->addEntityToAddQueue(nEntity);
     nEntity->build();
     nEntity->transform->setParent(parent);
+    nEntity->transform->setPosition(parent->getPosition());
     nEntity->awake();
     return GameObject(nEntity);
 }
@@ -139,9 +154,11 @@ polymorph::engine::api::SceneManager::instantiate(polymorph::engine::GameObject 
 {
     auto xml = gameObject->getXmlConfig();
     auto nEntity = std::make_shared<Entity>(xml, _game);
+    nEntity->_createComponents();
     auto nId = polymorph::engine::uuid::uuid();
 
     nEntity->setId(nId);
+    nEntity->setIsPrefab(false);
     _current->addEntityToAddQueue(nEntity);
     nEntity->build();
     nEntity->transform->setParent(parent);
@@ -208,6 +225,8 @@ void polymorph::engine::api::SceneManager::createScene(std::string name)
 void polymorph::engine::api::SceneManager::dontDestroyOnLoad(polymorph::engine::GameObject gameObject)
 {
     KeepOnLoad.emplace_back(*gameObject);
+    for (auto &child : **gameObject->transform)
+        dontDestroyOnLoad(child->gameObject);
 }
 
 std::vector<std::shared_ptr<polymorph::engine::Entity>> &polymorph::engine::api::SceneManager::getKeepedEntities()

@@ -20,10 +20,12 @@ Please complete this section if any breaking changes have been made, otherwise d
 
 # Checklist
 
-- [ ] I have assigned this PR to myself
+- [ ] I have assigned this PR to the reviewer
 - [ ] I have added at least 1 reviewer
 - [ ] I have updated the documentation
 - [ ] I have updated the README.md
+- [ ] I have manually tested the code
+- [ ] I have added/updated tests
 
 # Additional comments
 

@@ -87,11 +87,12 @@ void polymorph::engine::Engine::loadEngine()
 {
     _pluginsExecOrder = _projectConfig->getPluginsExecOrder();
     _pluginManager.loadPlugins(_pluginsPath, *_projectConfig->getPlugins(), *this);
+
     _initGameData();
     _sceneManager.setCurrentScene(*_scenes.begin());
+    _pluginManager.startingScripts();
     _sceneManager.getCurrentScene()->loadScene();
     _time = time::Time();
-    _pluginManager.startingScripts();
 }
 
 polymorph::engine::api::PluginManager &polymorph::engine::Engine::getPluginManager()
@@ -115,7 +116,7 @@ std::string polymorph::engine::Engine::getTitle()
     return _projectName;
 }
 
-std::vector<std::shared_ptr<polymorph::engine::config::XmlEntity>> polymorph::engine::Engine::getPrefabs()
+std::vector<std::shared_ptr<polymorph::engine::Entity>> polymorph::engine::Engine::getPrefabs()
 {
     return _prefabs;
 }
@@ -196,7 +197,7 @@ void polymorph::engine::Engine::_initPrefabs()
 
     for (auto &prefab : *prefabs) {
         try {
-            auto entity = std::make_shared<config::XmlEntity>(prefab, _logger);
+            auto entity = std::make_shared<Entity>(prefab, *this);
             _prefabs.push_back(entity);
         } catch (const std::exception &e) {
             e.what();

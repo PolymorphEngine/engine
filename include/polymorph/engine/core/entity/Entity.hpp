@@ -332,7 +332,7 @@ namespace polymorph::engine
              * @param prefabId The prefab id of the child
              * @return The child entity
              */
-            GameObject findByPrefabId(const std::string &prefabId, bool _firstCall = true) const;
+            GameObject findByPrefabId(const std::string &prefabId, bool _firstCall = true);
 
             /**
              * @details Get a child entity by its index
@@ -486,7 +486,9 @@ namespace polymorph::engine
              */
             bool componentExist(std::string &type) const noexcept;
             
-            void _createComponents(std::shared_ptr<myxmlpp::Node> components);
+        public:
+            void _createComponents();
+        private:
             void _createComponent(std::shared_ptr<myxmlpp::Node> component);
             GameObject _getByPrefabId(std::string id);
 //////////////////////--------------------------/////////////////////////

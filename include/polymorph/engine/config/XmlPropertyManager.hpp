@@ -98,8 +98,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>() && !CastHelper::is_builtin<T>)
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -122,8 +124,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>() && !CastHelper::is_builtin<T>)
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -146,8 +150,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>() && !CastHelper::is_builtin<T>)
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -162,8 +168,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>() && !CastHelper::is_builtin<T>)
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -277,8 +285,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -306,8 +316,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -327,8 +339,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -348,8 +362,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
                     _setPrimitiveProperty(property, reinterpret_cast<int &>(toSet), level);
@@ -373,8 +389,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
                     _savePrimitiveProperty<int>(property, reinterpret_cast<int &>(toSave), level);
@@ -448,8 +466,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
                     _savePrimitiveProperty<int>(property, reinterpret_cast<int &>(toSet), level);
@@ -488,8 +508,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setRefProperty<T>(property, toSet, entity, level);
             };
@@ -499,8 +521,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setRefProperty<T>(property, toSet, component, level);
             };
@@ -571,6 +595,25 @@ namespace polymorph::engine::config
                     _onWrongValueExcept(level, name, id);
             };
 
+            template<typename T, typename T2 = void>
+            void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
+                                 safe_ptr<T> &toSet, safe_ptr<api::APluginConfig> _component,
+                                 debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::string id;
+                std::string name = refProp->findAttribute("name")->getValue();
+                GameObject gameObject;
+
+                if (!_setPropertyFromAttr(id, refProp, level))
+                    return;
+                else if (!gameObject)
+                    gameObject = _component->Scene.findById(id);
+                if (gameObject)
+                    toSet = gameObject->getComponent<T>();
+                if (!toSet)
+                    _onWrongValueExcept(level, name, id);
+            };
+
             template<typename T2 = void>
             void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp, GameObject &toSet,
                                  safe_ptr<AComponent> _component, debug::Logger::severity level)
@@ -599,8 +642,28 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
+                static_assert(!CastHelper::is_map<T>);
+                _setRefProperty(property, toSet, _component, level);
+            };
+            
+            template<typename T>
+            void _setSubProperty(const std::string &propertyName,
+                                 const std::shared_ptr<myxmlpp::Node> &data,
+                                 safe_ptr<T> &toSet, safe_ptr<api::APluginConfig> _component,
+                                 debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::shared_ptr<myxmlpp::Node> property = (!propertyName.empty())
+                                                          ? _findProperty(propertyName, data)
+                                                          : data;
+
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setRefProperty(property, toSet, _component, level);
             };
@@ -615,8 +678,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setRefProperty(property, toSet, entity, level);
             };
@@ -627,8 +692,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _saveRefProperty(property, toSet, level);
             };
@@ -664,8 +731,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 if constexpr (std::is_enum<T>())
                     _savePrimitiveProperty<int>(property, reinterpret_cast<int &>(toSet), level);
@@ -707,8 +776,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setSerializableProperty(property, toSet, entity, type, level);
             };
@@ -718,8 +789,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setSerializableProperty(property, toSet, component, level);
             };
@@ -729,8 +802,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setSerializableProperty(property, toSet, config, level);
             };
@@ -740,8 +815,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setSerializableProperty(property, toSet, engine, type, level);
             };
@@ -848,8 +925,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setSerializableProperty(property, toSet, _engine, _type, level);
             };
 
@@ -863,8 +942,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setSerializableProperty(property, toSet, _config, level);
             };
 
@@ -878,8 +959,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setSerializableProperty(property, toSet, _component, level);
             };
 
@@ -893,8 +976,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setSerializableProperty(property, toSet, entity, type, level);
             };
 
@@ -915,8 +1000,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 toSet->saveAll();
             };
 
@@ -958,8 +1045,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setVectorProperty(property, toSet, entity, type, level);
             };
@@ -969,8 +1058,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setVectorProperty(property, toSet, component, level);
             };
@@ -980,8 +1071,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setVectorProperty(property, toSet, config, level);
             };
@@ -991,8 +1084,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _setVectorProperty(property, toSet, engine, _type, level);
             };
@@ -1074,8 +1169,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setVectorProperty(property, toSet, entity, type, level);
             };
 
@@ -1089,8 +1186,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setVectorProperty(property, toSet, engine, type, level);
             };
             
@@ -1104,8 +1203,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setVectorProperty(property, toSet, component, level);
             };
 
@@ -1119,8 +1220,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setVectorProperty(property, toSet, config, level);
             };
 
@@ -1137,8 +1240,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _saveVectorProperty(property, toSave, level);
             };
@@ -1191,8 +1296,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 static_assert(!CastHelper::is_map<T>);
                 _saveVectorProperty<T>(property, toSet, level);
             };
@@ -1238,8 +1345,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, entity, type, level);
             };
 
@@ -1257,8 +1366,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, engine, type, level);
             };
 
@@ -1276,8 +1387,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, component, level);
             };
 
@@ -1295,8 +1408,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, config, level);
             };
 
@@ -1382,8 +1497,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, config, level);
             };
 
@@ -1397,8 +1514,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, config, level);
             };
 
@@ -1412,8 +1531,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, config, type, level);
             };
 
@@ -1427,8 +1548,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setMapProperty<T1, T2>(property, toSet, config, type, level);
             };
 
@@ -1446,8 +1569,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _saveMapProperty<T1, T2>(property, toSave, level);
             };
 
@@ -1473,8 +1598,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _saveMapProperty<T1, T2>(property, toSet, level);
             };
 
@@ -1543,8 +1670,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, entity, type, level);
             };
 
@@ -1562,8 +1691,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, engine, type, level);
             };
 
@@ -1581,8 +1712,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, component, level);
             };
 
@@ -1600,8 +1733,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, config, level);
             };
 
@@ -1687,8 +1822,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, config, level);
             };
 
@@ -1702,8 +1839,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, config, level);
             };
 
@@ -1717,8 +1856,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, config, type, level);
             };
 
@@ -1732,8 +1873,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _setUMapProperty<T1, T2>(property, toSet, config, type, level);
             };
 
@@ -1751,8 +1894,10 @@ namespace polymorph::engine::config
             {
                 std::shared_ptr<myxmlpp::Node> property = _findProperty(propertyName);
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _saveUMapProperty<T1, T2>(property, toSave, level);
             };
             
@@ -1806,8 +1951,10 @@ namespace polymorph::engine::config
                                                           ? _findProperty(propertyName, data)
                                                           : data;
 
-                if (property == nullptr)
-                    _onMissingPropertyExcept(level, propertyName);
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
                 _saveUMapProperty<T1, T2>(property, toSet, level);
             };
 

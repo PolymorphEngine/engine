@@ -32,12 +32,13 @@ namespace polymorph::engine::api
         _pluginsOrder = _game.getPluginExecOrder();
         for (auto &node : list) {
             auto name = node->findAttribute("name")->getValue();
-            _game.getAssetManager().addPath(pluginsPath + "/" + name + "/Assets/");
+            _game.getAssetManager().addPath(pluginsPath + "/" + name + "/assets/");
         }
         for (auto &node : list) {
             auto name = node->findAttribute("name")->getValue();
             try {
                 auto plugin = _loadPlugin(node, pluginsPath + name, game, name);
+                plugin->build();
                 _plugins.push_back(plugin);
             } catch (debug::ExceptionLogger &e) {
                 e.what();
@@ -55,7 +56,7 @@ namespace polymorph::engine::api
                                            std::shared_ptr<myxmlpp::Node> node)
     {
         for (auto &plugin : _plugins) {
-            if (plugin->hasObject(type))
+            if (plugin->hasComponent(type))
             {
                 if (!plugin->isEnabled())
                     throw debug::PluginDisabledException(plugin->getPluginName(), type);
@@ -132,7 +133,9 @@ namespace polymorph::engine::api
             if (plugin->isEnabled() && plugin->hasPrefab(id))
             {
                 auto e = plugin->getPrefabConf(id);
-                _prefabs.push_back(std::make_shared<Entity>(e, _game));
+                auto entity = std::make_shared<Entity>(e, _game);
+                entity->_createComponents(); //TODO: see if needed
+                _prefabs.push_back(entity);
                 return GameObject(_prefabs.back());
             }
         }

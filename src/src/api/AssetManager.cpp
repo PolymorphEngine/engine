@@ -18,11 +18,27 @@ namespace polymorph::engine::api
     {
         for (auto &folder: _paths) {
             std::string path = folder + "/" + resource;
-            if (std::filesystem::exists(path) && !std::filesystem::is_directory(path)
-            && std::filesystem::status(path).permissions() == (std::filesystem::perms::owner_read | std::filesystem::perms::others_read))
-                return path;
+            if (!std::filesystem::exists(path))
+            {
+                //debug::CoreException("Path incorrect for: " + path, debug::Logger::DEBUG).what();
+                continue;
+            }
+            if (std::filesystem::is_directory(path))
+            {
+                debug::CoreException("Path is a directory for: " + path, debug::Logger::DEBUG).what();
+                continue;
+            }
+            /*auto perm = std::filesystem::status(path).permissions();
+            if ( perm != (std::filesystem::perms::others_read) && perm != std::filesystem::perms::owner_read && perm != std::filesystem::perms::group_read)
+            {
+                debug::CoreException("Path is not readable forTTT: " + path, debug::Logger::DEBUG).what();
+                continue;
+            }*/
+            return path;
         }
-        throw debug::CoreException("Asset not found: " + resource, errorIfNotFound);
+        debug::CoreException("Asset not found: " + resource, errorIfNotFound).what();
+        return "";
+        //TODO: CE DE
     }
 
     void api::AssetManager::addPath(std::string path)

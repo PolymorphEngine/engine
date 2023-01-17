@@ -595,6 +595,25 @@ namespace polymorph::engine::config
                     _onWrongValueExcept(level, name, id);
             };
 
+            template<typename T, typename T2 = void>
+            void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp,
+                                 safe_ptr<T> &toSet, safe_ptr<api::APluginConfig> _component,
+                                 debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::string id;
+                std::string name = refProp->findAttribute("name")->getValue();
+                GameObject gameObject;
+
+                if (!_setPropertyFromAttr(id, refProp, level))
+                    return;
+                else if (!gameObject)
+                    gameObject = _component->Scene.findById(id);
+                if (gameObject)
+                    toSet = gameObject->getComponent<T>();
+                if (!toSet)
+                    _onWrongValueExcept(level, name, id);
+            };
+
             template<typename T2 = void>
             void _setRefProperty(std::shared_ptr<myxmlpp::Node> &refProp, GameObject &toSet,
                                  safe_ptr<AComponent> _component, debug::Logger::severity level)
@@ -617,6 +636,24 @@ namespace polymorph::engine::config
             void _setSubProperty(const std::string &propertyName,
                                  const std::shared_ptr<myxmlpp::Node> &data,
                                  safe_ptr<T> &toSet, safe_ptr<AComponent> _component,
+                                 debug::Logger::severity level = debug::Logger::DEBUG)
+            {
+                std::shared_ptr<myxmlpp::Node> property = (!propertyName.empty())
+                                                          ? _findProperty(propertyName, data)
+                                                          : data;
+
+                if (property == nullptr) {
+                    _onMissingPropertyExcept(level, propertyName); 
+                   return;
+                   }
+                static_assert(!CastHelper::is_map<T>);
+                _setRefProperty(property, toSet, _component, level);
+            };
+            
+            template<typename T>
+            void _setSubProperty(const std::string &propertyName,
+                                 const std::shared_ptr<myxmlpp::Node> &data,
+                                 safe_ptr<T> &toSet, safe_ptr<api::APluginConfig> _component,
                                  debug::Logger::severity level = debug::Logger::DEBUG)
             {
                 std::shared_ptr<myxmlpp::Node> property = (!propertyName.empty())

@@ -101,10 +101,9 @@ void polymorph::engine::Scene::loadScene()
 
     for (auto &entity : *entities) {
         try {
-
-        auto newEntity = std::make_shared<Entity>(entity, _game);
-        newEntity->_createComponents();
-        _entities.push_back(newEntity);
+            auto newEntity = std::make_shared<Entity>(entity, _game);
+            newEntity->_createComponents();
+            _entities.push_back(newEntity);
         } catch (debug::ExceptionLogger &e) {
             e.what();
             continue;
